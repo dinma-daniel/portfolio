@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:portfolio-site-9ef434.webflow.io)",
+      "WebFetch(domain:awakeagency.webflow.io)"
+    ]
+  }
+}
