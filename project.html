@@ -1,0 +1,1001 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title id="pageTitle">Project — Dinma Okonicha</title>
+<meta name="description" content="Case study — Dinma Okonicha portfolio." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ivory:'#F5F2EC', ivory2:'#ECE7DD', ivory3:'#E3DCCB',
+          ink:'#161616', ink2:'#2A2926', sub:'#56544E', line:'#D8D2C4',
+          accent:'#2F4DEC', rust:'#C2410C', moss:'#4A5D23',
+        },
+        fontFamily: {
+          display:['Fraunces','serif'],
+          sans:['"IBM Plex Sans"','system-ui','sans-serif'],
+          mono:['"IBM Plex Mono"','ui-monospace','monospace'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root { color-scheme: light; }
+  html, body {
+    background: #F5F2EC; color: #161616;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-feature-settings: 'ss01','ss02';
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content:''; position: fixed; inset: 0; pointer-events: none;
+    z-index: 100; opacity:.07; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .font-display { font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 144, 'SOFT' 30; letter-spacing: -0.035em; }
+  .italic-soft  { font-style: italic; font-variation-settings: 'opsz' 144, 'SOFT' 100; }
+  .mono         { font-family: 'IBM Plex Mono', monospace; }
+  .label        { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+  .h1 { font-size: clamp(2.5rem, 7vw, 8rem); line-height: .92; }
+  .h2 { font-size: clamp(2.25rem, 5vw, 4.5rem); line-height: .98; }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right,  rgba(22,22,22,.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(22,22,22,.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 1s cubic-bezier(.2,.6,.2,1), transform 1s cubic-bezier(.2,.6,.2,1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  .rise { opacity: 0; transform: translateY(18px); animation: rise .9s cubic-bezier(.2,.6,.2,1) forwards; }
+  .rise-1 { animation-delay: .05s; } .rise-2 { animation-delay: .20s; }
+  .rise-3 { animation-delay: .35s; } .rise-4 { animation-delay: .50s; }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+  .btn { position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; gap: .6rem; transition: color .35s cubic-bezier(.2,.7,.2,1); }
+  .btn::after { content:''; position: absolute; inset: 0; background: #161616; transform: translateY(101%); transition: transform .5s cubic-bezier(.2,.7,.2,1); z-index: -1; }
+  .btn:hover::after { transform: translateY(0); }
+  .btn--ink::after { background: #F5F2EC; }
+  .btn--ink       { color: #F5F2EC; }
+  .btn--ink:hover { color: #161616; }
+  .btn--ivory     { color: #161616; }
+  .btn--ivory:hover { color: #F5F2EC; }
+
+  .ul-link { position: relative; }
+  .ul-link::after { content:''; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right center; transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+  .ul-link:hover::after { transform: scaleX(1); transform-origin: left center; }
+
+  .status-dot { width: 9px; height: 9px; border-radius: 999px; background: #4A5D23; box-shadow: 0 0 0 0 rgba(74,93,35,.5); animation: pulse 2.2s infinite; }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0   rgba(74,93,35,.55); }
+    70%  { box-shadow: 0 0 0 10px rgba(74,93,35,0); }
+    100% { box-shadow: 0 0 0 0   rgba(74,93,35,0); }
+  }
+
+  ::selection { background: #161616; color: #F5F2EC; }
+
+  .tile-demahub  { background: #1B1B1B; color: #F5F2EC; }
+  .tile-bio      { background: #E3DCCB; color: #161616; }
+  .tile-nerobee  { background: #C2410C; color: #F5F2EC; }
+  .tile-elibrary { background: #2F4DEC; color: #F5F2EC; }
+  .tile-gesture  { background: #4A5D23; color: #F5F2EC; }
+  .tile-easelite { background: #ECE7DD; color: #161616; }
+  .tile-tranzakt { background: #2A2926; color: #F5F2EC; }
+  .tile-artguide { background: #1B2B4B; color: #F5F2EC; }
+
+  header.scrolled .nav-bar {
+    background: rgba(245,242,236,.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #D8D2C4;
+  }
+
+  /* --- Custom cursor --- */
+  @media (hover: hover) and (pointer: fine) {
+    html, body, a, button, input, textarea, select, .btn { cursor: none; }
+  }
+  @media (hover: none), (pointer: coarse) {
+    #cDot, #cRing { display: none !important; }
+  }
+  #cDot {
+    position: fixed; top: 0; left: 0;
+    width: 6px; height: 6px; background: #F5F2EC; border-radius: 999px;
+    pointer-events: none; z-index: 9999; transform: translate(-50%,-50%);
+    transition: opacity .35s; mix-blend-mode: difference; will-change: transform;
+  }
+  #cRing {
+    position: fixed; top: 0; left: 0;
+    width: 38px; height: 38px; border: 1px solid #F5F2EC; border-radius: 999px;
+    pointer-events: none; z-index: 9998; transform: translate(-50%,-50%);
+    transition: width .5s cubic-bezier(.2,.7,.2,1), height .5s cubic-bezier(.2,.7,.2,1), background .35s, border-color .35s, opacity .35s;
+    mix-blend-mode: difference; will-change: transform;
+  }
+  #cRing.is-hover { width: 62px; height: 62px; }
+  #cRing.is-down  { width: 26px; height: 26px; }
+  #cRing.is-hidden, #cDot.is-hidden { opacity: 0; }
+
+  #progress {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+    background: #161616; z-index: 9997; will-change: width;
+  }
+
+  .magnetic { transition: transform .5s cubic-bezier(.2,.7,.2,1); will-change: transform; display: inline-flex; }
+
+  /* Section label + rule */
+  .sec-index { display: inline-flex; align-items: center; gap: .75rem; }
+  .sec-index .line { width: 48px; height: 1px; background: #161616; }
+
+  /* ------- Carousel ------- */
+  .carousel {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+  }
+  .carousel .slide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 1.75rem;
+  }
+  .carousel .slide {
+    position: absolute; inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.02);
+    transition: opacity .75s cubic-bezier(.2,.7,.2,1), transform 1.2s cubic-bezier(.2,.7,.2,1);
+  }
+  .carousel .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+  }
+  .carousel .glyph {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 144, 'SOFT' 100;
+    font-style: italic; font-size: clamp(10rem, 26vw, 26rem);
+    line-height: .8; letter-spacing: -.04em; opacity: .95;
+  }
+  .carousel .corners::before,
+  .carousel .corners::after {
+    content:''; position: absolute; width: 28px; height: 28px; border: 1px solid currentColor; opacity: .6;
+  }
+  .carousel .corners::before { top: 24px; left: 24px; border-right: 0; border-bottom: 0; }
+  .carousel .corners::after  { bottom: 24px; right: 24px; border-left: 0; border-top: 0; }
+
+  /* Carousel controls row */
+  .carousel-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 1.25rem;
+  }
+  .carousel-dots { display: flex; align-items: center; gap: .6rem; }
+  .carousel-dots button {
+    width: 26px; height: 2px; background: #D8D2C4; border: 0; padding: 0;
+    transition: background .35s ease, width .45s cubic-bezier(.2,.7,.2,1);
+  }
+  .carousel-dots button.active { background: #161616; width: 48px; }
+  .carousel-nav { display: flex; align-items: center; gap: .5rem; }
+  .carousel-nav button {
+    width: 44px; height: 44px;
+    border: 1px solid #161616; background: transparent;
+    display: grid; place-items: center;
+    transition: background .3s ease, color .3s ease;
+  }
+  .carousel-nav button:hover { background: #161616; color: #F5F2EC; }
+  .carousel-counter {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: .14em;
+    color: #56544E;
+  }
+
+  /* Slow parallax for hero title */
+  .parallax { will-change: transform; }
+</style>
+</head>
+
+<body class="min-h-screen">
+
+<div id="progress"></div>
+<div id="cRing"></div>
+<div id="cDot"></div>
+
+<!-- ==========================================================
+     HEADER / NAV
+========================================================== -->
+<header class="fixed top-0 inset-x-0 z-50">
+  <div class="nav-bar transition-colors">
+    <div class="mx-auto max-w-[1440px] px-6 lg:px-10 py-5 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded-full bg-ink text-ivory grid place-items-center">
+          <span class="font-display italic-soft text-[17px] leading-none -mt-[1px]">d</span>
+        </span>
+        <span class="font-display text-[22px] leading-none tracking-tight">
+          <span class="italic-soft">Dinma</span> Okonicha
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-9 label text-ink/75">
+        <a href="index.html#home"     class="ul-link hover:text-ink">Home</a>
+        <a href="index.html#work"     class="ul-link hover:text-ink">Work</a>
+        <a href="index.html#services" class="ul-link hover:text-ink">Services</a>
+        <a href="index.html#about"    class="ul-link hover:text-ink">About</a>
+        <a href="index.html#contact"  class="ul-link hover:text-ink">Contact</a>
+      </nav>
+
+      <a href="index.html#contact" class="hidden md:inline-flex btn btn--ivory border border-ink px-4 py-2.5 label">
+        Schedule a call
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+          <path d="M1 9L9 1M9 1H2M9 1v7" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ==========================================================
+     PROJECT HERO
+========================================================== -->
+<section class="relative pt-32 lg:pt-40 pb-14 overflow-hidden">
+  <div class="absolute inset-0 bg-grid opacity-90 pointer-events-none parallax" id="heroGrid"></div>
+  <div class="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ivory to-transparent pointer-events-none"></div>
+
+  <div class="relative mx-auto max-w-[1440px] px-6 lg:px-10">
+    <a href="index.html#work" class="inline-flex items-center gap-2 label text-sub hover:text-ink rise rise-1">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M11 6H1M1 6l5-5M1 6l5 5" stroke="currentColor" stroke-width="1.4"/></svg>
+      All projects
+    </a>
+
+    <div class="mt-10 flex items-center gap-3 label text-sub rise rise-2">
+      <span id="pIndex">01</span>
+      <span class="opacity-40">/</span>
+      <span id="pCategory">Category</span>
+      <span class="opacity-40">/</span>
+      <span id="pDate">00.00.0000</span>
+    </div>
+
+    <h1 id="pTitle" class="font-display h1 mt-6 rise rise-2">Project Title<span id="pDot" class="text-accent italic-soft">.</span></h1>
+
+    <p id="pTagline" class="mt-10 max-w-2xl text-[17px] lg:text-[18px] leading-relaxed text-sub rise rise-3">Project tagline goes here.</p>
+  </div>
+</section>
+
+<!-- ==========================================================
+     META STRIP
+========================================================== -->
+<section class="py-10 border-y border-line bg-ivory2/50">
+  <div class="mx-auto max-w-[1440px] px-6 lg:px-10 grid grid-cols-2 lg:grid-cols-4 gap-6">
+    <div>
+      <div class="label text-sub">Role</div>
+      <div id="pRole" class="mt-2 font-display text-2xl">—</div>
+    </div>
+    <div>
+      <div class="label text-sub">Timeline</div>
+      <div id="pTimeline" class="mt-2 font-display text-2xl">—</div>
+    </div>
+    <div>
+      <div class="label text-sub">Team</div>
+      <div id="pTeam" class="mt-2 font-display text-2xl">—</div>
+    </div>
+    <div>
+      <div class="label text-sub">Year</div>
+      <div id="pYear" class="mt-2 font-display text-2xl">—</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     VISUAL CAROUSEL
+========================================================== -->
+<section class="py-16 lg:py-24">
+  <div class="mx-auto max-w-[1440px] px-6 lg:px-10 reveal">
+    <div id="pCarousel" class="carousel tile-demahub">
+      <!-- slides injected -->
+    </div>
+
+    <div class="carousel-bar">
+      <div class="carousel-counter"><span id="cCur">01</span> / <span id="cTot">04</span></div>
+      <div class="carousel-dots" id="cDots"></div>
+      <div class="carousel-nav">
+        <button id="cPrev" aria-label="Previous slide">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13 7H1M1 7l6-6M1 7l6 6" stroke="currentColor" stroke-width="1.4"/></svg>
+        </button>
+        <button id="cNext" aria-label="Next slide">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M13 7L7 1M13 7l-6 6" stroke="currentColor" stroke-width="1.4"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     BODY (overview + sections)
+========================================================== -->
+<section class="py-16 lg:py-28">
+  <div class="mx-auto max-w-[1440px] px-6 lg:px-10 grid grid-cols-12 gap-10 lg:gap-16">
+
+    <!-- Left sticky label -->
+    <aside class="col-span-12 lg:col-span-3">
+      <div class="lg:sticky lg:top-28">
+        <div class="sec-index label text-sub reveal"><span class="line"></span>Case study</div>
+        <h2 class="font-display text-4xl mt-6 leading-[1] reveal">Overview<span class="italic-soft">.</span></h2>
+        <div class="mt-6 label text-sub space-y-2 reveal">
+          <div>— 01 · Context</div>
+          <div>— 02 · Approach</div>
+          <div>— 03 · Outcome</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right body -->
+    <div class="col-span-12 lg:col-span-9 space-y-16 lg:space-y-20">
+      <p id="pOverview" class="font-display text-[clamp(1.75rem,2.8vw,2.75rem)] leading-[1.15] reveal">
+        Overview paragraph goes here — the why and what of the project, in plain,
+        considered language.
+      </p>
+
+      <div class="reveal">
+        <div class="label text-sub">01 · Context</div>
+        <h3 class="font-display text-3xl lg:text-4xl mt-4">The brief<span class="italic-soft">.</span></h3>
+        <p id="pContext" class="mt-6 max-w-3xl text-[17px] leading-relaxed text-sub">—</p>
+      </div>
+
+      <div class="reveal">
+        <div class="label text-sub">02 · Approach</div>
+        <h3 class="font-display text-3xl lg:text-4xl mt-4">How I worked<span class="italic-soft">.</span></h3>
+        <p id="pApproach" class="mt-6 max-w-3xl text-[17px] leading-relaxed text-sub">—</p>
+      </div>
+
+      <div class="reveal">
+        <div class="label text-sub">03 · Outcome</div>
+        <h3 class="font-display text-3xl lg:text-4xl mt-4">What shipped<span class="italic-soft">.</span></h3>
+        <p id="pOutcome" class="mt-6 max-w-3xl text-[17px] leading-relaxed text-sub">—</p>
+      </div>
+
+      <!-- Stack pills -->
+      <div class="reveal">
+        <div class="label text-sub">Stack &amp; tools</div>
+        <div id="pStack" class="mt-5 flex flex-wrap gap-2 label"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     METRICS / HIGHLIGHTS
+========================================================== -->
+<section class="py-16 lg:py-24 bg-ivory2/60 border-y border-line">
+  <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+    <div class="sec-index label text-sub reveal"><span class="line"></span>Highlights</div>
+    <h2 class="font-display h2 mt-6 max-w-3xl reveal">Measured outcomes<span class="italic-soft">.</span></h2>
+
+    <div id="pMetrics" class="mt-12 grid grid-cols-2 lg:grid-cols-4 border-t border-l border-line reveal">
+      <!-- injected -->
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     NEXT PROJECT
+========================================================== -->
+<section class="py-16 lg:py-24">
+  <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+    <div class="sec-index label text-sub reveal"><span class="line"></span>Up next</div>
+    <a id="pNext" href="#" class="mt-8 block group reveal">
+      <div class="flex items-end justify-between pb-6 border-b border-line">
+        <div>
+          <div class="label text-sub"><span id="pNextCategory">—</span> · <span id="pNextYear">—</span></div>
+          <h3 id="pNextTitle" class="font-display text-6xl lg:text-8xl mt-3 leading-[.9]">Next Project<span class="italic-soft">.</span></h3>
+        </div>
+        <span class="font-display italic-soft text-6xl transition-transform duration-500 group-hover:translate-x-2 group-hover:-translate-y-2">↗</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ==========================================================
+     CTA
+========================================================== -->
+<section class="py-24 lg:py-36 relative overflow-hidden">
+  <div class="absolute inset-0 bg-grid opacity-80 pointer-events-none"></div>
+  <div class="relative mx-auto max-w-[1440px] px-6 lg:px-10 text-center">
+    <div class="sec-index justify-center inline-flex label text-sub reveal"><span class="line"></span>Contact<span class="line"></span></div>
+    <h2 class="font-display mt-8 text-[clamp(2.5rem,8vw,7.5rem)] leading-[.9] reveal">
+      Like what you see?<br>Let's <span class="italic-soft">build</span> something.
+    </h2>
+    <div class="mt-12 flex flex-wrap items-center justify-center gap-4 reveal">
+      <a href="index.html#contact" class="magnetic btn btn--ink bg-ink px-7 py-5 label">Schedule a call</a>
+      <a href="index.html#work" class="magnetic btn btn--ivory border border-ink px-7 py-5 label">Browse all work</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     FOOTER
+========================================================== -->
+<footer class="border-t border-line bg-ink text-ivory">
+  <div class="mx-auto max-w-[1440px] px-6 lg:px-10 py-14">
+    <div class="grid grid-cols-12 gap-8 lg:gap-14">
+      <div class="col-span-12 lg:col-span-5">
+        <div class="font-display text-5xl lg:text-6xl leading-[0.85]">
+          <span class="italic-soft">Dinma</span><br>Okonicha.
+        </div>
+      </div>
+      <div class="col-span-6 lg:col-span-3">
+        <div class="label text-ivory/50">Sitemap</div>
+        <ul class="mt-5 space-y-3">
+          <li><a href="index.html#home"     class="ul-link">Home</a></li>
+          <li><a href="index.html#work"     class="ul-link">Work</a></li>
+          <li><a href="index.html#services" class="ul-link">Services</a></li>
+          <li><a href="index.html#about"    class="ul-link">About</a></li>
+          <li><a href="index.html#contact"  class="ul-link">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-span-6 lg:col-span-4">
+        <div class="label text-ivory/50">Get in touch</div>
+        <a href="mailto:ddunebari@gmail.com" class="mt-5 block font-display italic-soft text-2xl lg:text-3xl">ddunebari@gmail.com</a>
+        <div class="mt-5 flex items-center gap-3 label text-ivory/60">
+          <span class="status-dot"></span>
+          <span>Taking briefs · 2026</span>
+        </div>
+      </div>
+    </div>
+    <div class="mt-12 pt-6 border-t border-ivory/15 flex flex-wrap items-center justify-between gap-4 label text-ivory/50">
+      <div>© 2026 — Okonicha Dinma Dunebari</div>
+      <div>Case study</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ==========================================================
+     PROJECT DATA + RENDER + SHARED SCRIPTS
+========================================================== -->
+<script>
+  const PROJECTS = {
+    demahub: {
+      index: '01', title: 'Demahub', dotColor: 'text-accent',
+      tile: 'tile-demahub', glyph: 'Dh', visualTag: 'v3.0 · 2021',
+      category: 'UI Design', date: '09.08.2021', year: '2021',
+      role: 'Product Design',
+      timeline: '4 weeks',
+      team: 'Solo',
+      tagline: 'A unified dashboard bringing scattered analytics, schedules and team workflows into a single, calm interface — built around rhythm, not alerts.',
+      overview: 'Demahub started as a frustration with tool-sprawl — teams juggling six windows to answer one question. The goal was a single surface that treated attention as a resource, and showed only what the current moment demanded.',
+      context: 'The team had accumulated analytics across five tools and a patchwork of saved views. Nothing spoke to each other; nobody trusted the numbers. The brief was to consolidate into one dashboard without turning it into a control room of blinking alerts.',
+      approach: 'I audited every existing report, clustered them by decision, and rebuilt the information architecture around questions rather than metrics. A restrained type system and a two-colour accent palette kept density readable; motion was reserved for state changes that actually mattered.',
+      outcome: 'Shipped a design system with forty-eight components and a prototype that the team adopted for their weekly rituals. Time-to-first-insight dropped sharply, and the dashboard stopped being a place people avoided.',
+      stack: ['Figma','Tokens','Prototyping','React','Tailwind'],
+      metrics: [
+        { label: 'Components', value: '48' },
+        { label: 'Tools consolidated', value: '05' },
+        { label: 'Time-to-insight', value: '−62%' },
+        { label: 'Adoption', value: '100%' },
+      ],
+      images: [
+        'pictures/demahub/mockup.jpg',
+        'pictures/demahub/Sign%20Up%20var1.png',
+        'pictures/demahub/Sign%20Up%20var2.png',
+        'pictures/demahub/Home%20page.png',
+        'pictures/demahub/Category%20page.png',
+        'pictures/demahub/Product%20Details%20page.jpg',
+      ],
+      next: 'bio',
+    },
+
+    bio: {
+      index: '02', title: 'Bio', dotColor: 'text-accent',
+      tile: 'tile-bio', glyph: 'b', visualTag: 'iOS · daily',
+      category: 'Application Development', date: '08.18.2021', year: '2021',
+      role: 'Design &amp; Development',
+      timeline: '6 weeks',
+      team: 'Solo',
+      tagline: 'A quiet journaling companion for habits, moods and health signals — privacy-first, offline-first, and designed to feel more like a notebook than an app.',
+      overview: 'Bio is a counter-reaction to the gamified, streak-obsessed wellness app. It favours reflection over reward and keeps every byte of data on-device by default.',
+      context: 'Most health trackers convert intimate data into leaderboard fodder. I wanted to build the opposite — an app that treats a day\'s notes with the care a paper journal would, without cloud sync as an afterthought.',
+      approach: 'Local-first architecture using SQLite and a tiny encrypted store. The interface borrows from editorial print — generous type, one thought per screen, no notifications unless the user explicitly asked. Shipped with a single accent colour and three pre-built reflection templates.',
+      outcome: 'A functional iOS prototype used daily by a small test group for three months. Feedback: "it feels like writing, not logging." That was the goal.',
+      stack: ['Swift','SwiftUI','SQLite','CryptoKit','Figma'],
+      metrics: [
+        { label: 'Screens', value: '22' },
+        { label: 'On-device', value: '100%' },
+        { label: 'Retention', value: '84%' },
+        { label: 'Net-promoter', value: '+72' },
+      ],
+      images: [
+        'pictures/bio/dashboard.png',
+        'pictures/bio/Desktop%20-%2011.png',
+        'pictures/bio/Desktop%20-%2012.png',
+        'pictures/bio/Desktop%20-%2017.png',
+      ],
+      next: 'nerobee',
+    },
+
+    nerobee: {
+      index: '03', title: 'Nerobee', dotColor: 'text-rust',
+      tile: 'tile-nerobee', glyph: 'N', visualTag: 'raw · unfiltered',
+      category: 'Branding', date: '07.29.2021', year: '2021',
+      role: 'Identity &amp; Art Direction',
+      timeline: '3 weeks',
+      team: 'With founder',
+      tagline: 'A full brand identity for an independent honey producer — mark, typography, packaging and voice. Warm, earthen, and distinctly unhurried.',
+      overview: 'Nerobee needed an identity that could live on a jar in a sunlit kitchen for a year without getting tired. We built a system around warmth, slowness and unpolished honesty.',
+      context: 'A small family apiary selling at farmer\'s markets wanted to move into boutique stockists. The old label looked homemade in the wrong way — we needed something that felt crafted without pretending to be a luxury brand.',
+      approach: 'Hand-drawn wordmark paired with a workhorse serif; a palette drawn from raw wax and burnt orange. Packaging kept the kraft paper and swapped in a single foil pass. Voice guide leaned into plain description — "raw, unfiltered, from eight hives near a road you\'ve never heard of."',
+      outcome: 'Launched across three SKUs. Picked up by two independent grocers in the first month. The founder stopped having to explain what made the honey different — the jar did the work.',
+      stack: ['Illustrator','InDesign','Print','Photography'],
+      metrics: [
+        { label: 'SKUs', value: '03' },
+        { label: 'Stockists', value: '02' },
+        { label: 'Sell-through', value: '+140%' },
+        { label: 'Foil passes', value: '01' },
+      ],
+      next: 'elibrary',
+    },
+
+    elibrary: {
+      index: '04', title: 'E-Library', dotColor: 'text-accent',
+      tile: 'tile-elibrary', glyph: 'e', visualTag: 'reader · v4',
+      category: 'Mobile Design', date: '06.24.2021', year: '2021',
+      role: 'Product Design',
+      timeline: '5 weeks',
+      team: 'Solo',
+      tagline: 'A reading platform that turns long-form writing into a daily ritual — typography-forward, distraction-free, and built for long evenings.',
+      overview: 'E-Library treats reading as the primary action, not a feature buried under recommendations. The app opens to where you left off, and almost everything else is one tap away.',
+      context: 'Existing reader apps optimise for discovery and social proof. I wanted the opposite — a reader for people who already know what they want to read and resent being interrupted on the way there.',
+      approach: 'I rebuilt the reader around typography — a small set of carefully paired fonts, three background warmths, and a single gesture for chapter navigation. Settings were hidden two levels deep intentionally, because every visible control is a small interruption.',
+      outcome: 'A working mobile prototype tested with a small cohort of readers. Average session length doubled compared with their previous apps, and the "settings panel anxiety" effect disappeared.',
+      stack: ['Figma','SwiftUI','Motion','Fraunces','Söhne'],
+      metrics: [
+        { label: 'Fonts', value: '04' },
+        { label: 'Gestures', value: '06' },
+        { label: 'Session length', value: '+118%' },
+        { label: 'Taps to read', value: '01' },
+      ],
+      images: [
+        'pictures/E-library/Book%20ui.png',
+        'pictures/E-library/Main.png',
+        'pictures/E-library/Explore.png',
+        'pictures/E-library/Selct%20book.png',
+        'pictures/E-library/My%20Library.png',
+        'pictures/E-library/Settings.png',
+      ],
+      next: 'gesture',
+    },
+
+    gesture: {
+      index: '05', title: 'Hand Recognition', dotColor: 'text-accent',
+      tile: 'tile-gesture', glyph: 'Hg', visualTag: 'mediapipe · 21 kp',
+      category: 'Data Science', date: '04.13.2021', year: '2021',
+      role: 'ML Engineering',
+      timeline: '8 weeks',
+      team: 'Solo',
+      tagline: 'A system that translates hand gestures into readable text — built to support communication for deaf and hard-of-hearing users, with hand estimation powered by MediaPipe.',
+      overview: 'Hand Recognition translates sign-language gestures into readable text in real time. It uses MediaPipe for hand keypoint estimation paired with a small custom classifier — light enough to run on a laptop or phone with a webcam.',
+      context: 'Communication tools for deaf and hard-of-hearing users often rely on typing or interpreters. I wanted to build a lightweight system that could read sign-language gestures from any phone camera and convert them into text — instantly, on-device, with no setup.',
+      approach: 'MediaPipe extracts 21 hand keypoints per frame. On top of that I trained a small classifier to recognise letters and gestures from keypoint sequences, keeping the model compact enough for real-time inference. The interface keeps the technology invisible — just camera, hand, text.',
+      outcome: 'A working prototype that translates a working alphabet of sign gestures into readable text from a live webcam feed. Latency stays well under a frame; everything runs locally with no network round-trip.',
+      stack: ['Python','MediaPipe','TensorFlow','OpenCV','NumPy'],
+      metrics: [
+        { label: 'Keypoints', value: '21' },
+        { label: 'Latency', value: '<50ms' },
+        { label: 'On-device', value: '100%' },
+        { label: 'Network', value: '00' },
+      ],
+      images: [
+        'pictures/handsign/sign.png',
+        'pictures/handsign/Green%20Brown%20Black%20Simple%20Filipino%20Sign%20Language%20Alphabet%20Flashcard.png',
+      ],
+      next: 'easelite',
+    },
+
+    easelite: {
+      index: '06', title: 'Easelite', dotColor: 'text-rust',
+      tile: 'tile-easelite', glyph: 'el', visualTag: 'iOS · iPadOS',
+      category: 'Mobile Development', date: '03.21.2021', year: '2021',
+      role: 'Design &amp; Development',
+      timeline: '7 weeks',
+      team: 'Solo',
+      tagline: 'A lightweight mobile sketching app built around an infinite canvas, gestural tools and the quietest possible chrome. Paper first, app second.',
+      overview: 'Easelite strips the sketch app down to an infinite canvas and a handful of real tools. Everything else — layers panels, brush pickers, export modals — is gesture-triggered and disappears the moment you stop using it.',
+      context: 'Pro drawing apps bury you in panels. I wanted a tool where the surface you\'re drawing on is 95% of the screen, 95% of the time, without giving up the essentials.',
+      approach: 'Built on a Metal-backed canvas with pressure-sensitive strokes and a small set of brushes handcrafted rather than parameterised. UI is summoned with two-finger gestures and vanishes automatically. Exports go straight to photos — no modals, no sheets.',
+      outcome: 'An internal build used by a small group of designers and illustrators for four months. Shipped with twelve brushes, six gestures and zero settings screens.',
+      stack: ['Swift','Metal','Core Graphics','Combine'],
+      metrics: [
+        { label: 'Brushes', value: '12' },
+        { label: 'Gestures', value: '06' },
+        { label: 'Panels', value: '00' },
+        { label: 'Settings', value: '00' },
+      ],
+      images: [
+        'pictures/easelite/mockup.png',
+        'pictures/easelite/Welcome.png',
+        'pictures/easelite/Home.png',
+        'pictures/easelite/Categories.png',
+        'pictures/easelite/Wallet.png',
+      ],
+      next: 'tranzakt',
+    },
+
+    tranzakt: {
+      index: '07', title: 'Tranzact', dotColor: 'text-accent',
+      tile: 'tile-tranzakt', glyph: 'Tz', visualTag: 'mono · api',
+      category: 'Application Development', date: '02.22.2021', year: '2021',
+      role: 'Front-end Engineering',
+      timeline: '10 weeks',
+      team: 'Small team',
+      tagline: 'A user dashboard built on the Mono Open Banking API that surfaces your subscriptions and recurring bills at a glance — built to help people track expenses, free trials and recurring charges in one place.',
+      overview: 'Tranzact is a financial dashboard built on top of the Mono Open Banking API. It connects to bank accounts, identifies subscriptions and recurring bills automatically, and surfaces them in one quiet view so users can stop bleeding money on free trials they forgot about.',
+      context: 'Subscription fatigue is real and largely unmonitored — most people genuinely don\'t know what they\'re paying for each month. The brief was to use the Mono API to pull transaction data and infer subscriptions automatically, without asking the user to type anything in.',
+      approach: 'Built with a small team — I led the dashboard front-end. We used Mono for bank linking and transaction history, then ran a small heuristic on top to identify recurring payment patterns. The UI prioritises one number — total monthly recurring spend — and only lets users drill down when they want to.',
+      outcome: 'Functional MVP that successfully identified recurring subscriptions across linked accounts. Used by a small group of test users for several weeks. The most surprising finding: people had on average four free trials they had completely forgotten about.',
+      stack: ['React','TypeScript','Mono API','Tailwind','Node'],
+      metrics: [
+        { label: 'API', value: 'Mono' },
+        { label: 'Avg trials', value: '04' },
+        { label: 'Test users', value: '20+' },
+        { label: 'MRR tracked', value: '$8k+' },
+      ],
+      images: [
+        'pictures/tranzact/tranzakt.png',
+        'pictures/tranzact/Dashboard.png',
+        'pictures/tranzact/sub.png',
+        'pictures/tranzact/sub2.png',
+        'pictures/tranzact/2%20(1).png',
+      ],
+      next: 'artguide',
+    },
+
+    artguide: {
+      index: '08', title: 'Art Guide', dotColor: 'text-rust',
+      tile: 'tile-artguide', glyph: 'Ag', visualTag: 'telegram · audio',
+      category: 'Data Science', date: '01.18.2021', year: '2021',
+      role: 'ML Engineering',
+      timeline: '5 weeks',
+      team: 'Solo',
+      tagline: 'An AI Telegram bot that takes a photo of an artwork and generates a spoken audio description — built to make galleries more accessible to visually-impaired visitors.',
+      overview: 'Art Guide turns photos of art into audio descriptions. Point your camera at a painting, send it to the bot, get back a generated narration of what\'s in the frame — all inside a chat interface people already know how to use.',
+      context: 'Audio guides in galleries are great when they exist — but most artworks, in most spaces, don\'t have one. Building a custom app means asking visitors to install something. A Telegram bot has zero install cost, runs on any device, and meets people where they already are.',
+      approach: 'The bot pipes uploaded photos through a vision-language model to generate a description, then a text-to-speech layer converts the description into audio. The whole thing runs as a small Python service. The conversational UX is kept ruthlessly simple — send photo, receive audio, done.',
+      outcome: 'A working bot that responds to photo uploads with spoken descriptions of artworks. Tested across a varied set of paintings, sculptures and gallery photos. Mostly accurate, occasionally delightful in how wrong it could be — but always useful.',
+      stack: ['Python','Telegram Bot API','Vision-Language Model','Text-to-Speech'],
+      metrics: [
+        { label: 'Platform', value: 'TG' },
+        { label: 'Latency', value: '~3s' },
+        { label: 'Install cost', value: '00' },
+        { label: 'Output', value: 'Audio' },
+      ],
+      images: [
+        'pictures/artG/art.jpg',
+        'pictures/artG/process.png',
+        'pictures/artG/graphics.png',
+        'pictures/artG/tgram.png',
+      ],
+      next: 'demahub',
+    },
+  };
+
+  /* ============================================================
+     RENDER
+  ============================================================ */
+  const slug = new URLSearchParams(location.search).get('p') || 'demahub';
+  const p = PROJECTS[slug] || PROJECTS.demahub;
+
+  function set(id, html) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  }
+  function text(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  document.getElementById('pageTitle').textContent = `${p.title} — Dinma Okonicha`;
+  text('pIndex', p.index);
+  text('pCategory', p.category);
+  text('pDate', p.date);
+  text('pTitle', p.title);
+
+  // Re-append the dot after title (overwritten by textContent above)
+  const titleEl = document.getElementById('pTitle');
+  titleEl.innerHTML = `${p.title}<span class="${p.dotColor} italic-soft">.</span>`;
+
+  text('pTagline', p.tagline);
+  set('pRole', p.role);
+  text('pTimeline', p.timeline);
+  text('pTeam', p.team);
+  text('pYear', p.year);
+
+  /* --- Visual carousel --- */
+  const carousel = document.getElementById('pCarousel');
+  carousel.className = `carousel ${p.tile}`;
+
+  // Pick a "detail" slide type based on project category
+  function detailType(category) {
+    const map = {
+      'UI Design':                'chart',
+      'Mobile Design':            'lines',
+      'Application Development':  'grid',
+      'Mobile Development':       'brush',
+      'Branding':                 'frame',
+      'Data Science':             'dots',
+    };
+    return map[category] || 'grid';
+  }
+
+  function renderSlide(slide) {
+    const type = typeof slide === 'string' ? slide : slide.type;
+    const label = `<div class="absolute top-6 left-6 label opacity-70 z-10">/ ${slug}.${p.year}</div>`;
+    const tag   = `<div class="absolute bottom-6 right-6 label opacity-70 z-10">${p.visualTag}</div>`;
+    const corners = `<div class="corners"></div>`;
+    let body = '';
+
+    switch (type) {
+      case 'image':
+        body = `<img src="${slide.src}" alt="${p.title} screen" loading="lazy" />`;
+        break;
+
+      case 'glyph':
+        body = `<div class="glyph">${p.glyph}</div>`;
+        break;
+
+      case 'metrics':
+        body = `
+          <div class="absolute inset-0 grid grid-cols-2 lg:grid-cols-4 p-10 lg:p-16">
+            ${p.metrics.map(m => `
+              <div class="flex flex-col justify-end p-4 lg:p-6">
+                <div class="label opacity-60">${m.label}</div>
+                <div class="font-display text-4xl lg:text-7xl mt-2 leading-[.9]">${m.value}</div>
+              </div>
+            `).join('')}
+          </div>`;
+        break;
+
+      case 'stack':
+        body = `
+          <div class="absolute inset-0 grid place-items-center p-12">
+            <div class="flex flex-wrap gap-3 justify-center max-w-2xl">
+              ${p.stack.map(s => `<span class="border border-current px-4 py-2 label opacity-80">${s}</span>`).join('')}
+            </div>
+          </div>`;
+        break;
+
+      case 'chart':
+        body = `
+          <div class="absolute left-12 right-12 bottom-14 top-28 grid grid-cols-12 gap-2 items-end">
+            ${[40,55,30,70,60,85,100,75,62,44,33,50].map((h, i) => `
+              <div class="bg-current" style="height:${h}%; opacity:${i === 6 ? 1 : .55};"></div>
+            `).join('')}
+          </div>
+          <div class="absolute left-12 bottom-6 label opacity-70">queries / month</div>`;
+        break;
+
+      case 'lines':
+        const widths = [98, 88, 94, 72, 90, 80, 96, 68, 84, 62];
+        body = `
+          <div class="absolute inset-x-12 lg:inset-x-24 inset-y-14 flex flex-col justify-center gap-4">
+            ${widths.map(w => `<div class="h-[3px] bg-current opacity-70" style="width:${w}%"></div>`).join('')}
+          </div>`;
+        break;
+
+      case 'grid':
+        body = `
+          <div class="absolute inset-12" style="background-image: radial-gradient(currentColor 1.2px, transparent 1.2px); background-size: 22px 22px; opacity: .55;"></div>
+          <div class="absolute right-12 bottom-14 font-display italic-soft text-7xl lg:text-8xl leading-[.8]">${p.glyph}</div>`;
+        break;
+
+      case 'brush':
+        body = `
+          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 800 450" fill="none" preserveAspectRatio="xMidYMid slice">
+            <path d="M60 380 Q 240 40, 420 260 T 760 120" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-opacity=".9"/>
+            <path d="M80 400 Q 260 120, 460 300 T 780 200" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-opacity=".55"/>
+            <path d="M100 420 Q 280 180, 500 330 T 780 260" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-opacity=".35"/>
+          </svg>`;
+        break;
+
+      case 'frame':
+        body = `
+          <div class="absolute inset-0 grid place-items-center p-16">
+            <div class="border border-current p-1.5 opacity-90" style="width: 58%; aspect-ratio: 3/2;">
+              <div class="w-full h-full" style="background: radial-gradient(at 28% 42%, rgba(255,255,255,.55) 0%, transparent 55%), radial-gradient(at 72% 72%, rgba(0,0,0,.35) 0%, transparent 60%), linear-gradient(135deg, rgba(255,255,255,.08), rgba(0,0,0,.12));"></div>
+            </div>
+          </div>
+          <div class="absolute left-12 bottom-8 label opacity-70">composition / 01</div>`;
+        break;
+
+      case 'dots':
+        body = `
+          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 800 450" fill="none" preserveAspectRatio="xMidYMid meet">
+            <g stroke="currentColor" stroke-opacity=".55" stroke-width="1.2">
+              <line x1="200" y1="360" x2="260" y2="210"/>
+              <line x1="260" y1="210" x2="250" y2="80"/>
+              <line x1="200" y1="360" x2="360" y2="190"/>
+              <line x1="360" y1="190" x2="400" y2="50"/>
+              <line x1="200" y1="360" x2="460" y2="210"/>
+              <line x1="460" y1="210" x2="520" y2="70"/>
+              <line x1="200" y1="360" x2="560" y2="240"/>
+              <line x1="560" y1="240" x2="620" y2="120"/>
+              <line x1="200" y1="360" x2="620" y2="340"/>
+            </g>
+            <g fill="currentColor">
+              <circle cx="200" cy="360" r="7"/>
+              <circle cx="260" cy="210" r="5"/>
+              <circle cx="250" cy="80"  r="5"/>
+              <circle cx="360" cy="190" r="5"/>
+              <circle cx="400" cy="50"  r="5"/>
+              <circle cx="460" cy="210" r="5"/>
+              <circle cx="520" cy="70"  r="5"/>
+              <circle cx="560" cy="240" r="5"/>
+              <circle cx="620" cy="120" r="5"/>
+              <circle cx="620" cy="340" r="5"/>
+            </g>
+          </svg>
+          <div class="absolute right-12 bottom-8 label opacity-70">keypoints · 21</div>`;
+        break;
+    }
+    return `<div class="slide">${label}${corners}${body}${tag}</div>`;
+  }
+
+  const slideTypes = (p.images && p.images.length)
+    ? p.images.map(src => ({ type: 'image', src }))
+    : ['glyph', detailType(p.category), 'metrics', 'stack'];
+  carousel.innerHTML = slideTypes.map(renderSlide).join('');
+
+  // Carousel controller
+  const slideEls = carousel.querySelectorAll('.slide');
+  const dotsWrap = document.getElementById('cDots');
+  dotsWrap.innerHTML = slideTypes.map((_, i) => `<button aria-label="Go to slide ${i+1}" data-i="${i}"></button>`).join('');
+  const dotEls = dotsWrap.querySelectorAll('button');
+  const cCur = document.getElementById('cCur');
+  const cTot = document.getElementById('cTot');
+  cTot.textContent = String(slideEls.length).padStart(2, '0');
+
+  let current = 0;
+  let autoTimer;
+
+  function go(i) {
+    current = ((i % slideEls.length) + slideEls.length) % slideEls.length;
+    slideEls.forEach((el, idx) => el.classList.toggle('active', idx === current));
+    dotEls.forEach((d, idx) => d.classList.toggle('active', idx === current));
+    cCur.textContent = String(current + 1).padStart(2, '0');
+  }
+
+  function restartAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => go(current + 1), 6000);
+  }
+
+  document.getElementById('cPrev').addEventListener('click', () => { go(current - 1); restartAuto(); });
+  document.getElementById('cNext').addEventListener('click', () => { go(current + 1); restartAuto(); });
+  dotEls.forEach(d => d.addEventListener('click', () => { go(parseInt(d.dataset.i, 10)); restartAuto(); }));
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft')  { go(current - 1); restartAuto(); }
+    if (e.key === 'ArrowRight') { go(current + 1); restartAuto(); }
+  });
+  carousel.addEventListener('mouseenter', () => clearInterval(autoTimer));
+  carousel.addEventListener('mouseleave', restartAuto);
+
+  go(0);
+  restartAuto();
+
+  // Body
+  text('pOverview', p.overview);
+  text('pContext', p.context);
+  text('pApproach', p.approach);
+  text('pOutcome', p.outcome);
+
+  // Stack pills
+  const stack = document.getElementById('pStack');
+  stack.innerHTML = p.stack.map(s => `<span class="border border-line px-3 py-1.5">${s}</span>`).join('');
+
+  // Metrics
+  const metrics = document.getElementById('pMetrics');
+  metrics.innerHTML = p.metrics.map(m => `
+    <div class="p-8 border-r border-b border-line">
+      <div class="label text-sub">${m.label}</div>
+      <div class="font-display text-5xl lg:text-6xl mt-4">${m.value}</div>
+    </div>
+  `).join('');
+
+  // Next project
+  const next = PROJECTS[p.next];
+  if (next) {
+    document.getElementById('pNext').href = `project.html?p=${p.next}`;
+    text('pNextCategory', next.category);
+    text('pNextYear', next.year);
+    const nt = document.getElementById('pNextTitle');
+    nt.innerHTML = `${next.title}<span class="${next.dotColor} italic-soft">.</span>`;
+  }
+
+  // Scroll to top on param navigation
+  window.scrollTo(0, 0);
+
+  /* ============================================================
+     SHARED SCRIPTS
+  ============================================================ */
+  const header = document.querySelector('header');
+  const prog = document.getElementById('progress');
+  function onScroll() {
+    const y = window.scrollY;
+    header.classList.toggle('scrolled', y > 8);
+    const h = document.documentElement;
+    const pct = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+    prog.style.width = (pct * 100) + '%';
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Cursor
+  const cDot = document.getElementById('cDot');
+  const cRing = document.getElementById('cRing');
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (fine && cDot && cRing) {
+    let mx = innerWidth/2, my = innerHeight/2, dx = mx, dy = my, rx = mx, ry = my, visible = false;
+    window.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      if (!visible) { visible = true; cDot.classList.remove('is-hidden'); cRing.classList.remove('is-hidden'); }
+    });
+    window.addEventListener('mousedown', () => cRing.classList.add('is-down'));
+    window.addEventListener('mouseup',   () => cRing.classList.remove('is-down'));
+    document.addEventListener('mouseleave', () => {
+      cDot.classList.add('is-hidden'); cRing.classList.add('is-hidden'); visible = false;
+    });
+    function loop() {
+      dx += (mx-dx)*0.92; dy += (my-dy)*0.92;
+      rx += (mx-rx)*0.16; ry += (my-ry)*0.16;
+      cDot.style.transform  = `translate(${dx}px, ${dy}px) translate(-50%, -50%)`;
+      cRing.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+    document.querySelectorAll('a, button, .magnetic').forEach(el => {
+      el.addEventListener('mouseenter', () => cRing.classList.add('is-hover'));
+      el.addEventListener('mouseleave', () => cRing.classList.remove('is-hover'));
+    });
+  }
+
+  // Magnetic
+  document.querySelectorAll('.magnetic').forEach(el => {
+    const strength = 18;
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - (r.left + r.width/2);
+      const y = e.clientY - (r.top + r.height/2);
+      el.style.transform = `translate(${x/r.width*strength}px, ${y/r.height*strength}px)`;
+    });
+    el.addEventListener('mouseleave', () => el.style.transform = 'translate(0,0)');
+  });
+
+  // Parallax grid in hero
+  const heroGrid = document.getElementById('heroGrid');
+  function parallax() {
+    const y = window.scrollY;
+    if (heroGrid) heroGrid.style.transform = `translate3d(0, ${y * 0.35}px, 0)`;
+    requestAnimationFrame(parallax);
+  }
+  requestAnimationFrame(parallax);
+</script>
+
+</body>
+</html>

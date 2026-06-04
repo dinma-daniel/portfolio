@@ -1,0 +1,4351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Portfolio OS — Okonicha Dinma</title>
+<meta name="description" content="An operating-system portfolio for Okonicha Dinma — software developer, data scientist, UI/UX designer." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Hugeicons via Iconify web component -->
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+<style>
+/* =================================================================
+   ROOT — Editorial OS theme system
+   Two skins (win / mac) × five backgrounds, one design language.
+   ================================================================= */
+:root {
+  /* Editorial Orange (Windows default) */
+  --bg-orange:      #E84E1B;
+  --bg-orange-soft: #D6451A;
+  --cream:          #F4EAD5;
+  --cream-2:        #EDE0C2;
+  --cream-3:        #E2D2AE;
+  --ink:            #1A1108;
+  --ink-2:          #3D2A1B;
+  --ink-soft:       #6A4F37;
+  --rust:           #A03A0F;
+  --rust-deep:      #7B2A06;
+  --paper:          #FAF5E9;
+
+  /* Twilight (mac default) */
+  --twi-1:  #1B1530;
+  --twi-2:  #2E2348;
+  --twi-3:  #4B3464;
+  --twi-4:  #7C5891;
+  --twi-5:  #C7A6C2;
+  --twi-glass: rgba(255,255,255,0.62);
+
+  /* Current theme tokens — overwritten by [data-skin] */
+  --bg:        var(--bg-orange);
+  --bg-pattern: none;
+  --win-bg:    var(--cream);
+  --win-bg-2:  var(--cream-2);
+  --win-border: rgba(26,17,8,0.18);
+  --win-shadow: 0 30px 60px -20px rgba(26,17,8,0.45), 0 2px 0 0 rgba(26,17,8,0.08);
+  --text:      var(--ink);
+  --text-soft: var(--ink-2);
+  --text-mute: var(--ink-soft);
+  --accent:    var(--rust);
+  --accent-deep: var(--rust-deep);
+  --chrome-bg:  rgba(244,234,213,0.78);
+  --chrome-border: rgba(26,17,8,0.16);
+  --pixel-fg: var(--rust);
+
+  --radius-win:   2px;
+  --radius-btn:   2px;
+  --radius-card:  3px;
+
+  --font-display: 'Fraunces', 'Times New Roman', serif;
+  --font-ui:      'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono:    'IBM Plex Mono', 'Menlo', monospace;
+}
+
+/* ---------- skins ---------- */
+[data-skin="mac"] {
+  --bg:
+    radial-gradient(ellipse 60% 50% at 18% 22%, #FFB07A 0%, transparent 55%),
+    radial-gradient(ellipse 55% 60% at 85% 18%, #D283C9 0%, transparent 55%),
+    radial-gradient(ellipse 75% 50% at 50% 95%, #FFD071 0%, transparent 60%),
+    radial-gradient(ellipse 60% 55% at 10% 85%, #C8528B 0%, transparent 55%),
+    linear-gradient(135deg, #F2854A 0%, #B96CB8 50%, #F6B45A 100%);
+  --win-bg:    rgba(250,247,243,0.78);
+  --win-bg-2:  rgba(240,237,230,0.72);
+  --win-border: rgba(255,255,255,0.4);
+  --win-shadow: 0 30px 80px -20px rgba(11, 8, 22, 0.55), 0 1px 0 rgba(255,255,255,0.5) inset;
+  --text:      #1D1B26;
+  --text-soft: #3A3548;
+  --text-mute: #6F687E;
+  --accent:    #BF4E84;
+  --accent-deep:#7A2D5C;
+  --chrome-bg:  rgba(255,255,255,0.18);
+  --chrome-border: rgba(255,255,255,0.22);
+  --pixel-fg:  #FFEFD9;
+  --radius-win: 11px;
+  --radius-btn: 999px;
+  --radius-card: 10px;
+}
+/* Mac BG overrides for the bg variants — they still feel "mac" */
+[data-skin="mac"][data-bg="cream"]  { --bg: linear-gradient(135deg, #FCEAD9, #FAD5C8 50%, #F6C0AE); }
+[data-skin="mac"][data-bg="ink"]    { --bg: linear-gradient(135deg, #1A1530, #2B1F3E 50%, #1A1530); --pixel-fg: #E2A8D0; --chrome-bg: rgba(20,15,30,0.55); --chrome-border: rgba(255,255,255,0.1); }
+[data-skin="mac"][data-bg="moss"]   { --bg: linear-gradient(135deg, #2D4A2D, #4A6B3E 50%, #6B8E5A); }
+[data-skin="mac"][data-bg="bliss"]  { --bg: linear-gradient(180deg, #79B8E5, #C8DFEF 55%, #84A24B 56%, #4D6E2B 100%); }
+[data-skin="mac"][data-bg="paper"]  { --bg: linear-gradient(135deg, #F0E8D0, #E5DBBE); }
+[data-skin="mac"][data-bg="grid"]   {
+  --bg: radial-gradient(ellipse at 50% 50%, #B96CB8 0%, #6E3F7A 80%);
+}
+
+/* ---------- background variants ---------- */
+[data-bg="cream"]   { --bg: var(--cream); --pixel-fg: var(--rust); --text: var(--ink); }
+[data-bg="ink"]     { --bg: #16110A; --pixel-fg: #E8A269; --chrome-bg: rgba(28,21,12,0.7); --chrome-border: rgba(244,234,213,0.16); }
+[data-bg="moss"]    { --bg: radial-gradient(120% 90% at 20% 10%, #3D4D24 0%, #1F2912 70%); --pixel-fg: #C8B873; }
+[data-bg="bliss"]   { --bg: linear-gradient(180deg, #6FA9D9 0%, #B6D6E8 55%, #6E8C39 56%, #3E5A1F 100%); }
+[data-bg="paper"]   { --bg: #EDE7D5; --pixel-fg: var(--rust); }
+[data-bg="grid"]    {
+  --bg: var(--bg-orange);
+  --bg-pattern:
+    linear-gradient(rgba(26,17,8,0.08) 1px, transparent 1px) 0 0 / 36px 36px,
+    linear-gradient(90deg, rgba(26,17,8,0.08) 1px, transparent 1px) 0 0 / 36px 36px;
+}
+
+/* =================================================================
+   BASE
+   ================================================================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font-ui);
+  color: var(--text);
+  background: var(--bg);
+  background-image: var(--bg-pattern), none;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'ss01','cv11';
+  transition: background 0.7s cubic-bezier(.2,.7,.2,1), color .35s ease;
+  user-select: none;
+}
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+/* iconify-icon defaults — sized & coloured by parent context */
+iconify-icon {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  width: 1em;
+  height: 1em;
+}
+.dock-icon iconify-icon  { font-size: 22px; }
+[data-skin="win"] .dock-icon iconify-icon { font-size: 20px; }
+[data-skin="mac"] .dock-icon iconify-icon { font-size: 28px; color: #fff; }
+.dock-start iconify-icon { font-size: 18px; }
+.tray-icon iconify-icon  { font-size: 14px; }
+.menubar .mac-icon iconify-icon { font-size: 14px; }
+.win-btn iconify-icon { font-size: 10px; }
+.start-tile .ico iconify-icon { font-size: 20px; color: #fff; }
+.power-btn iconify-icon { font-size: 16px; }
+.social-list a .ic iconify-icon { font-size: 18px; }
+.contact-meta iconify-icon { font-size: 14px; }
+.dock-search .ico-search iconify-icon { font-size: 14px; opacity: .65; }
+.spot-row iconify-icon { font-size: 22px; opacity: .55; flex-shrink: 0; }
+.start-search-row iconify-icon { font-size: 17px; opacity: .55; flex-shrink: 0; }
+
+/* Grain overlay — gives every theme the same paper texture */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 9000;
+  opacity: .05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+[data-skin="mac"] body::after { opacity: .03; }
+
+/* Desktop wallpaper layer — shown for image backgrounds */
+#wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #14110A;
+  pointer-events: none;
+}
+#wallpaper.on { display: block; }
+
+/* =================================================================
+   MENUBAR (top)
+   ================================================================= */
+.menubar {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 30px;
+  display: flex; align-items: center;
+  padding: 0 14px;
+  background: var(--chrome-bg);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border-bottom: 1px solid var(--chrome-border);
+  z-index: 1000;
+  font-size: 12.5px;
+  color: var(--text);
+}
+/* Win 11 mode: no top menubar (taskbar at bottom only) */
+[data-skin="win"] .menubar { display: none; }
+[data-skin="mac"] .menubar {
+  height: 26px;
+  padding: 0 18px;
+  background: rgba(0,0,0,0.18);
+  color: #fff;
+  border-bottom: 0;
+}
+[data-skin="mac"][data-bg="cream"] .menubar,
+[data-skin="mac"][data-bg="paper"] .menubar { background: rgba(0,0,0,0.10); color: #1D1B26; }
+.menubar .brand {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-right: 6px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.brand .logo-dot {
+  width: 14px; height: 14px;
+  background: var(--accent);
+  border-radius: 1px;
+}
+[data-skin="mac"] .brand .logo-dot { border-radius: 50%; background: radial-gradient(circle at 30% 30%, #fff, var(--accent) 70%); }
+[data-skin="mac"] .brand { font-family: var(--font-ui); gap: 6px; }
+[data-skin="mac"] .brand > span:last-child { display: none; }
+[data-skin="mac"] .menubar .item { font-weight: 500; padding: 3px 9px; font-size: 13px; }
+.menubar .item.appname { display: none; font-weight: 700; }
+[data-skin="mac"] .menubar .item.appname { display: inline-block; }
+[data-skin="mac"] .menubar .item:hover { background: rgba(255,255,255,0.18); }
+[data-skin="mac"][data-bg="cream"] .menubar .item:hover,
+[data-skin="mac"][data-bg="paper"] .menubar .item:hover { background: rgba(0,0,0,0.08); }
+.menubar .item {
+  padding: 4px 10px;
+  border-radius: var(--radius-btn);
+  transition: background .18s;
+  cursor: pointer;
+}
+.menubar .item:hover { background: rgba(0,0,0,0.07); }
+[data-skin="mac"] .menubar .item:hover { background: rgba(255,255,255,0.18); }
+.menubar .spacer { flex: 1; }
+.menubar .right { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.04em; }
+.menubar .right .pill {
+  padding: 3px 9px;
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--radius-btn);
+  background: rgba(255,255,255,0.18);
+}
+.menubar .sun { font-size: 13px; }
+.menubar .mac-only { display: none; }
+.menubar .mac-icon { display: inline-flex; align-items: center; cursor: pointer; padding: 2px; border-radius: 4px; }
+.menubar .mac-icon svg { width: 16px; height: 14px; }
+.menubar .mac-icon:hover { background: rgba(255,255,255,0.18); }
+[data-skin="mac"] .menubar .win-only { display: none; }
+[data-skin="mac"] .menubar .mac-only { display: inline-flex; }
+[data-skin="mac"] .menubar #clock { font-family: -apple-system, BlinkMacSystemFont, var(--font-ui); font-size: 13px; font-weight: 400; letter-spacing: 0; }
+
+/* Dropdown */
+.menu-dd {
+  position: absolute;
+  top: 28px;
+  background: var(--win-bg);
+  border: 1px solid var(--win-border);
+  box-shadow: var(--win-shadow);
+  min-width: 200px;
+  padding: 6px;
+  font-size: 12.5px;
+  border-radius: var(--radius-card);
+  display: none;
+  z-index: 1100;
+}
+.menu-dd.open { display: block; animation: dd-in .14s ease-out; }
+.menu-dd .row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  color: var(--text);
+}
+.menu-dd .row:hover { background: var(--accent); color: var(--paper); }
+[data-skin="mac"] .menu-dd .row:hover { background: var(--accent); color: #fff; }
+.menu-dd .row .kbd { font-family: var(--font-mono); font-size: 10.5px; opacity: .65; }
+.menu-dd .sep { height: 1px; background: var(--win-border); margin: 4px 6px; }
+
+@keyframes dd-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* =================================================================
+   DESKTOP
+   ================================================================= */
+.desktop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+}
+[data-skin="mac"] .desktop { top: 26px; }
+.desktop-grid {
+  position: absolute;
+  top: 24px; left: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, 92px);
+  gap: 6px 4px;
+  z-index: 2;
+}
+.desk-icon {
+  width: 92px; padding: 10px 6px 8px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  border-radius: var(--radius-card);
+  cursor: pointer;
+  transition: background .15s ease, transform .25s cubic-bezier(.2,.7,.2,1);
+  outline: 1px solid transparent;
+}
+.desk-icon:hover { background: rgba(255,255,255,0.15); }
+.desk-icon.selected { background: rgba(255,255,255,0.22); outline: 1px solid rgba(255,255,255,0.45); }
+[data-skin="mac"] .desk-icon { padding: 8px 4px; gap: 4px; }
+[data-skin="mac"] .desk-icon:hover { background: transparent; }
+[data-skin="mac"] .desk-icon:hover .glyph { transform: scale(1.08); }
+[data-skin="mac"] .desk-icon .glyph { transition: transform .25s cubic-bezier(.2,.8,.2,1); }
+[data-skin="mac"] .desk-icon.selected { background: rgba(0,0,0,0.15); outline: 1px solid rgba(255,255,255,0.4); }
+.desk-icon .glyph {
+  width: 48px; height: 48px;
+  display: grid; place-items: center;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.18));
+}
+[data-skin="mac"] .desk-icon .glyph { width: 56px; height: 56px; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.35)); }
+[data-skin="mac"] .desk-icon .lbl { font-family: -apple-system, BlinkMacSystemFont, var(--font-ui); font-size: 12px; font-weight: 500; }
+.desk-icon .lbl {
+  font-size: 11.5px;
+  text-align: center;
+  line-height: 1.2;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.55);
+  word-break: break-word;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+[data-bg="cream"] .desk-icon .lbl,
+[data-bg="paper"] .desk-icon .lbl { color: var(--ink); text-shadow: none; }
+.desk-icon.selected .lbl { background: rgba(20,12,4,0.55); }
+
+/* SVG glyph styles */
+.glyph svg { width: 100%; height: 100%; }
+.glyph .folder-body { fill: var(--accent); }
+.glyph .folder-tab  { fill: var(--accent-deep); }
+.glyph .folder-shade { fill: rgba(255,255,255,0.15); }
+[data-skin="mac"] .glyph .folder-body { fill: #6CA9F2; }
+[data-skin="mac"] .glyph .folder-tab { fill: #2F76C7; }
+.glyph .doc-body { fill: var(--cream); stroke: var(--ink); stroke-width: 1; }
+.glyph .doc-fold { fill: var(--cream-2); }
+.glyph .doc-line { stroke: var(--ink-soft); stroke-width: 1; }
+[data-skin="mac"] .glyph .doc-body { fill: #fff; stroke: #555; }
+[data-skin="mac"] .glyph .doc-fold { fill: #E5E5E5; }
+[data-skin="mac"] .glyph .doc-line { stroke: #999; }
+
+/* =================================================================
+   WINDOWS
+   ================================================================= */
+.windows-layer {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+.windows-layer .win { pointer-events: auto; }
+.win {
+  position: absolute;
+  background: var(--win-bg);
+  backdrop-filter: blur(18px) saturate(1.15);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  border: 1px solid var(--win-border);
+  border-radius: var(--radius-win);
+  box-shadow: var(--win-shadow);
+  display: flex; flex-direction: column;
+  min-width: 320px; min-height: 200px;
+  overflow: hidden;
+  animation: win-open .26s cubic-bezier(.2,.8,.2,1);
+}
+[data-skin="mac"] .win {
+  background: rgba(245,243,238,0.55);
+  backdrop-filter: blur(40px) saturate(1.6);
+  -webkit-backdrop-filter: blur(40px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,0.45);
+  box-shadow:
+    0 24px 60px -16px rgba(0,0,0,0.5),
+    0 1px 0 rgba(255,255,255,0.6) inset,
+    0 0 0 0.5px rgba(0,0,0,0.06);
+}
+[data-skin="mac"] .win-titlebar {
+  background: rgba(255,255,255,0.22);
+  border-bottom: 1px solid rgba(255,255,255,0.18);
+  height: 38px;
+}
+[data-skin="mac"] .win-title {
+  position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, var(--font-ui);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: -0.005em;
+  pointer-events: none;
+  color: var(--text);
+}
+[data-skin="mac"] .win-title .tt-icon { display: none; }
+[data-skin="mac"] .win-title em { font-style: normal; font-weight: 600; }
+[data-skin="mac"] .win-titlebar { position: relative; padding-left: 14px; padding-right: 14px; }
+[data-skin="mac"] .win-actions { position: relative; z-index: 2; }
+[data-skin="mac"] .win-btn::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.18);
+}
+.win.minimized { display: none; }
+.win.maximized {
+  top: 0 !important; left: 0 !important;
+  width: 100% !important; height: 100% !important;
+  border-radius: 0;
+}
+@keyframes win-open {
+  from { opacity: 0; transform: scale(.96) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes win-close {
+  to { opacity: 0; transform: scale(.96) translateY(6px); }
+}
+
+.win-titlebar {
+  height: 34px;
+  display: flex; align-items: center;
+  padding: 0 10px;
+  gap: 10px;
+  background: var(--win-bg-2);
+  border-bottom: 1px solid var(--win-border);
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+}
+.win-titlebar.dragging { cursor: grabbing; }
+.win-title {
+  flex: 1;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  color: var(--text-soft);
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 500;
+}
+.win-title .tt-icon { width: 14px; height: 14px; display: inline-block; }
+.win-title em { font-family: var(--font-display); font-style: italic; font-weight: 400; color: var(--text); }
+.win-actions { display: inline-flex; align-items: center; gap: 8px; }
+
+/* Windows-style square buttons (default) */
+.win-btn {
+  width: 28px; height: 22px;
+  display: grid; place-items: center;
+  border-radius: 2px;
+  color: var(--text-soft);
+  transition: background .15s, color .15s;
+}
+.win-btn:hover { background: rgba(26,17,8,0.12); }
+.win-btn.close:hover { background: #C2410C; color: #fff; }
+.win-btn svg { width: 11px; height: 11px; }
+
+/* Mac-style traffic lights — re-order actions to left + restyle */
+[data-skin="mac"] .win-titlebar { padding-left: 14px; }
+[data-skin="mac"] .win-actions { order: -1; gap: 8px; margin-right: 8px; }
+[data-skin="mac"] .win-btn {
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: #d5d2cc;
+  position: relative;
+  display: grid; place-items: center;
+}
+[data-skin="mac"] .win-btn svg,
+[data-skin="mac"] .win-btn iconify-icon {
+  width: 7px; height: 7px;
+  font-size: 8px;
+  opacity: 0;
+  transition: opacity .12s;
+  color: rgba(0,0,0,0.5);
+}
+[data-skin="mac"] .win-actions:hover .win-btn svg,
+[data-skin="mac"] .win-actions:hover .win-btn iconify-icon { opacity: 1; }
+[data-skin="mac"] .win-btn.close { background: #FF5F57; }
+[data-skin="mac"] .win-btn.min   { background: #FEBC2E; }
+[data-skin="mac"] .win-btn.max   { background: #28C840; }
+[data-skin="mac"] .win-btn.close:hover { background: #E0443E; }
+[data-skin="mac"] .win-btn.min:hover   { background: #DEA123; }
+[data-skin="mac"] .win-btn.max:hover   { background: #1FAA36; }
+
+.win-content {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+/* Scrollbar polish */
+.win-content::-webkit-scrollbar { width: 10px; height: 10px; }
+.win-content::-webkit-scrollbar-track { background: transparent; }
+.win-content::-webkit-scrollbar-thumb { background: rgba(26,17,8,0.18); border-radius: 6px; border: 2px solid transparent; background-clip: padding-box; }
+.win-content::-webkit-scrollbar-thumb:hover { background: rgba(26,17,8,0.32); background-clip: padding-box; border: 2px solid transparent; }
+
+/* Resize handle */
+.win-resize {
+  position: absolute; right: 0; bottom: 0;
+  width: 14px; height: 14px;
+  cursor: nwse-resize;
+  background: linear-gradient(135deg, transparent 50%, rgba(26,17,8,0.25) 50%);
+}
+
+/* =================================================================
+   WINDOW CONTENT — typography & blocks
+   ================================================================= */
+.pad { padding: 28px 32px; }
+.pad-lg { padding: 36px 44px; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+h1.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 4.4vw, 3.6rem);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  font-variation-settings: 'opsz' 144, 'SOFT' 30;
+}
+h1.display em { font-style: italic; font-variation-settings: 'opsz' 144, 'SOFT' 100; font-weight: 400; }
+h2.heading {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+}
+p.body {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--text-soft);
+  max-width: 56ch;
+}
+.divider-rule {
+  height: 1px;
+  background: var(--win-border);
+  margin: 18px 0;
+}
+.long-rule {
+  height: 1px;
+  background: linear-gradient(to right, var(--text) 0, var(--text) 18%, transparent 18%);
+  margin-bottom: 18px;
+}
+
+/* About card layout */
+.about-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 24px; margin-bottom: 22px;
+}
+.about-head .rule { flex: 1; height: 1px; background: var(--text); margin-bottom: 18px; }
+.about-focus {
+  margin-top: 22px;
+  border: 1px solid var(--win-border);
+  border-radius: var(--radius-card);
+  background: rgba(255,255,255,0.35);
+}
+.about-focus .head {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--win-border);
+  background: var(--win-bg-2);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+.about-focus ul { list-style: none; padding: 12px 14px; display: grid; gap: 8px; }
+.about-focus li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.5; }
+.about-focus li::before {
+  content: ''; width: 6px; height: 6px; background: var(--accent);
+  border-radius: 50%; margin-top: 7px; flex-shrink: 0;
+}
+.about-focus li a { border-bottom: 1px solid currentColor; }
+
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  background: var(--accent);
+  color: var(--paper);
+  border-radius: var(--radius-btn);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: transform .25s, background .25s;
+}
+.cta-btn:hover { background: var(--accent-deep); transform: translateY(-1px); }
+.cta-btn .ar { transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.cta-btn:hover .ar { transform: translate(2px, -2px); }
+
+/* File listing (Finder/Explorer style) */
+.file-list {
+  font-family: var(--font-ui);
+  font-size: 13px;
+}
+.file-list .row {
+  display: grid;
+  grid-template-columns: 28px 1fr 90px 110px 70px;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--win-border);
+  cursor: pointer;
+  gap: 10px;
+}
+.file-list .row.head {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  background: var(--win-bg-2);
+  cursor: default;
+}
+.file-list .row:hover:not(.head) { background: rgba(232,78,27,0.12); }
+[data-skin="mac"] .file-list .row:hover:not(.head) { background: rgba(108,169,242,0.18); }
+.file-list .row .ic { width: 20px; height: 20px; display: grid; place-items: center; }
+
+/* Markdown / text viewer */
+.text-view {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text);
+  padding: 28px 36px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.text-view h1, .text-view h2, .text-view h3 {
+  font-family: var(--font-display); font-weight: 600; line-height: 1.1;
+  letter-spacing: -0.02em; margin: 18px 0 8px;
+}
+.text-view h1 { font-size: 1.9rem; }
+.text-view h2 { font-size: 1.35rem; color: var(--accent-deep); }
+.text-view h3 { font-size: 1.05rem; }
+.text-view a { color: var(--accent); border-bottom: 1px solid currentColor; }
+.text-view .hr { height: 1px; background: var(--text); width: 18%; margin: 22px 0; opacity: .8; }
+.text-view .meta {
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--text-mute); margin-bottom: 24px;
+}
+
+/* Projects grid */
+.projects-wrap { padding: 24px 28px 32px; }
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+.proj-card {
+  border: 1px solid var(--win-border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(255,255,255,0.4);
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s;
+}
+.proj-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px -10px rgba(26,17,8,0.35); }
+.proj-card .thumb {
+  aspect-ratio: 4/3;
+  position: relative;
+  overflow: hidden;
+}
+.proj-card .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.proj-card:hover .thumb img { transform: scale(1.04); }
+.proj-card .thumb .badge {
+  position: absolute; top: 10px; left: 10px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #fff;
+  background: rgba(20,12,4,0.55); padding: 3px 7px; border-radius: 2px;
+  backdrop-filter: blur(8px);
+}
+.proj-card .meta {
+  padding: 12px 14px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.proj-card .name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; }
+.proj-card .tag { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute); }
+.proj-card .tag em { font-family: var(--font-display); font-style: italic; text-transform: none; letter-spacing: 0; color: var(--text-soft); }
+
+/* Project detail — split view */
+.proj-detail-v2 {
+  display: grid;
+  grid-template-columns: minmax(0, 44%) 1fr;
+  height: 100%;
+  min-height: 0;
+}
+.pd-left {
+  padding: 28px 28px 36px;
+  overflow-y: auto;
+  border-right: 1px solid var(--win-border);
+  background: var(--win-bg);
+  min-width: 0;
+}
+.pd-right {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  background: var(--win-bg-2);
+  min-width: 0;
+}
+.pd-visuals-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--win-border);
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--text-mute);
+}
+.pd-slides {
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.pd-slide {
+  flex-shrink: 0;
+  border: 1px solid var(--win-border);
+  border-radius: var(--radius-card);
+  background: var(--win-bg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, border-color .25s;
+}
+.pd-slide:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -10px rgba(0,0,0,0.35);
+  border-color: var(--accent);
+}
+.pd-slide:hover .pd-slide-cap { color: var(--accent); }
+.pd-slide-frame {
+  aspect-ratio: 16 / 10;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--win-bg-2);
+}
+.pd-slide-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.pd-slide-cap {
+  padding: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text-mute);
+  border-top: 1px solid var(--win-border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.pd-slide-fallback {
+  display: grid; place-items: center;
+  width: 100%; height: 100%;
+  font-family: var(--font-display); font-size: 2rem; letter-spacing: -0.02em;
+}
+
+/* Left column blocks */
+.pd-title {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  margin-top: 6px;
+  font-variation-settings: 'opsz' 144;
+}
+.pd-meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-top: 10px;
+}
+.pd-visit {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 18px;
+  padding: 8px 14px;
+  border: 1px solid var(--text);
+  border-radius: var(--radius-btn);
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text);
+  cursor: pointer;
+  transition: background .25s, color .25s, transform .25s;
+}
+.pd-visit:hover { background: var(--text); color: var(--win-bg); transform: translateY(-1px); }
+.pd-visit iconify-icon { font-size: 13px; }
+
+.pd-section { margin-top: 24px; }
+.pd-section .h {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--text-mute);
+  margin-bottom: 10px;
+}
+.pd-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pd-chip {
+  padding: 6px 12px;
+  border: 1px solid var(--win-border);
+  border-radius: var(--radius-btn);
+  font-size: 12.5px;
+  background: rgba(255,255,255,0.4);
+  color: var(--text);
+}
+.pd-chip-upper {
+  padding: 6px 12px;
+  border: 1px solid var(--text-soft);
+  border-radius: var(--radius-btn);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--text-soft);
+}
+.pd-refs { display: grid; gap: 6px; }
+.pd-ref {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px;
+  border: 1px solid var(--win-border);
+  border-radius: var(--radius-card);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.4);
+  color: var(--text);
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.pd-ref:hover { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+.pd-ref iconify-icon { font-size: 14px; }
+
+.pd-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--text);
+  border-bottom: 1px solid var(--win-border);
+  margin-top: 26px;
+}
+.pd-metric {
+  padding: 10px 4px 12px;
+  border-right: 1px solid var(--win-border);
+  border-bottom: 1px solid var(--win-border);
+}
+.pd-metric:nth-child(2n) { border-right: 0; }
+.pd-metric:nth-last-child(-n+2) { border-bottom: 0; }
+.pd-metric .k {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.pd-metric .v {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-top: 2px;
+  color: var(--text);
+}
+
+.pd-prose { margin-top: 30px; }
+.pd-prose .block + .block { margin-top: 22px; }
+.pd-prose h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.55rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  font-variation-settings: 'opsz' 144;
+}
+.pd-prose p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-soft);
+  max-width: 56ch;
+}
+.pd-cta {
+  margin-top: 32px;
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+
+/* Stack on narrow windows */
+@media (max-width: 720px) {
+  .proj-detail-v2 { grid-template-columns: 1fr; }
+  .pd-left { border-right: 0; border-bottom: 1px solid var(--win-border); }
+  .pd-right { grid-template-rows: auto auto; }
+  .pd-slides { max-height: none; }
+}
+
+.proj-detail { padding: 28px 36px; }
+.proj-detail .hero {
+  border: 1px solid var(--win-border); border-radius: var(--radius-card);
+  overflow: hidden; margin: 16px 0 22px;
+}
+.proj-detail .hero img { width: 100%; display: block; }
+.proj-detail h2 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em; font-size: 2rem; }
+.proj-detail p { font-size: 14.5px; line-height: 1.65; color: var(--text-soft); max-width: 62ch; margin-top: 12px; }
+.proj-detail .specs {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px; margin: 22px 0;
+}
+.proj-detail .spec { border-top: 1px solid var(--text); padding-top: 8px; }
+.proj-detail .spec .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-mute); }
+.proj-detail .spec .v { font-family: var(--font-display); font-size: 1.1rem; }
+
+/* Experience */
+.exp-wrap { padding: 32px 36px; }
+.exp-wrap h1.display { margin-bottom: 6px; }
+.exp-wrap .lede {
+  font-size: 14px;
+  color: var(--text-soft);
+  margin-bottom: 22px;
+  max-width: 58ch;
+}
+.exp-section {
+  border: 1px solid var(--win-border);
+  border-radius: var(--radius-card);
+  background: rgba(255,255,255,0.35);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.exp-section > .head {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--win-border);
+  background: var(--win-bg-2);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+.exp-section > .body { padding: 14px 18px; }
+.exp-focus { list-style: none; display: grid; gap: 8px; }
+.exp-focus li {
+  display: flex; gap: 10px; align-items: flex-start;
+  font-size: 14px; line-height: 1.55; color: var(--text);
+}
+.exp-focus li::before {
+  content: ''; width: 7px; height: 7px; background: var(--accent);
+  border-radius: 50%; margin-top: 7px; flex-shrink: 0;
+}
+
+.timeline {
+  position: relative;
+  padding: 8px 6px 8px 22px;
+}
+.timeline::before {
+  content: ''; position: absolute;
+  left: 9px; top: 14px; bottom: 14px; width: 1px;
+  background: var(--win-border);
+}
+.exp-card {
+  position: relative;
+  border: 1px solid var(--win-border);
+  border-radius: var(--radius-card);
+  padding: 12px 14px 12px 16px;
+  background: rgba(255,255,255,0.5);
+  margin-bottom: 12px;
+}
+.exp-card:last-child { margin-bottom: 0; }
+.exp-card::before {
+  content: ''; position: absolute;
+  left: -17px; top: 16px;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--win-bg);
+}
+.exp-card .row1 {
+  display: flex; align-items: baseline; gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.exp-card .role {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.exp-card .where { font-size: 13px; color: var(--text-soft); }
+.exp-card .where em { font-style: normal; }
+.exp-card .badge-current {
+  display: inline-block;
+  padding: 2px 8px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: var(--radius-btn);
+  background: var(--accent);
+  color: var(--paper);
+}
+.exp-card .row2 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-mute);
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+.exp-card .loc {
+  font-size: 12px;
+  color: var(--text-soft);
+  margin-bottom: 6px;
+}
+.exp-card .desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text-soft);
+  max-width: 64ch;
+}
+.exp-card .highlights {
+  list-style: none;
+  margin-top: 10px;
+  display: grid;
+  gap: 6px;
+}
+.exp-card .highlights li {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-soft);
+  max-width: 66ch;
+}
+.exp-card .highlights li::before {
+  content: '';
+  width: 4px; height: 4px;
+  margin-top: 7px;
+  flex-shrink: 0;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+/* Education rows */
+.edu-list { display: grid; }
+.edu-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--win-border);
+}
+.edu-row:first-child { padding-top: 2px; }
+.edu-row:last-child { border-bottom: 0; padding-bottom: 2px; }
+.edu-row .degree {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.edu-row .school {
+  font-size: 13px;
+  color: var(--text-soft);
+  margin-top: 2px;
+}
+.edu-row .edu-years {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--text-mute);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Contact */
+.contact-grid {
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px;
+  padding: 32px 36px;
+}
+@media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
+.contact-grid h1.display { margin-bottom: 14px; }
+.social-list { display: grid; gap: 0; }
+.social-list a {
+  display: grid; grid-template-columns: 24px 1fr auto; align-items: center; gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--win-border);
+  font-family: var(--font-display); font-size: 1.4rem; font-weight: 500; letter-spacing: -0.01em;
+  transition: padding .35s cubic-bezier(.2,.7,.2,1), color .25s;
+}
+.social-list a:hover { padding-left: 6px; color: var(--accent); }
+.social-list a .ic svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+.social-list a .arrow { font-family: var(--font-mono); font-size: 13px; transition: transform .35s; }
+.social-list a:hover .arrow { transform: translate(4px, -4px); }
+.contact-meta {
+  border-left: 1px solid var(--text);
+  padding-left: 22px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.9;
+}
+.contact-meta .k { color: var(--text-mute); letter-spacing: 0.14em; text-transform: uppercase; font-size: 10px; }
+.contact-meta .v { color: var(--text); margin-bottom: 10px; }
+
+/* =================================================================
+   TERMINAL
+   ================================================================= */
+.term {
+  height: 100%;
+  display: flex; flex-direction: column;
+  background: #14110A;
+  color: #E8DFC8;
+  font-family: var(--font-mono);
+}
+[data-skin="mac"] .term { background: rgba(20, 16, 30, 0.82); color: #EDEAFF; }
+.term-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  font-size: 13px;
+  line-height: 1.55;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+.term-body::-webkit-scrollbar { width: 8px; }
+.term-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+.term .line { white-space: pre-wrap; word-break: break-word; }
+.term .line.out { color: #E8DFC8; }
+[data-skin="mac"] .term .line.out { color: #EDEAFF; }
+.term .line.cmd .prompt { color: #E84E1B; margin-right: 6px; }
+[data-skin="mac"] .term .line.cmd .prompt { color: #C24A8A; }
+.term .line.err { color: #F08C5C; }
+.term .ascii { color: #E84E1B; }
+[data-skin="mac"] .term .ascii { color: #E2A8D0; }
+.term .accent { color: #F0C775; }
+.term-input-row {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 20px 14px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.term-input-row .prompt { color: #E84E1B; font-weight: 500; }
+[data-skin="mac"] .term-input-row .prompt { color: #C24A8A; }
+.term-input {
+  flex: 1;
+  background: transparent;
+  border: 0; outline: none;
+  color: inherit;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  caret-color: currentColor;
+}
+.term-input::selection { background: #E84E1B; color: #fff; }
+.term .blink {
+  display: inline-block; width: 7px; height: 13px; background: currentColor;
+  animation: tblink 1.1s steps(1) infinite; vertical-align: -2px; margin-left: 2px;
+}
+@keyframes tblink { 50% { opacity: 0; } }
+
+/* =================================================================
+   SETTINGS
+   ================================================================= */
+.settings { padding: 0; height: 100%; display: grid; grid-template-columns: 200px 1fr; }
+.settings .nav {
+  border-right: 1px solid var(--win-border);
+  background: var(--win-bg-2);
+  padding: 14px 8px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.settings .nav button {
+  text-align: left;
+  padding: 9px 12px;
+  border-radius: var(--radius-btn);
+  font-size: 13px;
+  color: var(--text);
+  display: flex; align-items: center; gap: 10px;
+}
+.settings .nav button:hover { background: rgba(26,17,8,0.06); }
+.settings .nav button.active { background: var(--accent); color: var(--paper); }
+.settings .body { padding: 24px 28px; overflow-y: auto; }
+.settings .body h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; letter-spacing: -0.02em; margin-bottom: 4px; }
+.settings .body p.lede { font-size: 13.5px; color: var(--text-soft); margin-bottom: 22px; max-width: 50ch; }
+.settings .group { border-top: 1px solid var(--win-border); padding: 18px 0; }
+.settings .group h3 { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-mute); font-family: var(--font-mono); margin-bottom: 12px; }
+
+.skin-toggle {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.skin-card {
+  border: 1px solid var(--win-border);
+  border-radius: var(--radius-card);
+  padding: 14px;
+  cursor: pointer;
+  transition: transform .25s, border-color .25s;
+  background: rgba(255,255,255,0.35);
+}
+.skin-card:hover { transform: translateY(-2px); }
+.skin-card.active { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
+.skin-card .preview { aspect-ratio: 16/10; border-radius: 4px; margin-bottom: 10px; overflow: hidden; position: relative; }
+.skin-card .preview.win { background: linear-gradient(135deg, #E84E1B, #C13F12); }
+.skin-card .preview.win::before {
+  content: ''; position: absolute; right: 14%; bottom: 16%; left: 16%; top: 30%;
+  background: #F4EAD5; border-radius: 2px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.skin-card .preview.win::after {
+  content: ''; position: absolute; left: 30%; right: 30%; bottom: 6%; height: 8%;
+  background: rgba(255,255,255,0.4); border-radius: 4px;
+}
+.skin-card .preview.mac {
+  background:
+    radial-gradient(ellipse 60% 50% at 18% 22%, #FFB07A 0%, transparent 55%),
+    radial-gradient(ellipse 55% 60% at 85% 18%, #D283C9 0%, transparent 55%),
+    radial-gradient(ellipse 75% 50% at 50% 95%, #FFD071 0%, transparent 60%),
+    linear-gradient(135deg, #F2854A, #B96CB8 50%, #F6B45A);
+}
+.skin-card .preview.mac::before {
+  content: ''; position: absolute; left: 14%; right: 16%; top: 22%; bottom: 28%;
+  background: rgba(255,255,255,0.7); border-radius: 8px; backdrop-filter: blur(10px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+}
+.skin-card .preview.mac::after {
+  content: ''; position: absolute; left: 22%; right: 22%; bottom: 4%; height: 11%;
+  background: rgba(255,255,255,0.42); border-radius: 14px; backdrop-filter: blur(8px);
+}
+.skin-card .name { font-family: var(--font-display); font-size: 1rem; font-weight: 600; }
+.skin-card .meta { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute); }
+
+.bg-grid-pick {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+}
+.bg-pick {
+  aspect-ratio: 16/10;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  border: 2px solid transparent;
+  transition: transform .25s, border-color .25s;
+  overflow: hidden;
+}
+.bg-pick:hover { transform: translateY(-2px); }
+.bg-pick.active { border-color: var(--accent); }
+.bg-pick .lbl {
+  position: absolute; bottom: 6px; left: 8px; right: 8px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+}
+.bg-pick.bg-orange { background: var(--bg-orange); }
+.bg-pick.bg-cream  { background: var(--cream); }
+.bg-pick.bg-cream .lbl { color: var(--ink); text-shadow: none; }
+.bg-pick.bg-ink    { background: #16110A; }
+.bg-pick.bg-moss   { background: radial-gradient(120% 90% at 20% 10%, #3D4D24 0%, #1F2912 70%); }
+.bg-pick.bg-bliss  { background: linear-gradient(180deg, #6FA9D9 0%, #B6D6E8 55%, #6E8C39 56%, #3E5A1F 100%); }
+.bg-pick.bg-paper  { background: #EDE7D5; }
+.bg-pick.bg-paper .lbl { color: var(--ink); text-shadow: none; }
+.bg-pick.bg-grid {
+  background: var(--bg-orange);
+  background-image:
+    linear-gradient(rgba(26,17,8,0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,17,8,0.18) 1px, transparent 1px);
+  background-size: 12px 12px, 12px 12px;
+}
+.bg-pick.bg-photo {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* =================================================================
+   DOCK / TASKBAR
+   ================================================================= */
+.dock-wrap {
+  position: fixed;
+  left: 50%; bottom: 14px;
+  transform: translateX(-50%);
+  z-index: 800;
+}
+/* Win 11: taskbar spans the full bottom edge */
+[data-skin="win"] .dock-wrap {
+  left: 0; right: 0; bottom: 0;
+  transform: none;
+  width: 100%;
+}
+.dock {
+  display: inline-flex; align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  background: var(--chrome-bg);
+  backdrop-filter: blur(20px) saturate(1.25);
+  -webkit-backdrop-filter: blur(20px) saturate(1.25);
+  border: 1px solid var(--chrome-border);
+  border-radius: 10px;
+}
+/* Win 11 taskbar */
+[data-skin="win"] .dock {
+  display: flex;
+  width: 100%;
+  height: 48px;
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid rgba(26,17,8,0.18);
+  padding: 0 12px;
+  gap: 4px;
+  justify-content: center;
+  position: relative;
+  background: rgba(244,234,213,0.88);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.4) inset;
+}
+[data-skin="win"][data-bg="ink"] .dock {
+  background: rgba(20,15,8,0.88);
+  border-top: 1px solid rgba(244,234,213,0.16);
+  color: #F4EAD5;
+}
+[data-skin="win"][data-bg="moss"] .dock {
+  background: rgba(28,40,18,0.88);
+  color: #E8DFC8;
+  border-top: 1px solid rgba(244,234,213,0.14);
+}
+
+/* ----- Win 11 dock icons ----- */
+[data-skin="win"] .dock-icon {
+  width: 40px; height: 40px;
+  border-radius: 6px;
+  color: var(--ink);
+  background: transparent;
+}
+[data-skin="win"] .dock-icon:hover { background: rgba(26,17,8,0.08); transform: none; }
+[data-skin="win"][data-bg="ink"] .dock-icon { color: #F4EAD5; }
+[data-skin="win"][data-bg="ink"] .dock-icon:hover { background: rgba(244,234,213,0.10); }
+[data-skin="win"][data-bg="moss"] .dock-icon { color: #E8DFC8; }
+[data-skin="win"][data-bg="moss"] .dock-icon:hover { background: rgba(244,234,213,0.10); }
+[data-skin="win"] .dock-icon svg { width: 20px; height: 20px; }
+[data-skin="win"] .dock-icon .dot {
+  bottom: 4px;
+  width: 14px; height: 2.5px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0;
+}
+[data-skin="win"] .dock-icon.is-open .dot { opacity: 1; }
+
+/* Win Start button */
+.dock-start {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .15s;
+}
+.dock-start { color: var(--ink); }
+.dock-start:hover { background: rgba(26,17,8,0.08); }
+.dock-start svg { width: 18px; height: 18px; }
+[data-skin="win"][data-bg="ink"] .dock-start  { color: #F4EAD5; }
+[data-skin="win"][data-bg="moss"] .dock-start { color: #E8DFC8; }
+[data-skin="win"][data-bg="ink"] .dock-start:hover,
+[data-skin="win"][data-bg="moss"] .dock-start:hover { background: rgba(244,234,213,0.10); }
+
+/* Win 11 search pill */
+[data-skin="win"] .dock-search {
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(26,17,8,0.14);
+  border-radius: 4px;
+  height: 32px;
+  width: 220px;
+  margin: 0 6px 0 4px;
+  transition: border-color .15s;
+}
+[data-skin="win"] .dock-search:focus-within { border-color: var(--accent); }
+[data-skin="win"][data-bg="ink"] .dock-search { background: rgba(244,234,213,0.10); border-color: rgba(244,234,213,0.18); color: #F4EAD5; }
+[data-skin="win"][data-bg="ink"] .dock-search input { color: #F4EAD5; }
+[data-skin="win"][data-bg="ink"] .dock-search input::placeholder { color: rgba(244,234,213,0.55); }
+[data-skin="win"][data-bg="moss"] .dock-search { background: rgba(244,234,213,0.10); border-color: rgba(244,234,213,0.18); color: #E8DFC8; }
+[data-skin="win"][data-bg="moss"] .dock-search input { color: #E8DFC8; }
+[data-skin="win"] .dock-search-wrap .dock-sep { display: none; }
+
+/* System tray on the right */
+.dock-tray {
+  position: absolute;
+  right: 8px; top: 0; bottom: 0;
+  align-items: center;
+  gap: 4px;
+  padding-right: 4px;
+}
+.tray-icon {
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+  color: inherit;
+  transition: background .15s;
+}
+.tray-icon:hover { background: rgba(26,17,8,0.08); }
+[data-skin="win"][data-bg="ink"] .tray-icon:hover,
+[data-skin="win"][data-bg="moss"] .tray-icon:hover { background: rgba(244,234,213,0.10); }
+.tray-icon svg { width: 14px; height: 14px; }
+.tray-clock {
+  font-size: 11px;
+  text-align: right;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: default;
+}
+.tray-clock:hover { background: rgba(26,17,8,0.06); }
+[data-skin="win"][data-bg="ink"] .tray-clock:hover,
+[data-skin="win"][data-bg="moss"] .tray-clock:hover { background: rgba(244,234,213,0.08); }
+.tray-clock .l1 { display: block; }
+.tray-clock .l2 { display: block; opacity: .75; font-size: 10.5px; }
+
+/* =================================================================
+   START MENU (Win 11)
+   ================================================================= */
+#start-menu {
+  position: fixed; inset: 0;
+  z-index: 9300;
+  display: grid; place-items: end center;
+  padding-bottom: 60px;
+  pointer-events: none;
+  animation: fade-in .14s ease;
+}
+#start-menu .start-card {
+  pointer-events: auto;
+  width: min(640px, 92vw);
+  max-height: 78vh;
+  background: rgba(244,234,213,0.94);
+  border: 1px solid rgba(26,17,8,0.18);
+  border-radius: 10px;
+  box-shadow: 0 24px 70px -10px rgba(0,0,0,0.45);
+  backdrop-filter: blur(30px) saturate(1.4);
+  -webkit-backdrop-filter: blur(30px) saturate(1.4);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  color: var(--ink);
+  animation: start-in .22s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes start-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+[data-bg="ink"] #start-menu .start-card { background: rgba(28,21,12,0.96); color: #F4EAD5; border-color: rgba(244,234,213,0.16); }
+[data-bg="moss"] #start-menu .start-card { background: rgba(28,40,18,0.96); color: #E8DFC8; border-color: rgba(244,234,213,0.14); }
+.start-search-row {
+  display: flex; align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(26,17,8,0.10);
+}
+.start-search-row svg { width: 17px; height: 17px; opacity: .55; flex-shrink: 0; }
+.start-search-row input {
+  flex: 1; background: transparent; border: 0; outline: none;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: inherit;
+}
+.start-search-row input::placeholder { color: rgba(26,17,8,0.45); }
+[data-bg="ink"] .start-search-row input::placeholder,
+[data-bg="moss"] .start-search-row input::placeholder { color: rgba(244,234,213,0.45); }
+.start-body { flex: 1; overflow-y: auto; padding: 18px 22px; }
+.start-body::-webkit-scrollbar { width: 8px; }
+.start-body::-webkit-scrollbar-thumb { background: rgba(26,17,8,0.18); border-radius: 4px; }
+.start-head {
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.start-head .all {
+  font-size: 11.5px; font-weight: 500; opacity: .7; cursor: pointer;
+  padding: 4px 10px;
+  border-radius: var(--radius-btn);
+  background: rgba(26,17,8,0.06);
+}
+.start-head .all:hover { opacity: 1; background: rgba(26,17,8,0.1); }
+.start-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  margin-bottom: 22px;
+}
+.start-tile {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px;
+  padding: 12px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .15s, transform .2s cubic-bezier(.2,.8,.2,1);
+}
+.start-tile:hover { background: rgba(26,17,8,0.08); transform: translateY(-2px); }
+[data-bg="ink"] .start-tile:hover, [data-bg="moss"] .start-tile:hover { background: rgba(244,234,213,0.1); }
+.start-tile .ico {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: 8px;
+  color: #fff;
+}
+.start-tile .ico svg { width: 20px; height: 20px; }
+.start-tile .lbl {
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.start-reco {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+.start-reco .row {
+  display: grid; grid-template-columns: 30px 1fr;
+  gap: 10px; align-items: center;
+  padding: 8px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background .12s;
+}
+.start-reco .row:hover { background: rgba(26,17,8,0.08); }
+[data-bg="ink"] .start-reco .row:hover, [data-bg="moss"] .start-reco .row:hover { background: rgba(244,234,213,0.1); }
+.start-reco .row .ic {
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  background: rgba(26,17,8,0.06);
+  border-radius: 4px;
+}
+.start-reco .row .ic svg { width: 15px; height: 15px; }
+.start-reco .row .meta .name { font-size: 12.5px; font-weight: 500; line-height: 1.1; }
+.start-reco .row .meta .sub { font-size: 10.5px; opacity: .6; }
+
+.start-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(26,17,8,0.06);
+  border-top: 1px solid rgba(26,17,8,0.10);
+}
+[data-bg="ink"] .start-footer, [data-bg="moss"] .start-footer { background: rgba(244,234,213,0.05); }
+.start-user { display: inline-flex; align-items: center; gap: 10px; }
+.start-user .avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--paper);
+}
+.start-user .name { font-size: 13px; font-weight: 500; }
+.power-btn {
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .12s;
+}
+.power-btn:hover { background: rgba(26,17,8,0.08); }
+[data-bg="ink"] .power-btn:hover, [data-bg="moss"] .power-btn:hover { background: rgba(244,234,213,0.1); }
+.power-btn svg { width: 16px; height: 16px; }
+
+[data-skin="mac"] .dock {
+  border-radius: 22px;
+  padding: 6px 8px;
+  gap: 4px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.28);
+  box-shadow:
+    0 12px 30px -10px rgba(0,0,0,0.35),
+    0 1px 0 rgba(255,255,255,0.5) inset;
+  backdrop-filter: blur(30px) saturate(1.8);
+  -webkit-backdrop-filter: blur(30px) saturate(1.8);
+}
+
+.dock-icon {
+  position: relative;
+  width: 38px; height: 38px;
+  border-radius: 7px;
+  display: grid; place-items: center;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), background .2s;
+}
+.dock-icon:hover { transform: translateY(-3px); background: rgba(255,255,255,0.16); }
+.dock-icon svg { width: 22px; height: 22px; transition: transform .25s; }
+.dock-icon .dot {
+  position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity .2s;
+}
+.dock-icon.is-open .dot { opacity: 1; }
+
+/* ----- Mac dock icons ----- */
+[data-skin="mac"] .dock-icon {
+  width: 52px; height: 52px;
+  border-radius: 13px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 100%);
+  box-shadow:
+    0 4px 10px -2px rgba(0,0,0,0.25),
+    0 1px 0 rgba(255,255,255,0.55) inset,
+    0 -1px 0 rgba(0,0,0,0.06) inset;
+  color: #1D1B26;
+  transform-origin: bottom center;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1);
+}
+[data-skin="mac"] .dock-icon svg { width: 28px; height: 28px; }
+[data-skin="mac"] .dock-icon:hover { transform: translateY(-12px) scale(1.35); }
+[data-skin="mac"] .dock-icon:has(+ :hover),
+[data-skin="mac"] .dock-icon:hover + .dock-icon { transform: translateY(-6px) scale(1.18); }
+[data-skin="mac"] .dock-icon .dot {
+  bottom: -10px;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 0 4px rgba(0,0,0,0.3);
+  width: 5px; height: 5px;
+}
+
+/* Colorful icon tints per app — Mac mode only, gives the dock that signature rainbow feel */
+[data-skin="mac"] .dock-icon[data-open="about"]      { background: linear-gradient(135deg, #FFD86B, #E8722A); color: #fff; }
+[data-skin="mac"] .dock-icon[data-open="experience"] { background: linear-gradient(135deg, #C4974A, #6B3E15); color: #fff; }
+[data-skin="mac"] .dock-icon.mac-files { background: transparent; box-shadow: 0 4px 10px -2px rgba(0,0,0,0.25); padding: 0; overflow: hidden; }
+[data-skin="mac"] .dock-icon.mac-files svg { width: 100%; height: 100%; }
+[data-skin="mac"] .dock-icon[data-open="projects"]:not(.mac-files) { background: linear-gradient(135deg, #4ECDC4, #1E8C8C); color: #fff; }
+[data-skin="mac"] .dock-icon[data-open="photos"]   { background: linear-gradient(135deg, #FF6B9D, #B5388F); color: #fff; }
+[data-skin="mac"] .dock-icon[data-open="contact"]  { background: linear-gradient(135deg, #6BB5FF, #1F65C4); color: #fff; }
+[data-skin="mac"] .dock-icon[data-href*="mail"]    { background: linear-gradient(135deg, #4FA3FF, #1357C2); color: #fff; }
+[data-skin="mac"] .dock-icon[data-href*="github"]  { background: linear-gradient(135deg, #4D4D4D, #1A1A1A); color: #fff; }
+[data-skin="mac"] .dock-icon[data-href*="linkedin"]{ background: linear-gradient(135deg, #2D9EE0, #0A66C2); color: #fff; }
+[data-skin="mac"] .dock-icon[data-open="terminal"] { background: linear-gradient(135deg, #2E2A36, #0B0810); color: #B8FFB8; }
+[data-skin="mac"] .dock-icon[data-open="settings"] { background: linear-gradient(135deg, #B0B0B5, #525258); color: #fff; }
+[data-skin="mac"] .dock-icon[data-trash]           { background: linear-gradient(135deg, #DDD9D2, #8E8A82); color: #fff; }
+
+/* Dock separator line (vertical) for Mac */
+.dock-sep {
+  width: 1px; height: 22px;
+  background: rgba(255,255,255,0.22);
+  margin: 0 4px;
+}
+[data-skin="mac"] .dock-sep {
+  height: 36px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.45) 30%, rgba(255,255,255,0.45) 70%, transparent);
+  margin: 0 6px;
+}
+.dock-search-wrap { display: inline-flex; align-items: center; gap: 0; }
+[data-skin="mac"] .dock-search-wrap { display: none; }
+.mac-only-icon, .mac-only-block { display: none !important; }
+[data-skin="mac"] .mac-only-icon { display: grid !important; }
+[data-skin="mac"] .mac-only-block { display: block !important; }
+.win-only-icon, .win-only-block { display: none !important; }
+[data-skin="win"] .win-only-icon { display: grid !important; }
+[data-skin="win"] .win-only-block { display: flex !important; }
+
+.dock-search {
+  display: flex; align-items: center;
+  gap: 8px;
+  padding: 0 10px 0 12px;
+  height: 32px;
+  width: 230px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.22);
+  border: 1px solid var(--chrome-border);
+  margin: 0 8px 0 4px;
+}
+.dock-search input {
+  flex: 1;
+  background: transparent;
+  border: 0; outline: none;
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  color: var(--text);
+}
+.dock-search input::placeholder { color: var(--text-mute); }
+.dock-search .ico {
+  width: 14px; height: 14px; opacity: .65;
+}
+.dock-sep { width: 1px; height: 22px; background: var(--chrome-border); margin: 0 4px; }
+
+/* search dropdown */
+.search-results {
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  bottom: 66px;
+  width: 380px;
+  background: var(--win-bg);
+  border: 1px solid var(--win-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--win-shadow);
+  padding: 8px;
+  display: none;
+  max-height: 360px;
+  overflow-y: auto;
+}
+.search-results.open { display: block; animation: dd-in .2s ease-out; }
+.search-results .res-head { padding: 4px 10px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-mute); }
+.search-results .res-row {
+  display: grid; grid-template-columns: 22px 1fr auto;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  font-size: 13px;
+  align-items: center;
+}
+.search-results .res-row:hover { background: var(--accent); color: var(--paper); }
+.search-results .res-row .kind { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; opacity: .65; }
+
+/* =================================================================
+   PHOTO VIEWER
+   ================================================================= */
+.photo-view {
+  display: grid; grid-template-rows: auto 1fr; height: 100%;
+}
+.photo-view .meta-bar {
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--win-border);
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px;
+}
+.photo-view .meta-bar h2 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 500; }
+.photo-view .meta-bar .meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute); }
+.photo-view .stage {
+  display: grid; place-items: center;
+  background: #14110A;
+  overflow: auto;
+}
+.photo-view .stage img { max-width: 100%; max-height: 100%; }
+.photo-view .stage .pixel-art { image-rendering: pixelated; transform: scale(2); }
+
+/* Pixel image canvases */
+.pixel-card {
+  aspect-ratio: 4/3;
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.pixel-card svg { width: 100%; height: 100%; image-rendering: pixelated; }
+
+/* =================================================================
+   SLIDE VIEWER (project image window)
+   ================================================================= */
+.sv-wrap {
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  height: 100%;
+  min-height: 0;
+}
+.sv-stage {
+  display: grid;
+  place-items: stretch;
+  overflow: hidden;
+  padding: 14px;
+  min-height: 0;
+}
+.sv-stage img {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
+  display: block;
+}
+.sv-fb {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  letter-spacing: -0.02em;
+  padding: 40px;
+  display: grid; place-items: center;
+  text-align: center;
+}
+.sv-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px;
+  border-top: 1px solid var(--win-border);
+  background: var(--win-bg-2);
+  gap: 10px;
+}
+.sv-nav {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px;
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  border: 1px solid var(--win-border);
+  border-radius: var(--radius-btn);
+  background: rgba(255,255,255,0.5);
+  color: var(--text);
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.sv-nav:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+}
+.sv-nav:disabled { opacity: .35; cursor: not-allowed; }
+.sv-nav iconify-icon { font-size: 13px; }
+.sv-pos {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.sv-thumbs {
+  display: flex; gap: 6px;
+  padding: 10px 16px;
+  overflow-x: auto;
+  border-top: 1px solid var(--win-border);
+  background: var(--win-bg);
+}
+.sv-thumb {
+  flex-shrink: 0;
+  width: 56px; height: 38px;
+  border-radius: 3px;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: .6;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: opacity .15s, outline-color .15s, transform .15s;
+}
+.sv-thumb:hover { opacity: 1; transform: translateY(-1px); }
+.sv-thumb.active { opacity: 1; outline-color: var(--accent); }
+.sv-thumb img,
+.sv-thumb .sv-thumb-fb { width: 100%; height: 100%; display: block; }
+.sv-thumb img { object-fit: cover; }
+.sv-thumb-fb {
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-size: 13px;
+}
+
+/* =================================================================
+   SPOTLIGHT (mac)
+   ================================================================= */
+#spotlight {
+  position: fixed; inset: 0;
+  display: grid; place-items: start center;
+  padding-top: 22vh;
+  z-index: 9500;
+  background: rgba(0,0,0,0.18);
+  backdrop-filter: blur(2px);
+  animation: fade-in .15s ease;
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+#spotlight .spot-card {
+  width: min(640px, 92vw);
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(40px) saturate(1.8);
+  -webkit-backdrop-filter: blur(40px) saturate(1.8);
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 12px;
+  box-shadow: 0 30px 80px -10px rgba(0,0,0,0.45);
+  overflow: hidden;
+  color: #1D1B26;
+}
+.spot-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 18px;
+}
+.spot-row svg { width: 22px; height: 22px; opacity: .55; flex-shrink: 0; }
+.spot-row input {
+  flex: 1; background: transparent; border: 0; outline: none;
+  font-family: -apple-system, BlinkMacSystemFont, var(--font-ui);
+  font-size: 22px;
+  color: #1D1B26;
+}
+.spot-row input::placeholder { color: rgba(0,0,0,0.4); font-weight: 300; }
+.spot-results:not(:empty) { border-top: 1px solid rgba(0,0,0,0.08); padding: 6px; max-height: 360px; overflow-y: auto; }
+.spot-res {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.spot-res:hover { background: rgba(0,122,255,0.85); color: #fff; }
+.spot-res .kk { font-size: 11px; opacity: .6; }
+.spot-res:hover .kk { opacity: .9; }
+
+/* =================================================================
+   STAGE MANAGER (mac)
+   ================================================================= */
+.stage-manager {
+  position: fixed;
+  left: 8px;
+  top: 60px; bottom: 90px;
+  width: 76px;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+  pointer-events: none;
+}
+[data-skin="mac"] .stage-manager.has-items { display: flex; }
+.stage-card {
+  pointer-events: auto;
+  aspect-ratio: 4/3;
+  background: rgba(255,255,255,0.32);
+  border: 1px solid rgba(255,255,255,0.42);
+  border-radius: 7px;
+  box-shadow: 0 6px 14px -4px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.5) inset;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 5px 6px 4px;
+  cursor: pointer;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), background .25s;
+  display: flex; flex-direction: column; gap: 3px;
+  overflow: hidden;
+}
+.stage-card:hover { transform: translateX(4px) scale(1.05); background: rgba(255,255,255,0.45); }
+.stage-card .scn {
+  flex: 1;
+  background: linear-gradient(135deg, rgba(255,255,255,0.5), rgba(255,255,255,0.2));
+  border-radius: 3px;
+  display: flex; align-items: flex-start; padding: 3px;
+}
+.stage-card .scn .bar { width: 10px; height: 2px; background: rgba(0,0,0,0.25); border-radius: 1px; }
+.stage-card .scn .bar + .bar { margin-left: 2px; }
+.stage-card .lbl {
+  font-size: 7.5px;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+  font-weight: 600;
+  text-align: center;
+  text-transform: capitalize;
+  line-height: 1;
+}
+
+/* When stage manager is active, push the desktop grid right a touch so it doesn't overlap */
+[data-skin="mac"] .desktop.has-stage .desktop-grid { left: 100px; transition: left .25s ease; }
+
+/* =================================================================
+   BOOT
+   ================================================================= */
+.boot {
+  position: fixed; inset: 0;
+  z-index: 9999;
+  background: #14110A;
+  color: var(--paper);
+  display: grid; place-items: center;
+  font-family: var(--font-mono);
+}
+.boot.gone { opacity: 0; pointer-events: none; transition: opacity .8s ease; }
+.boot .col { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+.boot .ascii { font-size: 11px; line-height: 1.1; color: var(--accent); white-space: pre; }
+.boot .lbl { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; opacity: .8; }
+.boot .bar { width: 240px; height: 2px; background: rgba(255,255,255,0.12); overflow: hidden; }
+.boot .bar i { display: block; height: 100%; width: 0; background: var(--accent); animation: boot 2.4s ease-in-out forwards; }
+@keyframes boot { from { width: 0; } to { width: 100%; } }
+
+/* =================================================================
+   Small helpers
+   ================================================================= */
+.flex { display: flex; }
+.grid { display: grid; }
+.row-gap-8 { gap: 8px; }
+.italic { font-style: italic; }
+.tabular { font-variant-numeric: tabular-nums; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* responsive */
+@media (max-width: 720px) {
+  .desktop-grid { grid-template-columns: repeat(2, 80px); }
+  .dock-search { width: 140px; }
+  .win { min-width: 280px; }
+}
+
+/* =================================================================
+   RETRO ERA — hidden skin, triggered by the Green Hill wallpaper.
+   Repaints the Win-layout chrome in an early-2000s style.
+   ================================================================= */
+body[data-era="xp"] {
+  --win-bg: #ECE9D8;
+  --win-bg-2: #ECE9D8;
+  --win-border: #ACA899;
+  --text: #000000;
+  --text-soft: #2B2B2B;
+  --text-mute: #5C5C5C;
+  --accent: #2A5BC8;
+  --accent-deep: #0A246A;
+  --paper: #FFFFFF;
+  --radius-win: 8px;
+  --radius-btn: 3px;
+  --radius-card: 3px;
+  --font-ui: Tahoma, "Trebuchet MS", Geneva, Verdana, sans-serif;
+  --font-display: "Trebuchet MS", Tahoma, Verdana, sans-serif;
+  --font-mono: "Lucida Console", Consolas, monospace;
+}
+
+/* ---- Windows ---- */
+body[data-era="xp"] .win {
+  background: #ECE9D8;
+  border: 3px solid #0A3BD4;
+  border-top: 0;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.5);
+}
+body[data-era="xp"] .win.maximized { border: 0; }
+body[data-era="xp"] .win-content { background: #FFFFFF; }
+
+/* ---- Title bar ---- */
+body[data-era="xp"] .win-titlebar {
+  height: 30px;
+  padding: 0 4px 0 7px;
+  border: 0;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(180deg, #1F8FFF 0%, #3D9BFF 9%, #1675EE 18%, #0A5DE3 40%, #0A59E0 86%, #0A4AD0 94%, #0B3FC6 100%);
+}
+body[data-era="xp"] .win-title {
+  order: 0;
+  color: #FFFFFF;
+  font-family: "Trebuchet MS", Tahoma, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0;
+  text-shadow: 1px 1px 2px rgba(0,0,40,0.6);
+  padding-left: 3px;
+}
+body[data-era="xp"] .win-title em { color: #fff; font-style: normal; font-family: inherit; font-weight: 700; }
+body[data-era="xp"] .win-title .tt-icon { filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4)); }
+body[data-era="xp"] .win-actions { order: 1; gap: 2px; }
+
+/* ---- Caption buttons ---- */
+body[data-era="xp"] .win-btn {
+  width: 22px; height: 21px;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.55);
+  color: #fff;
+}
+body[data-era="xp"] .win-btn iconify-icon { font-size: 11px; }
+body[data-era="xp"] .win-btn.min,
+body[data-era="xp"] .win-btn.max {
+  background: linear-gradient(180deg, #59A6FF 0%, #2F7DEE 46%, #1A60DA 54%, #4D95F6 100%);
+}
+body[data-era="xp"] .win-btn.close {
+  background: linear-gradient(180deg, #F0987C 0%, #DA5630 46%, #C13F1E 54%, #E97550 100%);
+}
+body[data-era="xp"] .win-btn.min:hover,
+body[data-era="xp"] .win-btn.max:hover { background: linear-gradient(180deg, #7BBAFF, #3D8BF5); }
+body[data-era="xp"] .win-btn.close:hover { background: linear-gradient(180deg, #FFB199, #E5683F); }
+
+/* ---- Taskbar ---- */
+body[data-era="xp"] .dock {
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid #1138C0;
+  justify-content: flex-start;
+  background: linear-gradient(180deg, #3F8CF3 0%, #2D74E3 8%, #2A6DDD 48%, #2664D7 90%, #1E54CC 96%, #1A4CC2 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ---- Start button ---- */
+.dock-start .start-label { display: none; }
+body[data-era="xp"] .dock-start {
+  display: flex !important;
+  width: auto;
+  height: 100%;
+  min-width: 92px;
+  padding: 0 26px 4px 11px;
+  border: 0;
+  border-radius: 0 13px 13px 0;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(180deg, #5DB746 0%, #4FAA38 9%, #3F9A28 45%, #379020 55%, #4FAC36 92%, #429F2C 100%);
+  color: #fff;
+}
+body[data-era="xp"] .dock-start:hover {
+  filter: brightness(1.08);
+  background: linear-gradient(180deg, #6BC553 0%, #56B23F 50%, #4AAA33 100%);
+}
+body[data-era="xp"] .dock-start iconify-icon { font-size: 17px; }
+body[data-era="xp"] .dock-start .start-label {
+  display: inline;
+  font-family: "Trebuchet MS", Tahoma, sans-serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 16px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* ---- Taskbar app buttons ---- */
+body[data-era="xp"] .dock-icon {
+  width: 34px; height: 28px;
+  border-radius: 3px;
+  color: #fff;
+  margin: 0 1px;
+}
+body[data-era="xp"] .dock-icon iconify-icon { color: #fff; }
+body[data-era="xp"] .dock-icon:hover { background: rgba(255,255,255,0.16); transform: none; }
+body[data-era="xp"] .dock-icon.is-open {
+  background: linear-gradient(180deg, #18459E 0%, #2E6FD8 100%);
+  box-shadow: inset 1px 1px 4px rgba(0,0,0,0.5);
+}
+body[data-era="xp"] .dock-icon .dot { display: none; }
+
+/* ---- Taskbar search field ---- */
+body[data-era="xp"] .dock-search {
+  height: 22px;
+  background: #fff;
+  border: 1px solid #5A7EA8;
+  border-radius: 2px;
+  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.22);
+  color: #000;
+}
+body[data-era="xp"] .dock-search input { color: #000; }
+body[data-era="xp"] .dock-search input::placeholder { color: #888; }
+body[data-era="xp"] .dock-sep { display: none; }
+
+/* ---- System tray ---- */
+body[data-era="xp"] .dock-tray {
+  background: linear-gradient(180deg, #14A0EF 0%, #18AEF5 7%, #1493EA 50%, #0F7BD8 100%);
+  box-shadow: inset 2px 0 4px rgba(0,0,40,0.45);
+  padding: 0 10px;
+}
+body[data-era="xp"] .tray-icon { color: #fff; }
+body[data-era="xp"] .tray-clock { color: #fff; text-shadow: 1px 1px 1px rgba(0,0,0,0.4); padding: 0 4px; }
+body[data-era="xp"] .tray-clock .l1 { font-size: 11.5px; }
+body[data-era="xp"] .tray-clock .l2 { display: none; }
+
+/* ---- Desktop icon selection ---- */
+body[data-era="xp"] .desk-icon.selected {
+  background: rgba(49,106,197,0.45);
+  outline-color: rgba(255,255,255,0.6);
+}
+
+/* ---- Start menu ---- */
+body[data-era="xp"] #start-menu .start-card {
+  background: #fff;
+  border: 1px solid #0A3BD4;
+  border-radius: 9px 9px 3px 3px;
+}
+body[data-era="xp"] .start-search-row {
+  background: linear-gradient(180deg, #2E80EE 0%, #1A60D8 60%, #1255CC 100%);
+  border-bottom: 2px solid #0A3FB8;
+}
+body[data-era="xp"] .start-search-row iconify-icon { color: #fff; opacity: .9; }
+body[data-era="xp"] .start-search-row input { color: #fff; }
+body[data-era="xp"] .start-search-row input::placeholder { color: rgba(255,255,255,0.72); }
+body[data-era="xp"] .start-footer {
+  background: linear-gradient(180deg, #2E80EE 0%, #1A60D8 60%, #1255CC 100%);
+  border-top: 2px solid #0A3FB8;
+}
+body[data-era="xp"] .start-user .name { color: #fff; }
+body[data-era="xp"] .start-head { color: #0A3FB8; }
+
+/* ---- Content buttons ---- */
+body[data-era="xp"] .cta-btn {
+  background: linear-gradient(180deg, #FBFBF6 0%, #ECEAD9 48%, #DFDCC8 52%, #EEECDF 100%);
+  color: #000;
+  border: 1px solid #8C8A72;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px #fff;
+}
+body[data-era="xp"] .cta-btn:hover {
+  background: linear-gradient(180deg, #FFFFF4, #F1EFE0);
+  border-color: #2A5BC8;
+  transform: none;
+}
+
+/* ---- Terminal — black console ---- */
+body[data-era="xp"] .term { background: #000; color: #C8C8C8; }
+body[data-era="xp"] .term .line.cmd .prompt { color: #6FCF6F; }
+
+/* ---- Boot screen ---- */
+body[data-era="xp"] .boot { background: #000; }
+body[data-era="xp"] .boot .ascii { color: #3F8CF3; }
+body[data-era="xp"] .boot .lbl { color: #CFE3FF; }
+body[data-era="xp"] .boot .bar i { background: linear-gradient(90deg, #3F8CF3, #5DB746); }
+</style>
+</head>
+
+<body data-skin="win" data-bg="mosaic">
+
+<!-- ============= DESKTOP WALLPAPER ============= -->
+<div id="wallpaper"></div>
+
+<!-- ============= BOOT SCREEN ============= -->
+<div class="boot" id="boot">
+  <div class="col">
+    <pre class="ascii">    ____             __       ___       ___
+   / __ \____  _____/ /__    /   |     |__ \
+  / / / / __ \/ ___/ //_/   / /| |     __/ /
+ / /_/ / /_/ /__  / ,&lt;     / ___ |    / __/
+/_____/\____/____/_/|_|   /_/  |_|   /____/  v1.0</pre>
+    <div class="lbl">Portfolio OS — booting</div>
+    <div class="bar"><i></i></div>
+  </div>
+</div>
+
+<!-- ============= MENUBAR ============= -->
+<div class="menubar" id="menubar">
+  <div class="brand">
+    <span class="logo-dot"></span>
+    <span>Portfolio</span>
+  </div>
+  <div class="item appname">Portfolio</div>
+  <div class="item" data-menu="file">File</div>
+  <div class="item" data-menu="view">View</div>
+  <div class="item" data-menu="go">Go</div>
+  <div class="item" data-action="open-experience">Experience</div>
+  <div class="item" data-menu="help">Help</div>
+
+  <div id="menu-file" class="menu-dd">
+    <div class="row" data-open="about">Open About <span class="kbd">⌘1</span></div>
+    <div class="row" data-open="projects">Open Projects <span class="kbd">⌘2</span></div>
+    <div class="row" data-open="contact">Open Contact <span class="kbd">⌘3</span></div>
+    <div class="sep"></div>
+    <div class="row" data-open="terminal">New Terminal <span class="kbd">⌘T</span></div>
+    <div class="row" data-action="close-all">Close All Windows</div>
+  </div>
+  <div id="menu-view" class="menu-dd">
+    <div class="row" data-skin-set="win">Sharp Skin</div>
+    <div class="row" data-skin-set="mac">Frosted Skin</div>
+    <div class="sep"></div>
+    <div class="row" data-open="settings">Settings…</div>
+  </div>
+  <div id="menu-go" class="menu-dd">
+    <div class="row" data-open="about">~/about.txt</div>
+    <div class="row" data-open="contact">~/contact.card</div>
+    <div class="sep"></div>
+    <div class="row" data-open="projects">~/projects/</div>
+    <div class="row" data-open="photos">~/photos/</div>
+  </div>
+  <div id="menu-help" class="menu-dd">
+    <div class="row" data-open="terminal">Try the Terminal</div>
+    <div class="sep"></div>
+    <div class="row" data-action="email">Email Dinma →</div>
+  </div>
+
+  <div class="spacer"></div>
+  <div class="right">
+    <span class="pill win-only" id="status">FOCUS · Streamatic</span>
+    <span class="mac-only mac-icon" title="Battery">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="7" width="17" height="10" rx="2"/><rect x="4" y="9" width="13" height="6" fill="currentColor"/><path d="M21 10v4"/></svg>
+    </span>
+    <span class="mac-only mac-icon" title="Wi-Fi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 8.5a16 16 0 0 1 20 0"/><path d="M5 12a12 12 0 0 1 14 0"/><path d="M8.5 15.5a7 7 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+    </span>
+    <span class="mac-only mac-icon" id="spotlight-trigger" title="Search"><iconify-icon icon="hugeicons:search-01" noobserver></iconify-icon></span>
+    <span class="mac-only mac-icon" title="Control Center"><iconify-icon icon="hugeicons:dashboard-square-01" noobserver></iconify-icon></span>
+    <span class="sun win-only">☼</span>
+    <span id="clock" class="tabular">Mon — 00:00</span>
+  </div>
+</div>
+
+<!-- ============= DESKTOP ============= -->
+<div class="desktop" id="desktop">
+
+  <!-- Stage Manager strip (mac only, populated by JS) -->
+  <div class="stage-manager" id="stage-manager"></div>
+
+  <!-- Desktop icons -->
+  <div class="desktop-grid" id="desktop-grid">
+    <!-- icons populated dynamically -->
+  </div>
+
+  <!-- Windows layer -->
+  <div class="windows-layer" id="windows-layer"></div>
+</div>
+
+<!-- ============= DOCK ============= -->
+<div class="dock-wrap">
+  <div class="search-results" id="search-results"></div>
+  <div class="dock" id="dock">
+    <button class="dock-start win-only-icon" id="start-btn" title="Open menu">
+      <iconify-icon icon="hugeicons:dashboard-circle" noobserver></iconify-icon>
+      <span class="start-label">start</span>
+    </button>
+    <div class="dock-search-wrap">
+      <div class="dock-search">
+        <span class="ico-search"><iconify-icon icon="hugeicons:search-01" noobserver></iconify-icon></span>
+        <input id="search" placeholder="Search" />
+      </div>
+      <div class="dock-sep"></div>
+    </div>
+    <button class="dock-icon mac-files mac-only-icon" title="Files" data-open="projects">
+      <iconify-icon icon="hugeicons:folder-01" noobserver></iconify-icon>
+    </button>
+    <button class="dock-icon" data-open="experience" title="Experience">
+      <iconify-icon icon="hugeicons:briefcase-01" noobserver></iconify-icon>
+      <span class="dot"></span>
+    </button>
+    <button class="dock-icon" data-open="projects" title="Projects">
+      <iconify-icon icon="hugeicons:folder-01" noobserver></iconify-icon>
+      <span class="dot"></span>
+    </button>
+    <button class="dock-icon" data-open="photos" title="Photos">
+      <iconify-icon icon="hugeicons:image-01" noobserver></iconify-icon>
+      <span class="dot"></span>
+    </button>
+    <button class="dock-icon" data-open="contact" title="Contact">
+      <iconify-icon icon="hugeicons:contact-01" noobserver></iconify-icon>
+      <span class="dot"></span>
+    </button>
+    <button class="dock-icon" data-href="mailto:ddunebari@gmail.com" title="Email">
+      <iconify-icon icon="hugeicons:mail-01" noobserver></iconify-icon>
+    </button>
+    <div class="dock-sep"></div>
+    <button class="dock-icon" data-open="terminal" title="Terminal">
+      <iconify-icon icon="hugeicons:command-line" noobserver></iconify-icon>
+      <span class="dot"></span>
+    </button>
+    <button class="dock-icon" data-open="settings" title="Settings">
+      <iconify-icon icon="hugeicons:settings-01" noobserver></iconify-icon>
+      <span class="dot"></span>
+    </button>
+    <div class="dock-sep mac-only-block"></div>
+    <button class="dock-icon mac-only-icon" data-trash="1" title="Trash">
+      <iconify-icon icon="hugeicons:delete-02" noobserver></iconify-icon>
+    </button>
+
+    <!-- Win 11 system tray (right side) -->
+    <div class="dock-tray win-only-block">
+      <button class="tray-icon" title="Show hidden icons">
+        <iconify-icon icon="hugeicons:arrow-up-01" noobserver></iconify-icon>
+      </button>
+      <button class="tray-icon" title="Network">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 8.5a16 16 0 0 1 20 0"/><path d="M5 12a12 12 0 0 1 14 0"/><path d="M8.5 15.5a7 7 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+      </button>
+      <button class="tray-icon" title="Volume">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg>
+      </button>
+      <button class="tray-icon" title="Battery">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7" width="17" height="10" rx="2"/><rect x="4" y="9" width="11" height="6" fill="currentColor"/><path d="M21 10v4"/></svg>
+      </button>
+      <div class="tray-clock" id="tray-clock">
+        <span class="l1">00:00 AM</span>
+        <span class="l2">1/1/2026</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =================================================================
+   THEME + BACKGROUND
+   ================================================================= */
+/* Image wallpapers — drop a file into pictures/bg/ and add an entry here.
+   fit: 'cover' fills the screen, 'contain' shows the whole image centred.   */
+const WALLPAPERS = [
+  { id: 'jelly',  label: 'Astronaut Jelly', src: 'pictures/bg/astronaut-jelly.jpg', fit: 'cover' },
+  { id: 'hill',   label: 'Green Hill',      src: 'pictures/bg/winxp.jpg', fit: 'cover', pad: '#5B9BD5' },
+  { id: 'mosaic', label: 'Hello Mosaic',    src: 'pictures/bg/hello-mosaic-5120x2880-25567.png', fit: 'cover', pad: '#1A1438' },
+  { id: 'coffee', label: 'Coffee Refill',   src: 'pictures/bg/coffee-cup-refill-3840x2160-13666.png', fit: 'cover', pad: '#000000' },
+  { id: 'fire',   label: 'Pixel Fire',      src: 'pictures/bg/fire-pixel-art-3840x2160-15142.png', fit: 'cover', pad: '#000000' },
+  { id: 'duck',   label: 'Pixel Duck',      src: 'pictures/bg/bg.jpg', fit: 'contain', pad: '#D6D4CE', pixelated: true },
+];
+const COLOR_BGS = [
+  ['orange','Editorial Orange'],
+  ['cream','Paper Cream'],
+  ['ink','Late Ink'],
+  ['moss','Forest Dusk'],
+  ['bliss','Bliss Hill'],
+  ['paper','Worn Paper'],
+  ['grid','Graph Orange'],
+];
+
+/* The wallpaper that flips the OS into its hidden retro era. */
+const XP_TRIGGER_BG = 'hill';
+
+const Theme = {
+  /* --- raw appliers (no reload) --- */
+  _applySkin(skin) {
+    document.body.dataset.skin = skin;
+    document.querySelectorAll('[data-skin-card]').forEach(el => el.classList.toggle('active', el.dataset.skinCard === skin));
+  },
+  _applyBg(bg) {
+    const wp = WALLPAPERS.find(w => w.id === bg);
+    const layer = document.getElementById('wallpaper');
+    if (wp && layer) {
+      layer.classList.add('on');
+      layer.style.backgroundImage = `url('${wp.src}')`;
+      layer.style.backgroundSize = wp.fit === 'contain' ? 'contain' : 'cover';
+      layer.style.backgroundColor = wp.pad || '#14110A';
+      layer.style.imageRendering = wp.pixelated ? 'pixelated' : 'auto';
+    } else if (layer) {
+      layer.classList.remove('on');
+      layer.style.backgroundImage = 'none';
+    }
+    document.body.dataset.bg = bg;
+    document.querySelectorAll('[data-bg-pick]').forEach(el => el.classList.toggle('active', el.dataset.bgPick === bg));
+  },
+
+  /* --- public setters (reload only when crossing the era boundary) --- */
+  setSkin(skin) {
+    if (document.body.dataset.era === 'xp') {
+      // Switching appearance leaves the retro era — reboot back to a modern desktop.
+      localStorage.setItem('os.era', 'modern');
+      localStorage.setItem('os.skin', skin);
+      localStorage.setItem('os.bg', 'orange');
+      location.reload();
+      return;
+    }
+    this._applySkin(skin);
+    localStorage.setItem('os.skin', skin);
+  },
+  setBg(bg) {
+    const inXp = document.body.dataset.era === 'xp';
+    const wantsXp = (bg === XP_TRIGGER_BG);
+    // Entering the retro era — reboot.
+    if (wantsXp && !inXp) {
+      localStorage.setItem('os.era', 'xp');
+      localStorage.setItem('os.skin', 'win');
+      localStorage.setItem('os.bg', XP_TRIGGER_BG);
+      location.reload();
+      return;
+    }
+    // Leaving the retro era for any other wallpaper — reboot.
+    if (!wantsXp && inXp) {
+      localStorage.setItem('os.era', 'modern');
+      localStorage.setItem('os.skin', 'win');
+      localStorage.setItem('os.bg', bg);
+      location.reload();
+      return;
+    }
+    // Same era — just swap, no reboot.
+    this._applyBg(bg);
+    localStorage.setItem('os.bg', bg);
+  },
+  init() {
+    const era = localStorage.getItem('os.era') || 'modern';
+    if (era === 'xp') document.body.dataset.era = 'xp';
+    else delete document.body.dataset.era;
+    this._applySkin(era === 'xp' ? 'win' : (localStorage.getItem('os.skin') || 'win'));
+    this._applyBg(era === 'xp' ? XP_TRIGGER_BG : (localStorage.getItem('os.bg') || 'mosaic'));
+  }
+};
+
+/* =================================================================
+   FILESYSTEM — desktop content
+   ================================================================= */
+const FS = {
+  '~': {
+    type: 'dir', label: 'home',
+    children: {
+      'about.txt':      { type: 'file', kind: 'about',     icon: 'doc-info', label: 'about.txt',      modified: '2026 — 05 — 12', size: '1.2K' },
+      'contact.card':   { type: 'file', kind: 'contact',   icon: 'doc-card', label: 'contact.card',   modified: '2026 — 05 — 12', size: '0.4K' },
+      'projects':       { type: 'dir',  kind: 'projects',  icon: 'folder',   label: 'projects',       modified: '2026 — 05 — 16' },
+      'photos':         { type: 'dir',  kind: 'photos',    icon: 'folder',   label: 'photos',         modified: '2026 — 04 — 28' },
+    }
+  }
+};
+
+const PROJECTS = [
+  {
+    id: 'demahub', name: 'Demahub', tag: 'product · v3',
+    color: '#1B1B1B', fg: '#F4EAD5',
+    year: '2021', role: 'Product Design', timeline: '4 weeks', team: 'Solo',
+    meta: 'PRODUCT DESIGN • 4 WEEKS · 2021',
+    stack: 'Figma · Tokens · React · Tailwind',
+    img: 'pictures/demahub/mockup.jpg',
+    blurb: 'A unified dashboard bringing scattered analytics, schedules and team workflows into a single, calm interface — built around rhythm, not alerts.',
+    techStack: ['Figma', 'Tokens', 'Prototyping', 'React', 'Tailwind'],
+    tasks: ['Architecture', 'Product Design', 'Design System', 'Prototyping'],
+    refs: [
+      { name: 'Component Inventory' },
+      { name: 'Information Architecture' },
+    ],
+    metrics: [
+      { k: 'Components', v: '48' },
+      { k: 'Tools consolidated', v: '05' },
+      { k: 'Time-to-insight', v: '−62%' },
+      { k: 'Adoption', v: '100%' },
+    ],
+    sections: [
+      { h: 'Origin',   p: 'Demahub started as a frustration with tool-sprawl — teams juggling six windows to answer one question. The goal was a single surface that treated attention as a resource, and showed only what the current moment demanded.' },
+      { h: 'Approach', p: 'I audited every existing report, clustered them by decision, and rebuilt the information architecture around questions rather than metrics. A restrained type system and a two-colour accent palette kept density readable; motion was reserved for state changes that actually mattered.' },
+      { h: 'Outcome',  p: 'Shipped a design system with forty-eight components and a prototype the team adopted for their weekly rituals. Time-to-first-insight dropped sharply, and the dashboard stopped being a place people avoided.' },
+    ],
+    images: [
+      'pictures/demahub/mockup.jpg',
+      'pictures/demahub/Sign Up var1.png',
+      'pictures/demahub/Sign Up var2.png',
+      'pictures/demahub/Home page.png',
+      'pictures/demahub/Category page.png',
+      'pictures/demahub/Product Details page.jpg',
+    ],
+  },
+  {
+    id: 'bio', name: 'Bio', tag: 'iOS · daily',
+    color: '#E3DCCB', fg: '#1A1108',
+    year: '2021', role: 'Design & Development', timeline: '6 weeks', team: 'Solo',
+    meta: 'DESIGN & DEVELOPMENT • 6 WEEKS · 2021',
+    stack: 'Swift · SwiftUI · SQLite',
+    img: 'pictures/bio/dashboard.png',
+    blurb: 'A quiet journaling companion for habits, moods and health signals — privacy-first, offline-first, and designed to feel more like a notebook than an app.',
+    techStack: ['Swift', 'SwiftUI', 'SQLite', 'CryptoKit', 'Figma'],
+    tasks: ['iOS Development', 'Local-first Architecture', 'Encryption', 'Editorial Type'],
+    refs: [
+      { name: 'Local Schema' },
+      { name: 'Reflection Templates' },
+    ],
+    metrics: [
+      { k: 'Screens', v: '22' },
+      { k: 'On-device', v: '100%' },
+      { k: 'Retention', v: '84%' },
+      { k: 'Net-promoter', v: '+72' },
+    ],
+    sections: [
+      { h: 'Origin',   p: 'Bio is a counter-reaction to the gamified, streak-obsessed wellness app. It favours reflection over reward and keeps every byte of data on-device by default.' },
+      { h: 'Approach', p: 'Local-first architecture using SQLite and a tiny encrypted store. The interface borrows from editorial print — generous type, one thought per screen, no notifications unless the user explicitly asked. Shipped with a single accent colour and three pre-built reflection templates.' },
+      { h: 'Outcome',  p: 'A functional iOS prototype used daily by a small test group for three months. Feedback: "it feels like writing, not logging." That was the goal.' },
+    ],
+    images: [
+      'pictures/bio/dashboard.png',
+      'pictures/bio/Desktop - 11.png',
+      'pictures/bio/Desktop - 12.png',
+      'pictures/bio/Desktop - 17.png',
+    ],
+  },
+  {
+    id: 'nerobee', name: 'Nerobee', tag: 'brand · identity',
+    color: '#C2410C', fg: '#F4EAD5',
+    year: '2021', role: 'Identity & Art Direction', timeline: '3 weeks', team: 'With founder',
+    meta: 'IDENTITY & ART DIRECTION • 3 WEEKS · 2021',
+    stack: 'Illustrator · InDesign · Print',
+    img: '',
+    blurb: 'A full brand identity for an independent honey producer — mark, typography, packaging and voice. Warm, earthen, and distinctly unhurried.',
+    techStack: ['Illustrator', 'InDesign', 'Print', 'Photography'],
+    tasks: ['Brand Identity', 'Wordmark', 'Packaging', 'Voice Guide'],
+    refs: [
+      { name: 'Brand Mark Specs' },
+      { name: 'Voice & Tone Guide' },
+    ],
+    metrics: [
+      { k: 'SKUs', v: '03' },
+      { k: 'Stockists', v: '02' },
+      { k: 'Sell-through', v: '+140%' },
+      { k: 'Foil passes', v: '01' },
+    ],
+    sections: [
+      { h: 'Origin',   p: 'Nerobee needed an identity that could live on a jar in a sunlit kitchen for a year without getting tired. We built a system around warmth, slowness and unpolished honesty.' },
+      { h: 'Approach', p: 'Hand-drawn wordmark paired with a workhorse serif; a palette drawn from raw wax and burnt orange. Packaging kept the kraft paper and swapped in a single foil pass. The voice guide leaned into plain description — raw, unfiltered, from a few hives near a road most people haven\'t heard of.' },
+      { h: 'Outcome',  p: 'Launched across three SKUs. Picked up by two independent grocers in the first month. The founder stopped having to explain what made the honey different — the jar did the work.' },
+    ],
+    images: [],
+  },
+  {
+    id: 'elibrary', name: 'E-Library', tag: 'reader · v4',
+    color: '#2F4DEC', fg: '#F4EAD5',
+    year: '2021', role: 'Product Design', timeline: '5 weeks', team: 'Solo',
+    meta: 'PRODUCT DESIGN • 5 WEEKS · 2021',
+    stack: 'Figma · SwiftUI · Motion',
+    img: 'pictures/E-library/Book ui.png',
+    blurb: 'A reading platform that turns long-form writing into a daily ritual — typography-forward, distraction-free, and built for long evenings.',
+    techStack: ['Figma', 'SwiftUI', 'Motion', 'Fraunces', 'Söhne'],
+    tasks: ['Mobile Design', 'Typography System', 'Motion', 'Reader UX'],
+    refs: [
+      { name: 'Typography System' },
+      { name: 'Gesture Map' },
+    ],
+    metrics: [
+      { k: 'Fonts', v: '04' },
+      { k: 'Gestures', v: '06' },
+      { k: 'Session length', v: '+118%' },
+      { k: 'Taps to read', v: '01' },
+    ],
+    sections: [
+      { h: 'Origin',   p: 'Existing reader apps optimise for discovery and social proof. I wanted the opposite — a reader for people who already know what they want to read and resent being interrupted on the way there.' },
+      { h: 'Approach', p: 'I rebuilt the reader around typography — a small set of carefully paired fonts, three background warmths, and a single gesture for chapter navigation. Settings were hidden two levels deep intentionally, because every visible control is a small interruption.' },
+      { h: 'Outcome',  p: 'A working mobile prototype tested with a small cohort of readers. Average session length doubled compared with their previous apps, and the settings-panel anxiety effect disappeared.' },
+    ],
+    images: [
+      'pictures/E-library/Book ui.png',
+      'pictures/E-library/Main.png',
+      'pictures/E-library/Explore.png',
+      'pictures/E-library/Selct book.png',
+      'pictures/E-library/My Library.png',
+      'pictures/E-library/Settings.png',
+    ],
+  },
+  {
+    id: 'gesture', name: 'Hand Recognition', tag: 'mediapipe · 21 kp',
+    color: '#4A5D23', fg: '#F4EAD5',
+    year: '2021', role: 'ML Engineering', timeline: '8 weeks', team: 'Solo',
+    meta: 'ML ENGINEERING • 8 WEEKS · 2021',
+    stack: 'Python · MediaPipe · TensorFlow',
+    img: 'pictures/handsign/sign.png',
+    blurb: 'A system that translates hand gestures into readable text — built to support communication for deaf and hard-of-hearing users, with hand estimation powered by MediaPipe.',
+    techStack: ['Python', 'MediaPipe', 'TensorFlow', 'OpenCV', 'NumPy'],
+    tasks: ['ML Engineering', 'Computer Vision', 'Real-time Inference', 'Data Collection'],
+    refs: [
+      { name: 'Model Card v2' },
+      { name: 'Keypoint Reference' },
+    ],
+    metrics: [
+      { k: 'Keypoints', v: '21' },
+      { k: 'Latency', v: '<50ms' },
+      { k: 'On-device', v: '100%' },
+      { k: 'Network', v: '00' },
+    ],
+    sections: [
+      { h: 'Origin',   p: 'Communication tools for deaf and hard-of-hearing users often rely on typing or interpreters. I wanted to build a lightweight system that could read sign-language gestures from any phone camera and convert them into text — instantly, on-device, with no setup.' },
+      { h: 'Approach', p: 'MediaPipe extracts 21 hand keypoints per frame. On top of that I trained a small classifier to recognise letters and gestures from keypoint sequences, keeping the model compact enough for real-time inference. The interface keeps the technology invisible — just camera, hand, text.' },
+      { h: 'Outcome',  p: 'A working prototype that translates a working alphabet of sign gestures into readable text from a live webcam feed. Latency stays well under a frame; everything runs locally with no network round-trip.' },
+    ],
+    images: [
+      'pictures/handsign/sign.png',
+      'pictures/handsign/Green Brown Black Simple Filipino Sign Language Alphabet Flashcard.png',
+    ],
+  },
+  {
+    id: 'easelite', name: 'Easelite', tag: 'iOS · iPadOS',
+    color: '#ECE7DD', fg: '#1A1108',
+    year: '2021', role: 'Design & Development', timeline: '7 weeks', team: 'Solo',
+    meta: 'DESIGN & DEVELOPMENT • 7 WEEKS · 2021',
+    stack: 'Swift · Metal · Core Graphics',
+    img: 'pictures/easelite/mockup.png',
+    blurb: 'A lightweight mobile sketching app built around an infinite canvas, gestural tools and the quietest possible chrome. Paper first, app second.',
+    techStack: ['Swift', 'Metal', 'Core Graphics', 'Combine'],
+    tasks: ['iOS Development', 'Canvas Engine', 'Gesture Design', 'Brush Engine'],
+    refs: [
+      { name: 'Brush System' },
+      { name: 'Gesture Map' },
+    ],
+    metrics: [
+      { k: 'Brushes', v: '12' },
+      { k: 'Gestures', v: '06' },
+      { k: 'Panels', v: '00' },
+      { k: 'Settings', v: '00' },
+    ],
+    sections: [
+      { h: 'Origin',   p: 'Pro drawing apps bury you in panels. I wanted a tool where the surface you\'re drawing on is 95% of the screen, 95% of the time, without giving up the essentials.' },
+      { h: 'Approach', p: 'Built on a Metal-backed canvas with pressure-sensitive strokes and a small set of brushes handcrafted rather than parameterised. UI is summoned with two-finger gestures and vanishes automatically. Exports go straight to photos — no modals, no sheets.' },
+      { h: 'Outcome',  p: 'An internal build used by a small group of designers and illustrators for four months. Shipped with twelve brushes, six gestures and zero settings screens.' },
+    ],
+    images: [
+      'pictures/easelite/mockup.png',
+      'pictures/easelite/Welcome.png',
+      'pictures/easelite/Home.png',
+      'pictures/easelite/Categories.png',
+      'pictures/easelite/Wallet.png',
+    ],
+  },
+  {
+    id: 'tranzakt', name: 'Tranzact', tag: 'mono · api',
+    color: '#2A2926', fg: '#F4EAD5',
+    year: '2021', role: 'Front-end Engineering', timeline: '10 weeks', team: 'Small team',
+    meta: 'FRONT-END ENGINEERING • 10 WEEKS · 2021',
+    stack: 'React · TypeScript · Mono API',
+    img: 'pictures/tranzact/tranzakt.png',
+    blurb: 'A user dashboard built on the Mono Open Banking API that surfaces your subscriptions and recurring bills at a glance — built to help people track expenses, free trials and recurring charges in one place.',
+    techStack: ['React', 'TypeScript', 'Mono API', 'Tailwind', 'Node'],
+    tasks: ['Front-end Engineering', 'API Integration', 'Dashboard Design', 'Heuristics'],
+    refs: [
+      { name: 'Recurring Detection' },
+      { name: 'Account Linking Flow' },
+    ],
+    metrics: [
+      { k: 'API', v: 'Mono' },
+      { k: 'Avg trials', v: '04' },
+      { k: 'Test users', v: '20+' },
+      { k: 'MRR tracked', v: '$8k+' },
+    ],
+    sections: [
+      { h: 'Origin',   p: 'Subscription fatigue is real and largely unmonitored — most people genuinely don\'t know what they\'re paying for each month. The brief was to use the Mono API to pull transaction data and infer subscriptions automatically, without asking the user to type anything in.' },
+      { h: 'Approach', p: 'Built with a small team — I led the dashboard front-end. We used Mono for bank linking and transaction history, then ran a small heuristic on top to identify recurring payment patterns. The UI prioritises one number — total monthly recurring spend — and only lets users drill down when they want to.' },
+      { h: 'Outcome',  p: 'Functional MVP that successfully identified recurring subscriptions across linked accounts. Used by a small group of test users for several weeks. The most surprising finding: people had on average four free trials they had completely forgotten about.' },
+    ],
+    images: [
+      'pictures/tranzact/tranzakt.png',
+      'pictures/tranzact/Dashboard.png',
+      'pictures/tranzact/sub.png',
+      'pictures/tranzact/sub2.png',
+    ],
+  },
+  {
+    id: 'artguide', name: 'Art Guide', tag: 'telegram · audio',
+    color: '#1B2B4B', fg: '#F4EAD5',
+    year: '2021', role: 'ML Engineering', timeline: '5 weeks', team: 'Solo',
+    meta: 'ML ENGINEERING • 5 WEEKS · 2021',
+    stack: 'Python · Telegram · VLM · TTS',
+    img: 'pictures/artG/graphics.png',
+    blurb: 'An AI Telegram bot that takes a photo of an artwork and generates a spoken audio description — built to make galleries more accessible to visually-impaired visitors.',
+    techStack: ['Python', 'Telegram Bot API', 'Vision-Language Model', 'Text-to-Speech'],
+    tasks: ['ML Engineering', 'Telegram Integration', 'Vision-Language', 'Audio Pipeline'],
+    refs: [
+      { name: 'Pipeline Diagram' },
+      { name: 'Latency Notes' },
+    ],
+    metrics: [
+      { k: 'Platform', v: 'TG' },
+      { k: 'Latency', v: '~3s' },
+      { k: 'Install cost', v: '00' },
+      { k: 'Output', v: 'Audio' },
+    ],
+    sections: [
+      { h: 'Origin',   p: 'Audio guides in galleries are great when they exist — but most artworks, in most spaces, don\'t have one. Building a custom app means asking visitors to install something. A Telegram bot has zero install cost, runs on any device, and meets people where they already are.' },
+      { h: 'Approach', p: 'The bot pipes uploaded photos through a vision-language model to generate a description, then a text-to-speech layer converts the description into audio. The whole thing runs as a small Python service. The conversational UX is kept ruthlessly simple — send photo, receive audio, done.' },
+      { h: 'Outcome',  p: 'A working bot that responds to photo uploads with spoken descriptions of artworks. Tested across a varied set of paintings, sculptures and gallery photos. Mostly accurate, occasionally delightful in how wrong it could be — but always useful.' },
+    ],
+    images: [
+      'pictures/artG/art.jpg',
+      'pictures/artG/process.png',
+      'pictures/artG/graphics.png',
+      'pictures/artG/tgram.png',
+    ],
+  },
+];
+
+const EXPERIENCE = {
+  focus: [
+    { html: 'Co-founding <em><b>Streamatic</b></em> as CTO — a physical intelligence platform for safety &amp; operational excellence (NVIDIA Inception).' },
+    { html: 'Shipping customer-facing Next.js dashboards: multi-site view and a video wall with KVS HLS timeline.' },
+    { html: 'Leading hardware integration across cameras, Zigbee sensor networks, and LoRaWAN gateways.' },
+  ],
+  timeline: [
+    {
+      role: 'Co-Founder & CTO',
+      company: 'Streamatic',
+      type: 'Full-time',
+      current: true,
+      dates: '2025 — Present',
+      duration: '1 yr +',
+      location: 'Remote · MENA / Africa',
+      description: 'Co-founding a physical intelligence platform for safety and operational excellence — NVIDIA Inception member.',
+      highlights: [
+        'Co-founded Streamatic to build a physical intelligence platform serving African and MENA markets.',
+        'Designed and shipped customer-facing web apps in Next.js and React — a multi-site dashboard and a video wall with KVS HLS timeline.',
+        'Redesigned onboarding from 7 blocking steps to 4 by merging company profile + site creation and auto-generating default Department / Device Group entities.',
+        'Led hardware integration across cameras, Zigbee sensor networks and LoRaWAN gateways; stood up MQTT-based device firmware standards for vendor-neutral deployments.',
+      ],
+    },
+    {
+      role: 'Software Engineer',
+      company: 'Cyrus Terminal',
+      type: 'Full-time',
+      current: false,
+      dates: '2024',
+      duration: '~1 yr',
+      location: 'Remote',
+      description: 'Solana pre-bond token listings platform — blockchain-integrated dashboards and on-chain wallet auth.',
+      highlights: [
+        'Built responsive, blockchain-integrated dashboards in React, TypeScript and Tailwind CSS supporting token listings, user roles and real-time data updates.',
+        'Implemented Solana Web3 and Phantom Wallet authentication, wiring UI components to on-chain events and transaction states alongside smart-contract engineers.',
+        'Integrated TanStack Query for efficient API fetching and caching, lifting perceived responsiveness across the creator dashboard.',
+        'Cut bounce rates 25% with targeted UI work and refactored shared components into a reusable library.',
+      ],
+    },
+    {
+      role: 'Front-End Engineer',
+      company: 'B.Grimm',
+      type: 'Full-time',
+      current: false,
+      dates: '2022 — 2024',
+      duration: '2 yrs',
+      location: 'Bangkok, TH · On-site',
+      description: 'Designed and shipped real-time dashboards tracking KPIs and project metrics across multiple departments.',
+      highlights: [
+        'Built real-time dashboards in Web2py and JavaScript to track KPIs and project metrics across departments.',
+        'Cut page load times 30% through modular refactors and lazy loading — a further 40% on initial loads via targeted frontend performance work.',
+        'Led frontend redesigns that raised engagement and reduced support requests 20%.',
+        'Translated Figma prototypes into pixel-perfect responsive pages and built reusable Tailwind CSS components folded into the company design system.',
+      ],
+    },
+    {
+      role: 'Front-End Developer Intern',
+      company: 'Spark',
+      type: 'Internship',
+      current: false,
+      dates: '2021 — 2022',
+      duration: '1 yr',
+      location: 'On-site',
+      description: 'Built and maintained production features for dynamic web applications with Laravel, Vue.js and JavaScript.',
+      highlights: [
+        'Refactored legacy UI into modular, reusable Vue components — 40% less development redundancy.',
+        'Translated Figma designs into high-fidelity, responsive interfaces with HTML5, CSS3 and Tailwind / Bootstrap.',
+        'Integrated RESTful APIs with backend developers and coordinated A/B testing with UI/UX, lifting user retention 15%.',
+      ],
+    },
+    {
+      role: 'Front-End Developer',
+      company: 'Spotify Campus',
+      type: 'Hackathon',
+      current: false,
+      dates: '2021',
+      duration: '48 hours',
+      location: 'Remote',
+      description: 'Shipped a music-ranking SPA in a 48-hour hackathon with the Spotify API.',
+      highlights: [
+        'Built a music-ranking SPA with React, Redux, Tailwind CSS and the Spotify API.',
+        'Integrated Spotify OAuth 2.0 for secure user login and access to listening data and playlists.',
+        'Built dynamic Chart.js visualisations of listening patterns plus Twitter API integration for social sharing.',
+      ],
+    },
+  ],
+  education: [
+    { degree: 'M.Sc. Data Science',     school: 'Harbour.Space University', years: '2022 — 2024' },
+    { degree: 'B.Sc. Computer Science', school: 'Covenant University',      years: '2018 — 2022' },
+  ],
+};
+
+const PHOTOS = [
+  { id: 'me',      label: 'demo day',  meta: 'University of the Future · 2025', img: 'pictures/photos/me.jpg' },
+  { id: 'bgrimm',  label: 'the team',  meta: 'B.Grimm — Bangkok · 2024',        img: 'pictures/photos/bgrimm.jpg' },
+  { id: 'bgrimm1', label: 'boardroom', meta: 'B.Grimm internship · 2024',       img: 'pictures/photos/bgrimm1.jpg' },
+];
+
+/* =================================================================
+   ICONS — SVG snippets
+   ================================================================= */
+const ICONS = {
+  folder: () => `<svg viewBox="0 0 48 48"><path class="folder-shade" d="M2 12h44v32H2z"/><path class="folder-tab" d="M4 8h16l4 4h22v6H4z"/><path class="folder-body" d="M4 14h40v28H4z"/></svg>`,
+  'doc-info': () => `<svg viewBox="0 0 48 48"><path class="doc-body" d="M10 4h22l8 8v32H10z"/><path class="doc-fold" d="M32 4v8h8z"/><path class="doc-line" stroke-linecap="round" d="M16 18h16M16 24h16M16 30h12M16 36h8"/></svg>`,
+  'doc-md':   () => `<svg viewBox="0 0 48 48"><path class="doc-body" d="M10 4h22l8 8v32H10z"/><path class="doc-fold" d="M32 4v8h8z"/><text x="14" y="34" font-family="IBM Plex Mono" font-size="9" font-weight="700" fill="currentColor">.md</text></svg>`,
+  'doc-card': () => `<svg viewBox="0 0 48 48"><path class="doc-body" d="M6 10h36v28H6z"/><circle cx="16" cy="22" r="4" class="doc-fold"/><path class="doc-line" stroke-linecap="round" d="M24 18h12M24 22h12M24 26h8M10 32h28"/></svg>`,
+  email:    () => `<iconify-icon icon="hugeicons:mail-01" noobserver></iconify-icon>`,
+  github:   () => `<iconify-icon icon="hugeicons:github" noobserver></iconify-icon>`,
+  linkedin: () => `<iconify-icon icon="hugeicons:linkedin-01" noobserver></iconify-icon>`,
+  twitter:  () => `<iconify-icon icon="hugeicons:new-twitter" noobserver></iconify-icon>`,
+};
+
+/* =================================================================
+   DESKTOP — populate icons
+   ================================================================= */
+const DESKTOP_ORDER = ['about.txt', 'contact.card', 'projects', 'photos'];
+
+function renderDesktop() {
+  const grid = document.getElementById('desktop-grid');
+  grid.innerHTML = '';
+  DESKTOP_ORDER.forEach(name => {
+    const node = FS['~'].children[name];
+    const wrap = document.createElement('button');
+    wrap.className = 'desk-icon';
+    wrap.dataset.name = name;
+    wrap.innerHTML = `
+      <span class="glyph">${ICONS[node.icon]()}</span>
+      <span class="lbl">${node.label}</span>
+    `;
+    wrap.addEventListener('click', () => {
+      document.querySelectorAll('.desk-icon').forEach(d => d.classList.remove('selected'));
+      wrap.classList.add('selected');
+      openByName(name);
+    });
+    grid.appendChild(wrap);
+  });
+}
+
+function openByName(name) {
+  const node = FS['~'].children[name];
+  if (!node) return;
+  WM.open(node.kind, name);
+}
+
+/* =================================================================
+   WINDOW MANAGER
+   ================================================================= */
+const WM = {
+  zTop: 100,
+  windows: new Map(),
+
+  defaults: {
+    about:      { title: 'About — ~/about.txt',         w: 560, h: 520, x: 0.32, y: 0.10, builder: 'about',     icon: 'doc-info' },
+    contact:    { title: 'Contact — ~/contact.card',    w: 720, h: 480, x: 0.18, y: 0.18, builder: 'contact',   icon: 'doc-card' },
+    experience: { title: 'Experience',                  w: 780, h: 620, x: 0.20, y: 0.06, builder: 'experience', icon: 'doc-info' },
+    projects:   { title: 'Projects — ~/projects/',      w: 820, h: 580, x: 0.15, y: 0.08, builder: 'projects',  icon: 'folder'   },
+    photos:     { title: 'Photos — ~/photos/',          w: 780, h: 540, x: 0.20, y: 0.12, builder: 'photos',    icon: 'folder'   },
+    buildlog:   { title: 'Build Log — ~/build-log.md',  w: 620, h: 540, x: 0.40, y: 0.12, builder: 'buildlog',  icon: 'doc-md'   },
+    readme:     { title: 'Read Me — ~/README.md',       w: 580, h: 520, x: 0.36, y: 0.16, builder: 'readme',    icon: 'doc-md'   },
+    terminal:   { title: 'Terminal — zsh',              w: 640, h: 420, x: 0.24, y: 0.34, builder: 'terminal',  icon: 'doc-md'   },
+    settings:   { title: 'Settings',                    w: 720, h: 520, x: 0.22, y: 0.18, builder: 'settings',  icon: 'doc-info' },
+    'project-detail': { title: 'Project', w: 1040, h: 680, x: 0.12, y: 0.05, builder: 'project-detail', icon: 'doc-info' },
+    'photo-detail':   { title: 'Photo', w: 600, h: 500, x: 0.34, y: 0.14, builder: 'photo-detail', icon: 'doc-info' },
+    'slide-viewer':   { title: 'Slide', w: 880, h: 640, x: 0.18, y: 0.08, builder: 'slide-viewer', icon: 'doc-info' },
+  },
+
+  open(kind, payload) {
+    const id = (kind === 'project-detail' || kind === 'photo-detail' || kind === 'slide-viewer') ? `${kind}:${payload}` : kind;
+    if (this.windows.has(id)) {
+      const win = this.windows.get(id);
+      win.el.classList.remove('minimized');
+      this.focus(id);
+      renderStage();
+      return;
+    }
+    const def = { ...this.defaults[kind] };
+    if (payload && kind === 'project-detail') {
+      const p = PROJECTS.find(pr => pr.id === payload);
+      def.title = `Project — ${p ? p.name : payload}`;
+    }
+    if (payload && kind === 'photo-detail') {
+      const ph = PHOTOS.find(p => p.id === payload);
+      def.title = `Photo — ${ph ? ph.label : payload}`;
+    }
+    if (payload && kind === 'slide-viewer') {
+      const [pid, idxStr] = String(payload).split(':');
+      const pr = PROJECTS.find(x => x.id === pid);
+      const idx0 = parseInt(idxStr || '0', 10);
+      def.title = `${pr ? pr.name : pid} — Slide ${String(idx0+1).padStart(2,'0')}`;
+    }
+
+    const layer = document.getElementById('windows-layer');
+    const el = document.createElement('div');
+    el.className = 'win';
+    const W = Math.min(def.w, window.innerWidth - 40);
+    const H = Math.min(def.h, window.innerHeight - 90);
+    const x = Math.max(20, Math.min(window.innerWidth - W - 20, Math.round(window.innerWidth * def.x)));
+    const y = Math.max(46, Math.min(window.innerHeight - H - 80, Math.round(window.innerHeight * def.y)));
+    el.style.width = W + 'px';
+    el.style.height = H + 'px';
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.style.zIndex = ++this.zTop;
+    el.dataset.id = id;
+
+    el.innerHTML = `
+      <div class="win-titlebar">
+        <div class="win-actions">
+          <button class="win-btn min" title="Minimize"><iconify-icon icon="hugeicons:minus-sign" noobserver></iconify-icon></button>
+          <button class="win-btn max" title="Maximize"><iconify-icon icon="hugeicons:square" noobserver></iconify-icon></button>
+          <button class="win-btn close" title="Close"><iconify-icon icon="hugeicons:cancel-01" noobserver></iconify-icon></button>
+        </div>
+        <div class="win-title"><span class="tt-icon">${ICONS[def.icon] ? ICONS[def.icon]() : ''}</span><span>${def.title}</span></div>
+      </div>
+      <div class="win-content"></div>
+      <div class="win-resize"></div>
+    `;
+
+    layer.appendChild(el);
+
+    const win = { el, id, kind, payload, def };
+    this.windows.set(id, win);
+    this.build(win);
+    this.bindWindow(win);
+    this.markDock(kind, true);
+    this.focus(id);
+    return win;
+  },
+
+  close(id) {
+    const win = this.windows.get(id);
+    if (!win) return;
+    win.el.style.animation = 'win-close .18s forwards';
+    setTimeout(() => {
+      win.el.remove();
+      this.windows.delete(id);
+      this.markDock(win.kind, this.hasOpen(win.kind));
+    }, 180);
+  },
+
+  hasOpen(kind) {
+    for (const w of this.windows.values()) if (w.kind === kind) return true;
+    return false;
+  },
+
+  closeAll() {
+    [...this.windows.keys()].forEach(id => this.close(id));
+  },
+
+  focus(id) {
+    const win = this.windows.get(id);
+    if (!win) return;
+    win.el.style.zIndex = ++this.zTop;
+  },
+
+  minimize(id) {
+    const win = this.windows.get(id);
+    if (!win) return;
+    win.el.classList.add('minimized');
+    renderStage();
+  },
+
+  maximize(id) {
+    const win = this.windows.get(id);
+    if (!win) return;
+    win.el.classList.toggle('maximized');
+  },
+
+  markDock(kind, on) {
+    document.querySelectorAll(`.dock-icon[data-open="${kind}"]`).forEach(b => b.classList.toggle('is-open', !!on));
+    renderStage();
+  },
+
+  bindWindow(win) {
+    const { el, id } = win;
+    el.addEventListener('mousedown', () => this.focus(id), { capture: true });
+    el.querySelector('.win-btn.close').addEventListener('click', () => this.close(id));
+    el.querySelector('.win-btn.min').addEventListener('click', () => this.minimize(id));
+    el.querySelector('.win-btn.max').addEventListener('click', () => this.maximize(id));
+
+    // double-click title to maximize
+    const bar = el.querySelector('.win-titlebar');
+    bar.addEventListener('dblclick', e => {
+      if (e.target.closest('.win-btn')) return;
+      this.maximize(id);
+    });
+
+    // drag
+    let drag = null;
+    bar.addEventListener('mousedown', e => {
+      if (e.target.closest('.win-btn')) return;
+      if (el.classList.contains('maximized')) return;
+      drag = {
+        ox: e.clientX, oy: e.clientY,
+        lx: parseInt(el.style.left, 10), ly: parseInt(el.style.top, 10),
+      };
+      bar.classList.add('dragging');
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', e => {
+      if (!drag) return;
+      const nx = drag.lx + (e.clientX - drag.ox);
+      const ny = drag.ly + (e.clientY - drag.oy);
+      el.style.left = Math.max(0, Math.min(window.innerWidth - 80, nx)) + 'px';
+      el.style.top  = Math.max(30, Math.min(window.innerHeight - 60, ny)) + 'px';
+    });
+    window.addEventListener('mouseup', () => {
+      if (drag) { drag = null; bar.classList.remove('dragging'); }
+      if (resize) { resize = null; }
+    });
+
+    // resize
+    let resize = null;
+    const rh = el.querySelector('.win-resize');
+    rh.addEventListener('mousedown', e => {
+      resize = { ox: e.clientX, oy: e.clientY, w: el.offsetWidth, h: el.offsetHeight };
+      e.preventDefault(); e.stopPropagation();
+    });
+    window.addEventListener('mousemove', e => {
+      if (!resize) return;
+      el.style.width  = Math.max(320, resize.w + (e.clientX - resize.ox)) + 'px';
+      el.style.height = Math.max(220, resize.h + (e.clientY - resize.oy)) + 'px';
+    });
+  },
+
+  build(win) {
+    const c = win.el.querySelector('.win-content');
+    const b = win.def.builder;
+    if (b === 'about')      return buildAbout(c, win);
+    if (b === 'contact')    return buildContact(c, win);
+    if (b === 'experience') return buildExperience(c, win);
+    if (b === 'projects')   return buildProjects(c, win);
+    if (b === 'photos')     return buildPhotos(c, win);
+    if (b === 'buildlog')   return buildBuildLog(c, win);
+    if (b === 'readme')     return buildReadme(c, win);
+    if (b === 'terminal')   return buildTerminal(c, win);
+    if (b === 'settings')   return buildSettings(c, win);
+    if (b === 'project-detail') return buildProjectDetail(c, win);
+    if (b === 'photo-detail')   return buildPhotoDetail(c, win);
+    if (b === 'slide-viewer')   return buildSlideViewer(c, win);
+    if (b === 'trash')          return buildTrash(c, win);
+  }
+};
+
+function renderStage() {
+  const strip = document.getElementById('stage-manager');
+  const desktop = document.getElementById('desktop');
+  if (!strip) return;
+  // Group windows by their kind, keeping order
+  const wins = [...WM.windows.values()].filter(w => !w.el.classList.contains('minimized'));
+  if (!wins.length) {
+    strip.classList.remove('has-items');
+    desktop.classList.remove('has-stage');
+    strip.innerHTML = '';
+    return;
+  }
+  strip.classList.add('has-items');
+  desktop.classList.add('has-stage');
+  strip.innerHTML = wins.slice(0, 5).map(w => {
+    const label = w.def.title.split('—')[0].trim();
+    return `<div class="stage-card" data-id="${w.id}">
+      <div class="scn"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+      <div class="lbl">${label}</div>
+    </div>`;
+  }).join('');
+  strip.querySelectorAll('.stage-card').forEach(c => {
+    c.addEventListener('click', () => {
+      const w = WM.windows.get(c.dataset.id);
+      if (!w) return;
+      w.el.classList.remove('minimized');
+      WM.focus(w.id);
+    });
+  });
+}
+
+/* =================================================================
+   BUILDERS
+   ================================================================= */
+function buildAbout(c, win) {
+  c.innerHTML = `
+    <div class="pad-lg">
+      <div class="about-head">
+        <h1 class="display">Okonicha <em>Dinma</em><br/>— Dunebari</h1>
+        <span class="rule"></span>
+      </div>
+      <p class="body">Based in Bangkok, Thailand, I'm a software developer and UI/UX designer with a background in data science. I build careful, well-paced digital products — interfaces that feel quiet on the eye and certain in the hand.</p>
+      <p class="body" style="margin-top:10px;">Outside of code I draw and craft UI designs, hit the gym, and play RPGs and shooters 😊. You can find me on <a href="https://github.com/dinma-daniel" target="_blank" rel="noopener" style="border-bottom:1px solid;color:var(--accent)">GitHub</a>, <a href="https://www.linkedin.com/in/chukwudinma-okonicha/" target="_blank" rel="noopener" style="border-bottom:1px solid;color:var(--accent)">LinkedIn</a>, or <a href="mailto:ddunebari@gmail.com" style="border-bottom:1px solid;color:var(--accent)">over email</a>.</p>
+
+      <div class="about-focus">
+        <div class="head">Current Focus</div>
+        <ul>
+          <li>Co-founding <em><b>Streamatic</b></em> as CTO — a physical intelligence platform (NVIDIA Inception).</li>
+          <li>Shipping customer-facing Next.js dashboards and leading hardware integrations.</li>
+          <li>Carrying an M.Sc. in Data Science from <em><b>Harbour.Space University</b></em>.</li>
+        </ul>
+      </div>
+
+      <div style="margin-top:22px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <a class="cta-btn" data-open="experience">Open Experience <span class="ar">↗</span></a>
+        <a class="cta-btn" data-open="projects" style="background:transparent;color:var(--text);border:1px solid var(--text);">View Projects <span class="ar">→</span></a>
+      </div>
+    </div>
+  `;
+  c.querySelector('[data-open="projects"]').addEventListener('click', () => WM.open('projects'));
+  c.querySelector('[data-open="experience"]').addEventListener('click', () => WM.open('experience'));
+}
+
+function buildExperience(c) {
+  c.innerHTML = `
+    <div class="exp-wrap">
+      <div class="eyebrow">~/experience</div>
+      <h1 class="display" style="font-size: 2.2rem; margin-top: 6px;">Experience</h1>
+      <p class="lede">A timeline of my work, current focus and education — from 48-hour hackathon sprints to production blockchain platforms.</p>
+
+      <div class="exp-section">
+        <div class="head">Current Focus</div>
+        <div class="body">
+          <ul class="exp-focus">
+            ${EXPERIENCE.focus.map(f => `<li>${f.html}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-section">
+        <div class="head">Career Timeline</div>
+        <div class="body">
+          <div class="timeline">
+            ${EXPERIENCE.timeline.map(t => `
+              <div class="exp-card">
+                <div class="row1">
+                  <span class="role">${t.role}</span>
+                  <span class="where"><em>${t.company}</em> · ${t.type}</span>
+                  ${t.current ? '<span class="badge-current">Current</span>' : ''}
+                </div>
+                <div class="row2">${t.dates} · ${t.duration}</div>
+                ${t.location ? `<div class="loc">${t.location}</div>` : ''}
+                <div class="desc">${t.description}</div>
+                ${t.highlights && t.highlights.length ? `
+                  <ul class="highlights">
+                    ${t.highlights.map(h => `<li>${h}</li>`).join('')}
+                  </ul>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+
+      ${EXPERIENCE.education && EXPERIENCE.education.length ? `
+      <div class="exp-section">
+        <div class="head">Education</div>
+        <div class="body">
+          <div class="edu-list">
+            ${EXPERIENCE.education.map(e => `
+              <div class="edu-row">
+                <div class="edu-main">
+                  <div class="degree">${e.degree}</div>
+                  <div class="school">${e.school}</div>
+                </div>
+                <div class="edu-years">${e.years}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>` : ''}
+    </div>
+  `;
+}
+
+function buildContact(c) {
+  c.innerHTML = `
+    <div class="contact-grid">
+      <div>
+        <div class="eyebrow">~/contact.card</div>
+        <h1 class="display" style="margin-top:8px;">Say <em>hello</em>,<br/>build something.</h1>
+        <p class="body" style="margin-top:12px;">I'm open to freelance product work, design-engineering contracts, and meaningful collaborations. The fastest reply is by email.</p>
+        <div class="social-list" style="margin-top:18px;">
+          <a href="mailto:ddunebari@gmail.com"><span class="ic">${ICONS.email()}</span><span>ddunebari@gmail.com</span><span class="arrow">↗</span></a>
+          <a href="https://github.com/dinma-daniel" target="_blank" rel="noopener"><span class="ic">${ICONS.github()}</span><span>github.com/dinma-daniel</span><span class="arrow">↗</span></a>
+          <a href="https://www.linkedin.com/in/chukwudinma-okonicha/" target="_blank" rel="noopener"><span class="ic">${ICONS.linkedin()}</span><span>linkedin.com/in/chukwudinma-okonicha</span><span class="arrow">↗</span></a>
+        </div>
+      </div>
+      <div class="contact-meta">
+        <div class="k">Based</div><div class="v">Bangkok, Thailand</div>
+        <div class="k">Hours</div><div class="v">09:00 — 19:00 ICT</div>
+        <div class="k">Tools</div><div class="v">Figma · VS Code · React · TypeScript</div>
+        <div class="k">Status</div><div class="v" style="color:var(--accent);">— available to work</div>
+        <div class="k">Response</div><div class="v">within 24h</div>
+      </div>
+    </div>
+  `;
+}
+
+function buildProjects(c) {
+  c.innerHTML = `
+    <div class="projects-wrap">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px;">
+        <div>
+          <div class="eyebrow">~/projects/</div>
+          <h2 class="heading" style="margin-top:4px;">Selected work — <em>2023 → 2026</em></h2>
+        </div>
+        <div class="eyebrow">${PROJECTS.length} items</div>
+      </div>
+      <div class="projects-grid">
+        ${PROJECTS.map(p => `
+          <div class="proj-card" data-id="${p.id}">
+            <div class="thumb" style="background:${p.color}; color:${p.fg};">
+              ${p.img
+                ? `<img src="${p.img}" alt="${p.name}" data-fb="${p.name}" />`
+                : `<div class="thumb-fallback" style="display:grid;place-items:center;width:100%;height:100%;font-family:var(--font-display);font-size:1.8rem;letter-spacing:-0.02em;color:${p.fg};">${p.name}</div>`}
+              <div class="badge">${p.tag}</div>
+            </div>
+            <div class="meta">
+              <div class="name">${p.name}</div>
+              <div class="tag">${p.year} · <em>${p.role}</em></div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  c.querySelectorAll('.proj-card').forEach(card => {
+    card.addEventListener('click', () => WM.open('project-detail', card.dataset.id));
+  });
+  // graceful image fallback — replace with display-font name placeholder
+  c.querySelectorAll('.thumb img').forEach(img => {
+    img.addEventListener('error', () => {
+      const name = img.dataset.fb || 'Project';
+      const fg = img.parentElement.style.color || '#fff';
+      img.outerHTML = `<div class="thumb-fallback" style="display:grid;place-items:center;width:100%;height:100%;font-family:var(--font-display);font-size:1.8rem;letter-spacing:-0.02em;color:${fg};">${name}</div>`;
+    });
+  });
+}
+
+function buildProjectDetail(c, win) {
+  const p = PROJECTS.find(pr => pr.id === win.payload);
+  if (!p) { c.innerHTML = '<div class="pad">Project not found.</div>'; return; }
+  const images = (p.images && p.images.length) ? p.images : (p.img ? [p.img] : []);
+  const visit = p.visitUrl
+    ? `<a class="pd-visit" href="${p.visitUrl}" target="_blank" rel="noopener">Visit Project <iconify-icon icon="hugeicons:arrow-up-right-01" noobserver></iconify-icon></a>`
+    : `<a class="pd-visit" href="mailto:ddunebari@gmail.com?subject=Re: ${p.name}">Discuss This <iconify-icon icon="hugeicons:arrow-up-right-01" noobserver></iconify-icon></a>`;
+
+  c.innerHTML = `
+    <div class="proj-detail-v2">
+      <div class="pd-left">
+        <div class="eyebrow">~/projects/${p.id}.proj</div>
+        <h1 class="pd-title">${p.name}</h1>
+        <div class="pd-meta">${p.meta || `${p.role} • ${p.year}`}</div>
+        ${visit}
+
+        ${p.blurb ? `<p class="body" style="margin-top:22px; max-width: 50ch;">${p.blurb}</p>` : ''}
+
+        ${p.techStack && p.techStack.length ? `
+        <div class="pd-section">
+          <div class="h">Tech Stack</div>
+          <div class="pd-chips">
+            ${p.techStack.map(t => `<span class="pd-chip">${t}</span>`).join('')}
+          </div>
+        </div>` : ''}
+
+        ${p.tasks && p.tasks.length ? `
+        <div class="pd-section">
+          <div class="h">Tasks</div>
+          <div class="pd-chips">
+            ${p.tasks.map(t => `<span class="pd-chip-upper">${t}</span>`).join('')}
+          </div>
+        </div>` : ''}
+
+        ${p.refs && p.refs.length ? `
+        <div class="pd-section">
+          <div class="h">References & Diagrams</div>
+          <div class="pd-refs">
+            ${p.refs.map(r => `<div class="pd-ref"><iconify-icon icon="hugeicons:file-01" noobserver></iconify-icon><span>${r.name}</span></div>`).join('')}
+          </div>
+        </div>` : ''}
+
+        ${p.metrics && p.metrics.length ? `
+        <div class="pd-metrics">
+          ${p.metrics.slice(0, 4).map(m => `
+            <div class="pd-metric">
+              <div class="k">${m.k}</div>
+              <div class="v">${m.v}</div>
+            </div>
+          `).join('')}
+        </div>` : ''}
+
+        ${p.sections && p.sections.length ? `
+        <div class="pd-prose">
+          ${p.sections.map(s => `<div class="block"><h2>${s.h}</h2><p>${s.p}</p></div>`).join('')}
+        </div>` : ''}
+
+        <div class="pd-cta">
+          <a class="cta-btn" href="mailto:ddunebari@gmail.com?subject=Re: ${p.name}">Discuss this project <span class="ar">→</span></a>
+        </div>
+      </div>
+
+      <div class="pd-right">
+        <div class="pd-visuals-head">
+          <span>Visuals</span>
+          <span>${images.length || 0} ${images.length === 1 ? 'slide' : 'slides'}</span>
+        </div>
+        <div class="pd-slides">
+          ${images.length
+            ? images.map((src, i) => `
+              <div class="pd-slide">
+                <div class="pd-slide-frame" style="background:${p.color};">
+                  <img src="${src}" alt="${p.name} slide ${i+1}" data-fb="${p.name}" />
+                </div>
+                <div class="pd-slide-cap">
+                  <span>Slide ${String(i+1).padStart(2,'0')} · Image</span>
+                  <span>${i+1} / ${images.length}</span>
+                </div>
+              </div>
+            `).join('')
+            : `
+              <div class="pd-slide">
+                <div class="pd-slide-frame" style="background:${p.color}; color:${p.fg};">
+                  <div class="pd-slide-fallback">${p.name}</div>
+                </div>
+                <div class="pd-slide-cap"><span>Slide 01 · Placeholder</span></div>
+              </div>
+            `}
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Image error fallback — keep the slide card but swap to a typographic placeholder.
+  c.querySelectorAll('.pd-slide img').forEach(img => {
+    img.addEventListener('error', () => {
+      const name = img.dataset.fb || 'Project';
+      img.outerHTML = `<div class="pd-slide-fallback" style="background:${p.color}; color:${p.fg};">${name}</div>`;
+    });
+  });
+  // Click a slide to open it in a draggable Slide window at that index
+  c.querySelectorAll('.pd-slide').forEach((slide, idx) => {
+    slide.addEventListener('click', () => WM.open('slide-viewer', `${p.id}:${idx}`));
+  });
+}
+
+function buildSlideViewer(c, win) {
+  const [projectId, indexStr] = String(win.payload || '').split(':');
+  const p = PROJECTS.find(pr => pr.id === projectId);
+  if (!p) { c.innerHTML = '<div class="pad">Project not found.</div>'; return; }
+  const images = (p.images && p.images.length) ? p.images : (p.img ? [p.img] : []);
+  if (!images.length) {
+    c.innerHTML = `
+      <div class="sv-wrap">
+        <div class="sv-stage" style="background:${p.color};color:${p.fg};">
+          <div class="sv-fb">${p.name}</div>
+        </div>
+        <div class="sv-bar"><span class="sv-pos">No slides for this project</span></div>
+      </div>`;
+    return;
+  }
+
+  let idx = Math.max(0, Math.min(parseInt(indexStr || '0', 10), images.length - 1));
+
+  function render() {
+    c.innerHTML = `
+      <div class="sv-wrap">
+        <div class="sv-stage" style="background:${p.color};">
+          <img src="${images[idx]}" alt="${p.name} slide ${idx+1}" data-fb="${p.name}" />
+        </div>
+        <div class="sv-bar">
+          <button class="sv-nav sv-prev" ${idx === 0 ? 'disabled' : ''}>
+            <iconify-icon icon="hugeicons:arrow-left-01" noobserver></iconify-icon>
+            Previous
+          </button>
+          <span class="sv-pos">Slide ${String(idx+1).padStart(2,'0')} / ${String(images.length).padStart(2,'0')} · ${p.name}</span>
+          <button class="sv-nav sv-next" ${idx === images.length-1 ? 'disabled' : ''}>
+            Next
+            <iconify-icon icon="hugeicons:arrow-right-01" noobserver></iconify-icon>
+          </button>
+        </div>
+        ${images.length > 1 ? `
+          <div class="sv-thumbs">
+            ${images.map((src, i) => `
+              <div class="sv-thumb ${i === idx ? 'active' : ''}" data-i="${i}">
+                <img src="${src}" alt="thumb ${i+1}" data-fb="${p.name}" />
+              </div>
+            `).join('')}
+          </div>` : ''}
+      </div>
+    `;
+
+    // Update the window title bar so it reflects the current slide
+    const titleEl = win.el.querySelector('.win-title span:last-child');
+    if (titleEl) titleEl.textContent = `${p.name} — Slide ${String(idx+1).padStart(2,'0')} / ${String(images.length).padStart(2,'0')}`;
+
+    // Nav buttons
+    const prev = c.querySelector('.sv-prev');
+    const next = c.querySelector('.sv-next');
+    if (prev) prev.addEventListener('click', () => { if (idx > 0)               { idx--; render(); } });
+    if (next) next.addEventListener('click', () => { if (idx < images.length-1) { idx++; render(); } });
+
+    // Thumbnail strip
+    c.querySelectorAll('.sv-thumb').forEach(t => {
+      t.addEventListener('click', () => { idx = +t.dataset.i; render(); });
+      const tImg = t.querySelector('img');
+      if (tImg) tImg.addEventListener('error', () => {
+        tImg.outerHTML = `<div class="sv-thumb-fb" style="background:${p.color};color:${p.fg};">${(p.name[0] || '·')}</div>`;
+      });
+    });
+
+    // Main image fallback
+    const mainImg = c.querySelector('.sv-stage img');
+    if (mainImg) mainImg.addEventListener('error', () => {
+      mainImg.outerHTML = `<div class="sv-fb" style="color:${p.fg};">${p.name}</div>`;
+    });
+
+    // Scroll active thumb into view
+    const active = c.querySelector('.sv-thumb.active');
+    if (active && active.scrollIntoView) active.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+
+  // Keyboard nav while the window is focused
+  const onKey = (e) => {
+    if (!document.body.contains(win.el)) return;
+    if (win.el.classList.contains('minimized')) return;
+    const top = [...WM.windows.values()].filter(w => !w.el.classList.contains('minimized'))
+      .sort((a, b) => (parseInt(b.el.style.zIndex, 10) || 0) - (parseInt(a.el.style.zIndex, 10) || 0))[0];
+    if (!top || top.id !== win.id) return;
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); if (idx > 0)               { idx--; render(); } }
+    if (e.key === 'ArrowRight') { e.preventDefault(); if (idx < images.length-1) { idx++; render(); } }
+  };
+  document.addEventListener('keydown', onKey);
+  // Clean up when window closes
+  const close = win.el.querySelector('.win-btn.close');
+  if (close) close.addEventListener('click', () => document.removeEventListener('keydown', onKey));
+
+  render();
+}
+
+function buildPhotos(c) {
+  c.innerHTML = `
+    <div class="projects-wrap">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px;">
+        <div>
+          <div class="eyebrow">~/photos/</div>
+          <h2 class="heading" style="margin-top:4px;">Frames — <em>moments, mostly working</em></h2>
+        </div>
+        <div class="eyebrow">${PHOTOS.length} items</div>
+      </div>
+      <div class="projects-grid">
+        ${PHOTOS.map(p => `
+          <div class="proj-card" data-id="${p.id}">
+            <div class="thumb" style="background:#1A1108;">
+              <img src="${p.img}" alt="${p.label}" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              <div class="badge">${(p.meta.split('·')[0] || '').trim()}</div>
+            </div>
+            <div class="meta">
+              <div class="name">${p.label}</div>
+              <div class="tag">${p.meta}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  c.querySelectorAll('.proj-card').forEach(card => {
+    card.addEventListener('click', () => WM.open('photo-detail', card.dataset.id));
+  });
+}
+
+function buildPhotoDetail(c, win) {
+  const p = PHOTOS.find(ph => ph.id === win.payload);
+  if (!p) { c.innerHTML = '<div class="pad">Photo not found.</div>'; return; }
+  c.innerHTML = `
+    <div class="photo-view">
+      <div class="meta-bar">
+        <div>
+          <div class="eyebrow">~/photos/${p.id}.jpg</div>
+          <h2>${p.label}</h2>
+        </div>
+        <div class="meta">${p.meta}</div>
+      </div>
+      <div class="stage" style="background:#0A0805;">
+        <img src="${p.img}" alt="${p.label}" style="max-width:100%;max-height:100%;object-fit:contain;display:block;" />
+      </div>
+    </div>
+  `;
+}
+
+/* Tiny generative pixel scenes per location — vibe over realism */
+function pixelScene(id, pal) {
+  const [c1, c2, c3, c4] = pal;
+  if (id === 'berlin') {
+    return `<svg viewBox="0 0 32 24" shape-rendering="crispEdges" preserveAspectRatio="xMidYMid slice">
+      <rect width="32" height="24" fill="${c1}"/>
+      <rect x="0" y="14" width="32" height="10" fill="${c2}"/>
+      <rect x="2"  y="8"  width="3" height="6" fill="${c4}"/>
+      <rect x="6"  y="6"  width="4" height="8" fill="${c4}"/>
+      <rect x="11" y="4"  width="2" height="10" fill="${c4}"/>
+      <rect x="14" y="9"  width="5" height="5" fill="${c4}"/>
+      <rect x="20" y="3"  width="4" height="11" fill="${c4}"/>
+      <rect x="25" y="7"  width="5" height="7" fill="${c4}"/>
+      <rect x="7"  y="8"  width="1" height="1" fill="${c1}"/>
+      <rect x="21" y="6"  width="1" height="1" fill="${c1}"/>
+      <rect x="22" y="9"  width="1" height="1" fill="${c1}"/>
+      <rect x="26" y="9"  width="1" height="1" fill="${c1}"/>
+      <rect x="3"  y="2"  width="1" height="1" fill="${c3}"/>
+      <rect x="27" y="3"  width="1" height="1" fill="${c3}"/>
+    </svg>`;
+  }
+  if (id === 'portugal') {
+    return `<svg viewBox="0 0 32 24" shape-rendering="crispEdges" preserveAspectRatio="xMidYMid slice">
+      <rect width="32" height="24" fill="${c1}"/>
+      <path d="M0 12 L8 8 L14 12 L22 6 L32 12 L32 24 L0 24 Z" fill="${c3}"/>
+      <rect x="0" y="18" width="32" height="6" fill="${c4}"/>
+      <rect x="3" y="14" width="3" height="5" fill="${c2}"/>
+      <rect x="10" y="10" width="3" height="9" fill="${c1}"/>
+      <rect x="13" y="11" width="2" height="8" fill="${c2}"/>
+      <rect x="18" y="9" width="3" height="10" fill="${c1}"/>
+      <rect x="24" y="13" width="3" height="6" fill="${c2}"/>
+      <rect x="27" y="11" width="2" height="8" fill="${c1}"/>
+      <circle cx="26" cy="4" r="2" fill="${c2}"/>
+    </svg>`;
+  }
+  if (id === 'provence') {
+    return `<svg viewBox="0 0 32 24" shape-rendering="crispEdges" preserveAspectRatio="xMidYMid slice">
+      <rect width="32" height="24" fill="${c1}"/>
+      <rect y="14" width="32" height="10" fill="${c3}"/>
+      <path d="M0 18 L8 14 L18 17 L32 13 L32 24 L0 24 Z" fill="${c2}"/>
+      ${Array.from({length: 30}).map(() => {
+        const x = Math.floor(Math.random()*32);
+        const y = 17 + Math.floor(Math.random()*7);
+        return `<rect x="${x}" y="${y}" width="1" height="1" fill="${c4}"/>`;
+      }).join('')}
+      <rect x="14" y="6" width="2" height="2" fill="${c2}"/>
+    </svg>`;
+  }
+  // lagos
+  return `<svg viewBox="0 0 32 24" shape-rendering="crispEdges" preserveAspectRatio="xMidYMid slice">
+    <rect width="32" height="24" fill="${c1}"/>
+    <rect x="0" y="0" width="32" height="10" fill="${c2}"/>
+    <rect x="0" y="14" width="32" height="10" fill="${c3}"/>
+    <rect x="0" y="20" width="32" height="4" fill="${c4}"/>
+    <rect x="4"  y="10" width="3" height="8" fill="${c4}"/>
+    <rect x="9"  y="8"  width="4" height="10" fill="${c4}"/>
+    <rect x="14" y="11" width="5" height="7" fill="${c4}"/>
+    <rect x="20" y="6"  width="3" height="12" fill="${c4}"/>
+    <rect x="24" y="9"  width="6" height="9" fill="${c4}"/>
+    <rect x="5" y="12" width="1" height="1" fill="${c1}"/>
+    <rect x="10" y="11" width="1" height="1" fill="${c1}"/>
+    <rect x="21" y="9" width="1" height="1" fill="${c1}"/>
+    <rect x="25" y="13" width="1" height="1" fill="${c1}"/>
+  </svg>`;
+}
+
+function buildBuildLog(c) {
+  c.innerHTML = `
+    <div class="text-view">
+      <div class="meta">~/build-log.md · last edit 2026-05-17</div>
+      <h1>Build log</h1>
+      <div class="hr"></div>
+      <h2>2026 · May</h2>
+      <h3>v1.0 — Portfolio OS</h3>
+      <p>Spent the weekend rewriting my portfolio as a tiny operating system. Editorial-orange Sharp skin by default; Twilight Frosted skin one toggle away. Everything (about, projects, photos, contact) is just a file on the desktop now — even the terminal can <em>open ~/projects/demahub.proj</em>.</p>
+
+      <h2>2026 · April</h2>
+      <h3>Hand Sign — model card v2</h3>
+      <p>Switched the gesture classifier from a vanilla CNN to MediaPipe landmarks + a small MLP head. Lost a few false positives, kept ~30fps on a CPU laptop. Wrote up the dataset card.</p>
+
+      <h2>2026 · March</h2>
+      <h3>Bio.daily — gentle streaks</h3>
+      <p>Removed streaks. Reading retention research convinced me: streaks are great for habit-formation games and terrible for self-compassion tools. The little check-in cards now praise the <em>showing up</em>, not the <em>chain</em>.</p>
+
+      <h2>2025 · Dec</h2>
+      <h3>Demahub — v3 spec</h3>
+      <p>Wrote the v3 RFC for community wallets. Three things changed: pluggable rules (so a susu group can vote on payout cadence), bank-grade audit log, and a much smaller mobile bundle.</p>
+    </div>
+  `;
+}
+
+function buildReadme(c) {
+  c.innerHTML = `
+    <div class="text-view">
+      <div class="meta">~/README.md</div>
+      <h1>Hello, traveller.</h1>
+      <div class="hr"></div>
+      <p>This is a portfolio dressed as an operating system. Everything you see is interactive:</p>
+      <h2>How to look around</h2>
+      <p>· Click an icon on the desktop to open its window — <em>about.txt</em>, <em>contact.card</em>, the <em>projects/</em> folder, or the <em>photos/</em> folder.<br/>
+         · Drag windows by their title bar. Double-click a title bar to maximize. Resize from the bottom-right corner.<br/>
+         · Use the dock at the bottom for quick access to apps and socials.<br/>
+         · Tap the <em>search</em> field to fuzzy-find any file or project.<br/>
+         · Open <em>Terminal</em> and type <em>help</em> — it can navigate the file system too.<br/>
+         · Open <em>Settings</em> to switch between the Sharp and Frosted skins, or to swap the desktop background.</p>
+      <h2>Why?</h2>
+      <p>Because a CV is a poor place to hide a personality. This site is a small love letter to the operating systems I grew up on — and to the idea that an interface can feel like a room you've decorated yourself.</p>
+      <h2>About me, briefly</h2>
+      <p>Dinma. Software dev, data scientist, UI/UX designer. Based in Port Harcourt, working with clients around the world. Reply guaranteed within a day if you write me at <a href="mailto:ddunebari@gmail.com">ddunebari@gmail.com</a>.</p>
+    </div>
+  `;
+}
+
+/* =================================================================
+   TERMINAL
+   ================================================================= */
+function buildTerminal(c, win) {
+  const state = { cwd: '~', history: [], hi: -1 };
+  c.innerHTML = `
+    <div class="term">
+      <div class="term-body" id="tbody-${win.id}"></div>
+      <div class="term-input-row">
+        <span class="prompt">dinma@portfolio ${state.cwd} %</span>
+        <input class="term-input" id="tinput-${win.id}" spellcheck="false" autocomplete="off" autofocus />
+      </div>
+    </div>
+  `;
+  const body = c.querySelector(`#tbody-${CSS.escape(win.id)}`);
+  const input = c.querySelector(`#tinput-${CSS.escape(win.id)}`);
+  const prompt = c.querySelector('.term-input-row .prompt');
+
+  function print(html, cls='out') {
+    const line = document.createElement('div');
+    line.className = 'line ' + cls;
+    line.innerHTML = html;
+    body.appendChild(line);
+    body.scrollTop = body.scrollHeight;
+  }
+  function echo(cmd) { print(`<span class="prompt">dinma@portfolio ${state.cwd} %</span> ${escapeHTML(cmd)}`, 'cmd'); }
+  function escapeHTML(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  // Welcome banner
+  print(`<span class="ascii">
+   ___           _    __      ___        ___    ___
+  / _ \\___  ___ / /__ \\ \\    / / |      ( _ )  / _ \\
+ / // / _ \\(_-&lt; / __/ \\ \\/\\/ /| |__   / _ \\/\\| (_) |
+/____/\\___/___/\\__/   \\_/\\_/ |____|  \\___/\\/ \\___/
+</span>`);
+  print(`<span class="accent">Portfolio OS</span> · interactive terminal · type <span class="accent">help</span> to begin.`);
+  print(``);
+
+  const CMDS = {
+    help() {
+      return [
+        `<span class="accent">Available commands</span>`,
+        `  help                  show this list`,
+        `  ls [path]             list directory`,
+        `  cd &lt;path&gt;             change directory`,
+        `  pwd                   print working directory`,
+        `  cat &lt;file&gt;            print file content`,
+        `  open &lt;name&gt;           open a file or folder in a window`,
+        `  projects              shortcut → opens projects folder`,
+        `  photos                shortcut → opens photos folder`,
+        `  experience            shortcut → opens experience timeline`,
+        `  contact               shortcut → opens contact card`,
+        `  whoami                identify yourself`,
+        `  date                  show date and time`,
+        `  echo &lt;text&gt;           print text`,
+        `  theme &lt;win|mac&gt;       switch OS skin`,
+        `  bg &lt;name&gt;             switch background (jelly, duck, orange, cream, ink, moss, bliss, paper, grid)`,
+        `  neofetch              system info`,
+        `  clear                 clear the screen`,
+      ].join('\n');
+    },
+    ls(args) {
+      const dirRef = resolvePath(args[0] || state.cwd);
+      if (!dirRef || dirRef.node.type !== 'dir') return errLine(`ls: ${args[0] || ''}: not a directory`);
+      const items = Object.entries(dirRef.node.children).map(([name, n]) => {
+        const flag = n.type === 'dir' ? '<span class="accent">' + name + '/</span>' : name;
+        const mod  = (n.modified || '').padEnd(18);
+        const size = (n.size || '—').padStart(5);
+        return `  ${mod}  ${size}   ${flag}`;
+      });
+      return items.join('\n') || '  (empty)';
+    },
+    cd(args) {
+      const target = args[0];
+      if (!target || target === '~') { state.cwd = '~'; refreshPrompt(); return ''; }
+      if (target === '..') {
+        if (state.cwd === '~') return '';
+        const parts = state.cwd.split('/'); parts.pop();
+        state.cwd = parts.join('/') || '~';
+        refreshPrompt();
+        return '';
+      }
+      const r = resolvePath(joinPath(state.cwd, target));
+      if (!r) return errLine(`cd: no such directory: ${target}`);
+      if (r.node.type !== 'dir') return errLine(`cd: not a directory: ${target}`);
+      state.cwd = r.path;
+      refreshPrompt();
+      return '';
+    },
+    pwd() { return state.cwd; },
+    cat(args) {
+      if (!args[0]) return errLine('cat: missing argument');
+      const r = resolvePath(joinPath(state.cwd, args[0]));
+      if (!r || r.node.type !== 'file') return errLine(`cat: ${args[0]}: no such file`);
+      return CAT_CONTENT[r.node.kind] || '(empty)';
+    },
+    open(args) {
+      if (!args[0]) return errLine('open: missing argument');
+      const r = resolvePath(joinPath(state.cwd, args[0]));
+      if (!r) {
+        // Try as project id
+        const p = PROJECTS.find(pr => pr.id === args[0]);
+        if (p) { WM.open('project-detail', p.id); return `opening project: ${p.name}`; }
+        return errLine(`open: ${args[0]}: not found`);
+      }
+      WM.open(r.node.kind, r.path);
+      return `opening ${r.path}`;
+    },
+    projects()   { WM.open('projects');   return 'opening ~/projects/'; },
+    photos()     { WM.open('photos');     return 'opening ~/photos/'; },
+    contact()    { WM.open('contact');    return 'opening ~/contact.card'; },
+    experience() { WM.open('experience'); return 'opening experience timeline'; },
+    whoami()   { return `dinma — software dev · data scientist · ui/ux designer\n         port harcourt, ng · ddunebari@gmail.com`; },
+    date()     { return new Date().toString(); },
+    echo(args) { return args.join(' '); },
+    clear()    { body.innerHTML = ''; return ''; },
+    theme(args){
+      const t = args[0];
+      if (t === 'win' || t === 'windows') { Theme.setSkin('win'); return 'theme → windows 11'; }
+      if (t === 'mac' || t === 'macos')   { Theme.setSkin('mac'); return 'theme → macos'; }
+      return errLine('theme: pass `win` or `mac`');
+    },
+    bg(args) {
+      const valid = [...WALLPAPERS.map(w => w.id), ...COLOR_BGS.map(b => b[0])];
+      if (!valid.includes(args[0])) return errLine(`bg: pass one of ${valid.join(', ')}`);
+      Theme.setBg(args[0]);
+      return `background → ${args[0]}`;
+    },
+    neofetch() {
+      return `<span class="ascii">    ___    </span> dinma@portfolio
+<span class="ascii">   /   \\   </span> ---------------
+<span class="ascii">  |  o o| </span> OS:     Portfolio OS 1.0
+<span class="ascii">  |  ▽  | </span> Host:   editorial-edition
+<span class="ascii">   \\___/   </span> Kernel: html/css/js
+<span class="ascii">   /| |\\  </span>  Shell:  zsh
+<span class="ascii">  d ‾‾‾ b </span>  Theme:  ${document.body.dataset.skin === 'mac' ? 'Twilight Frosted' : 'Editorial Sharp'}
+            Memory: 2KB / ∞
+            Uptime: ${Math.floor((Date.now() - BOOT_T) / 1000)}s`;
+    },
+  };
+
+  function errLine(msg) { return `<span class="line err">${escapeHTML(msg)}</span>`; }
+
+  function joinPath(cwd, target) {
+    if (target.startsWith('~')) return target;
+    if (target.startsWith('/')) return '~' + target;
+    if (cwd === '~') return '~/' + target;
+    return cwd + '/' + target;
+  }
+
+  function resolvePath(p) {
+    if (!p) return null;
+    const clean = p.replace(/\/$/, '');
+    if (clean === '~') return { path: '~', node: FS['~'] };
+    const parts = clean.split('/');
+    if (parts[0] !== '~') return null;
+    let node = FS['~'];
+    let cur = '~';
+    for (let i = 1; i < parts.length; i++) {
+      const seg = parts[i]; if (!seg) continue;
+      if (node.type !== 'dir' || !node.children[seg]) return null;
+      node = node.children[seg];
+      cur = cur + '/' + seg;
+    }
+    return { path: cur, node };
+  }
+
+  function refreshPrompt() {
+    prompt.textContent = `dinma@portfolio ${state.cwd} %`;
+  }
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const raw = input.value;
+      input.value = '';
+      echo(raw);
+      const trimmed = raw.trim();
+      if (!trimmed) return;
+      state.history.unshift(trimmed);
+      state.hi = -1;
+      const [name, ...args] = trimmed.split(/\s+/);
+      const fn = CMDS[name];
+      if (!fn) { print(errLine(`zsh: command not found: ${name}`)); return; }
+      const out = fn(args);
+      if (out) print(out);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (state.history.length === 0) return;
+      state.hi = Math.min(state.history.length - 1, state.hi + 1);
+      input.value = state.history[state.hi];
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      state.hi = Math.max(-1, state.hi - 1);
+      input.value = state.hi === -1 ? '' : state.history[state.hi];
+    } else if (e.key === 'l' && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault(); body.innerHTML = '';
+    }
+  });
+  // focus on click
+  c.querySelector('.term').addEventListener('click', () => input.focus());
+}
+
+/* contents for `cat` */
+const CAT_CONTENT = {
+  about: `Okonicha Dinma — Dunebari
+Software developer · UI/UX designer · background in data science
+Bangkok, Thailand
+
+I build careful, well-paced digital products. I care about typography,
+quiet interactions, and software that ages well.
+
+Currently:
+  · Co-founder & CTO at Streamatic — a physical intelligence platform (NVIDIA Inception).
+  · Shipping customer-facing Next.js dashboards and leading hardware integrations.
+  · M.Sc. Data Science — Harbour.Space University.`,
+  contact: `name:      Okonicha Dinma — Dunebari
+email:     ddunebari@gmail.com
+github:    github.com/dinma-daniel
+linkedin:  linkedin.com/in/chukwudinma-okonicha
+based:     Bangkok, Thailand
+hours:     09:00 — 19:00 ICT
+response:  within 24h`,
+};
+
+/* =================================================================
+   SETTINGS
+   ================================================================= */
+function buildSettings(c) {
+  c.innerHTML = `
+    <div class="settings">
+      <div class="nav">
+        <button class="active" data-tab="appearance">◐  Appearance</button>
+        <button data-tab="bg">◑  Background</button>
+        <button data-tab="about">○  About this OS</button>
+      </div>
+      <div class="body" id="settings-body"></div>
+    </div>
+  `;
+  const body = c.querySelector('#settings-body');
+  const tabs = c.querySelectorAll('.nav button');
+  const render = (tab) => {
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    if (tab === 'appearance') {
+      body.innerHTML = `
+        <h2>Appearance</h2>
+        <p class="lede">Switch the chrome between two operating-system aesthetics. Affects window styling, dock shape, and accent colour. Your choice is remembered.</p>
+        <div class="group">
+          <h3>Skin</h3>
+          <div class="skin-toggle">
+            <div class="skin-card ${document.body.dataset.skin === 'win' ? 'active' : ''}" data-skin-card="win">
+              <div class="preview win"></div>
+              <div class="name">Editorial — Sharp</div>
+              <div class="meta">— sharp corners · centered taskbar</div>
+            </div>
+            <div class="skin-card ${document.body.dataset.skin === 'mac' ? 'active' : ''}" data-skin-card="mac">
+              <div class="preview mac"></div>
+              <div class="name">Twilight — Frosted</div>
+              <div class="meta">— frosted glass · floating dock</div>
+            </div>
+          </div>
+        </div>
+        <div class="group">
+          <h3>Accent</h3>
+          <p class="lede" style="margin-bottom:0; font-size:12px;">Accent colour follows the selected skin — rust for Sharp, dusk pink for Frosted.</p>
+        </div>
+      `;
+      body.querySelectorAll('[data-skin-card]').forEach(el => {
+        el.addEventListener('click', () => Theme.setSkin(el.dataset.skinCard));
+      });
+    }
+    if (tab === 'bg') {
+      body.innerHTML = `
+        <h2>Background</h2>
+        <p class="lede">Pick a desktop wallpaper — a photo from your <em>pictures/bg</em> folder, or a hand-built gradient.</p>
+        <div class="group">
+          <h3>Wallpaper — pictures/bg</h3>
+          <div class="bg-grid-pick">
+            ${WALLPAPERS.map(w => `
+              <div class="bg-pick bg-photo ${document.body.dataset.bg === w.id ? 'active' : ''}"
+                   data-bg-pick="${w.id}"
+                   style="background-image:url('${w.src}'); background-color:${w.pad || '#14110A'};">
+                <span class="lbl">${w.label}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div class="group">
+          <h3>Solid &amp; Gradient</h3>
+          <div class="bg-grid-pick">
+            ${COLOR_BGS.map(([k, n]) => `
+              <div class="bg-pick bg-${k} ${document.body.dataset.bg === k ? 'active' : ''}" data-bg-pick="${k}">
+                <span class="lbl">${n}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      body.querySelectorAll('[data-bg-pick]').forEach(el => {
+        el.addEventListener('click', () => Theme.setBg(el.dataset.bgPick));
+      });
+    }
+    if (tab === 'about') {
+      body.innerHTML = `
+        <h2>About this OS</h2>
+        <p class="lede">An editorial portfolio dressed as an operating system. One HTML file. No frameworks.</p>
+        <div class="group">
+          <h3>Version</h3>
+          <div style="font-family:var(--font-mono); font-size: 13px; line-height: 1.9;">
+            <div>Portfolio OS &nbsp; <span style="color:var(--text-mute)">1.0 — May 2026</span></div>
+            <div>Author &emsp; &emsp; &nbsp; <span style="color:var(--text-mute)">Okonicha Dinma</span></div>
+            <div>License &emsp; &emsp; &nbsp; <span style="color:var(--text-mute)">MIT — take it apart, make your own.</span></div>
+            <div>Made with &emsp; &nbsp; <span style="color:var(--text-mute)">HTML, CSS, JS, and stubbornness.</span></div>
+          </div>
+        </div>
+        <div class="group">
+          <h3>Keyboard</h3>
+          <div style="font-family:var(--font-mono); font-size: 12.5px; line-height: 1.9;">
+            <div><span style="color:var(--accent)">⌘1 / Alt+1</span> &nbsp; open about</div>
+            <div><span style="color:var(--accent)">⌘2 / Alt+2</span> &nbsp; open projects</div>
+            <div><span style="color:var(--accent)">⌘3 / Alt+3</span> &nbsp; open contact</div>
+            <div><span style="color:var(--accent)">⌘T / Alt+T</span> &nbsp; new terminal</div>
+            <div><span style="color:var(--accent)">⌘K / Alt+K</span> &nbsp; focus search</div>
+            <div><span style="color:var(--accent)">esc</span> &emsp; &emsp; &emsp; &nbsp; close focused window</div>
+          </div>
+        </div>
+      `;
+    }
+  };
+  tabs.forEach(t => t.addEventListener('click', () => render(t.dataset.tab)));
+  render('appearance');
+}
+
+/* =================================================================
+   MENUS
+   ================================================================= */
+function bindMenus() {
+  const items = document.querySelectorAll('.menubar .item[data-menu]');
+  let activeMenu = null;
+  function close() { document.querySelectorAll('.menu-dd').forEach(m => m.classList.remove('open')); activeMenu = null; }
+  function positionFor(item, dd) {
+    const r = item.getBoundingClientRect();
+    dd.style.left = Math.round(r.left) + 'px';
+    dd.style.top = Math.round(r.bottom + 2) + 'px';
+  }
+  items.forEach(it => {
+    it.addEventListener('click', e => {
+      e.stopPropagation();
+      const k = it.dataset.menu;
+      const dd = document.getElementById('menu-' + k);
+      if (activeMenu === dd) { close(); return; }
+      close();
+      positionFor(it, dd);
+      dd.classList.add('open');
+      activeMenu = dd;
+    });
+    it.addEventListener('mouseenter', () => {
+      if (!activeMenu) return;
+      const k = it.dataset.menu;
+      const dd = document.getElementById('menu-' + k);
+      close();
+      positionFor(it, dd);
+      dd.classList.add('open');
+      activeMenu = dd;
+    });
+  });
+  document.addEventListener('click', close);
+
+  // Direct-action menubar items (no dropdown)
+  document.querySelectorAll('.menubar .item[data-action]').forEach(it => {
+    it.addEventListener('click', e => {
+      e.stopPropagation();
+      close();
+      if (it.dataset.action === 'open-experience') WM.open('experience');
+    });
+  });
+
+  document.querySelectorAll('.menu-dd .row').forEach(r => {
+    r.addEventListener('click', e => {
+      e.stopPropagation();
+      if (r.dataset.open) {
+        const map = { 'about':'about','projects':'projects','contact':'contact','terminal':'terminal','settings':'settings','build-log':'buildlog','readme':'readme','photos':'photos' };
+        WM.open(map[r.dataset.open] || r.dataset.open);
+      } else if (r.dataset.skinSet) {
+        Theme.setSkin(r.dataset.skinSet);
+      } else if (r.dataset.action === 'close-all') {
+        WM.closeAll();
+      } else if (r.dataset.action === 'email') {
+        location.href = 'mailto:ddunebari@gmail.com';
+      }
+      close();
+    });
+  });
+}
+
+/* =================================================================
+   DOCK
+   ================================================================= */
+function bindDock() {
+  document.querySelectorAll('.dock-icon').forEach(b => {
+    b.addEventListener('click', () => {
+      if (b.dataset.trash) {
+        openTrashWindow();
+        return;
+      }
+      if (b.dataset.href) {
+        if (b.dataset.ext) window.open(b.dataset.href, '_blank', 'noopener');
+        else location.href = b.dataset.href;
+        return;
+      }
+      const kind = b.dataset.open;
+      if (kind) WM.open(kind);
+    });
+  });
+  // Mac Spotlight icon in menubar -> open a centered spotlight search
+  const spot = document.getElementById('spotlight-trigger');
+  if (spot) spot.addEventListener('click', openSpotlight);
+  // Win 11 Start button
+  const startBtn = document.getElementById('start-btn');
+  if (startBtn) startBtn.addEventListener('click', e => { e.stopPropagation(); openStartMenu(); });
+}
+
+/* =================================================================
+   START MENU (Win 11)
+   ================================================================= */
+const START_PINNED = [
+  { kind: 'experience', label: 'Experience', bg: 'linear-gradient(135deg,#C4974A,#6B3E15)', svg: '<iconify-icon icon="hugeicons:briefcase-01" noobserver></iconify-icon>' },
+  { kind: 'projects',   label: 'Projects',   bg: 'linear-gradient(135deg,#4ECDC4,#1E8C8C)', svg: '<iconify-icon icon="hugeicons:folder-01" noobserver></iconify-icon>' },
+  { kind: 'photos',     label: 'Photos',     bg: 'linear-gradient(135deg,#FF6B9D,#B5388F)', svg: '<iconify-icon icon="hugeicons:image-01" noobserver></iconify-icon>' },
+  { kind: 'about',      label: 'About',      bg: 'linear-gradient(135deg,#FFD86B,#E8722A)', svg: '<iconify-icon icon="hugeicons:user-circle" noobserver></iconify-icon>' },
+  { kind: 'contact',    label: 'Contact',    bg: 'linear-gradient(135deg,#6BB5FF,#1F65C4)', svg: '<iconify-icon icon="hugeicons:contact-01" noobserver></iconify-icon>' },
+  { kind: 'email',      label: 'Mail',       bg: 'linear-gradient(135deg,#4FA3FF,#1357C2)', svg: '<iconify-icon icon="hugeicons:mail-01" noobserver></iconify-icon>', href: 'mailto:ddunebari@gmail.com' },
+  { kind: 'terminal',   label: 'Terminal',   bg: 'linear-gradient(135deg,#2E2A36,#0B0810)', svg: '<iconify-icon icon="hugeicons:command-line" noobserver></iconify-icon>' },
+  { kind: 'settings',   label: 'Settings',   bg: 'linear-gradient(135deg,#B0B0B5,#525258)', svg: '<iconify-icon icon="hugeicons:settings-01" noobserver></iconify-icon>' },
+];
+
+const START_RECO = [
+  { kind: 'experience', label: 'Experience',   sub: 'Career timeline · just now', icon: 'doc-info' },
+  { kind: 'projects',   label: 'Projects',     sub: 'Folder · 8 items',           icon: 'folder' },
+  { kind: 'photos',     label: 'Photos',       sub: 'Folder · 3 items',           icon: 'folder' },
+  { kind: 'about',      label: 'about.txt',    sub: 'Document · 1.2K',            icon: 'doc-info' },
+];
+
+function openStartMenu() {
+  let el = document.getElementById('start-menu');
+  if (el) { el.remove(); return; }
+  el = document.createElement('div');
+  el.id = 'start-menu';
+  el.innerHTML = `
+    <div class="start-card" onclick="event.stopPropagation()">
+      <div class="start-search-row">
+        <iconify-icon icon="hugeicons:search-01" noobserver></iconify-icon>
+        <input id="start-input" placeholder="Type here to search" />
+      </div>
+      <div class="start-body" id="start-body">
+        <div class="start-head">Pinned <span class="all">All content  ⟩</span></div>
+        <div class="start-grid">
+          ${START_PINNED.map((t, i) => `
+            <div class="start-tile" data-idx="${i}">
+              <div class="ico" style="background:${t.bg};">${t.svg}</div>
+              <div class="lbl">${t.label}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="start-head">Recommended <span class="all">More  ⟩</span></div>
+        <div class="start-reco">
+          ${START_RECO.map(r => `
+            <div class="row" data-kind="${r.kind}">
+              <div class="ic">${ICONS[r.icon] ? ICONS[r.icon]() : ICONS['doc-info']()}</div>
+              <div class="meta"><div class="name">${r.label}</div><div class="sub">${r.sub}</div></div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="start-footer">
+        <div class="start-user">
+          <div class="avatar">D</div>
+          <span class="name">Okonicha Dinma</span>
+        </div>
+        <button class="power-btn" title="Power">
+          <iconify-icon icon="hugeicons:power" noobserver></iconify-icon>
+        </button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(el);
+
+  el.addEventListener('click', e => { if (e.target === el) el.remove(); });
+
+  const input = el.querySelector('#start-input');
+  setTimeout(() => input.focus(), 50);
+
+  // Tiles
+  el.querySelectorAll('.start-tile').forEach(t => {
+    t.addEventListener('click', () => {
+      const def = START_PINNED[+t.dataset.idx];
+      if (def.href) { location.href = def.href; }
+      else { WM.open(def.kind); }
+      el.remove();
+    });
+  });
+  // Recommended
+  el.querySelectorAll('.start-reco .row').forEach(r => {
+    r.addEventListener('click', () => { WM.open(r.dataset.kind); el.remove(); });
+  });
+  // Power button — playful: closes all windows
+  el.querySelector('.power-btn').addEventListener('click', () => { WM.closeAll(); el.remove(); });
+
+  // Search inside start menu — type-ahead through __SEARCH_ITEMS__
+  const body = el.querySelector('#start-body');
+  const originalBodyHTML = body.innerHTML;
+  function renderSearch(q) {
+    if (!q) { body.innerHTML = originalBodyHTML; rebindBody(); return; }
+    const Q = q.toLowerCase();
+    const matches = (window.__SEARCH_ITEMS__ || []).filter(it => it.name.toLowerCase().includes(Q) || it.kind.toLowerCase().includes(Q)).slice(0, 8);
+    body.innerHTML = `
+      <div class="start-head">Best matches for "${q.replace(/[<>]/g,'')}"</div>
+      <div class="start-reco" style="grid-template-columns:1fr;">
+        ${matches.length === 0
+          ? `<div class="row"><div class="ic">∅</div><div class="meta"><div class="name">No results</div><div class="sub">Try another term</div></div></div>`
+          : matches.map((m, i) => `
+            <div class="row" data-i="${i}">
+              <div class="ic">${ICONS['doc-info']()}</div>
+              <div class="meta"><div class="name">${m.name}</div><div class="sub">${m.kind}</div></div>
+            </div>
+          `).join('')}
+      </div>
+    `;
+    body.querySelectorAll('.start-reco .row').forEach((row, i) => {
+      row.addEventListener('click', () => { matches[i].open(); el.remove(); });
+    });
+  }
+  function rebindBody() {
+    body.querySelectorAll('.start-tile').forEach(t => {
+      t.addEventListener('click', () => {
+        const def = START_PINNED[+t.dataset.idx];
+        if (def.href) { location.href = def.href; }
+        else { WM.open(def.kind); }
+        el.remove();
+      });
+    });
+    body.querySelectorAll('.start-reco .row').forEach(r => {
+      r.addEventListener('click', () => { WM.open(r.dataset.kind); el.remove(); });
+    });
+  }
+  input.addEventListener('input', e => renderSearch(e.target.value));
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') el.remove();
+    if (e.key === 'Enter') {
+      const first = body.querySelector('.start-reco .row');
+      if (first) first.click();
+    }
+  });
+}
+
+function openTrashWindow() {
+  // Tiny easter-egg window
+  const id = 'trash';
+  if (WM.windows.has(id)) { WM.focus(id); return; }
+  // synthesize a window quickly
+  WM.defaults.trash = { title: 'Trash — empty', w: 460, h: 280, x: 0.36, y: 0.30, builder: 'trash', icon: 'doc-info' };
+  WM.open('trash');
+}
+function buildTrash(c) {
+  c.innerHTML = `
+    <div class="pad-lg" style="text-align:center;">
+      <div style="font-size:48px; margin-bottom:8px;">∅</div>
+      <h1 class="display" style="font-size:1.8rem;">Trash is <em>empty</em></h1>
+      <p class="body" style="margin: 8px auto 0;">Nothing here. Everything in this portfolio earned its keep.</p>
+    </div>
+  `;
+}
+
+/* Spotlight overlay (mac mode) */
+function openSpotlight() {
+  let el = document.getElementById('spotlight');
+  if (el) { el.remove(); return; }
+  el = document.createElement('div');
+  el.id = 'spotlight';
+  el.innerHTML = `
+    <div class="spot-card">
+      <div class="spot-row">
+        <iconify-icon icon="hugeicons:search-01" noobserver></iconify-icon>
+        <input id="spot-input" placeholder="Spotlight Search" autofocus />
+      </div>
+      <div class="spot-results" id="spot-results"></div>
+    </div>
+  `;
+  document.body.appendChild(el);
+  const input = el.querySelector('#spot-input');
+  const out = el.querySelector('#spot-results');
+  setTimeout(() => input.focus(), 50);
+  const items = window.__SEARCH_ITEMS__;
+  function render(q) {
+    if (!q) { out.innerHTML = ''; return; }
+    const Q = q.toLowerCase();
+    const matches = items.filter(it => it.name.toLowerCase().includes(Q) || it.kind.toLowerCase().includes(Q)).slice(0, 7);
+    out.innerHTML = matches.map(m => `<div class="spot-res"><span>${m.name}</span><span class="kk">${m.kind}</span></div>`).join('');
+    [...out.querySelectorAll('.spot-res')].forEach((row, i) => {
+      row.addEventListener('click', () => { matches[i].open(); el.remove(); });
+    });
+  }
+  input.addEventListener('input', e => render(e.target.value));
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') el.remove();
+    if (e.key === 'Enter') { const first = out.querySelector('.spot-res'); if (first) first.click(); }
+  });
+  el.addEventListener('click', e => { if (e.target === el) el.remove(); });
+}
+
+/* =================================================================
+   SEARCH
+   ================================================================= */
+function bindSearch() {
+  const input = document.getElementById('search');
+  const results = document.getElementById('search-results');
+  const items = window.__SEARCH_ITEMS__ = [
+    { name: 'about.txt',     kind: 'About',      open: () => WM.open('about') },
+    { name: 'contact.card',  kind: 'Contact',    open: () => WM.open('contact') },
+    { name: 'experience',    kind: 'Timeline',   open: () => WM.open('experience') },
+    { name: 'projects/',     kind: 'Folder',     open: () => WM.open('projects') },
+    { name: 'photos/',       kind: 'Folder',     open: () => WM.open('photos') },
+    { name: 'Terminal',      kind: 'App',        open: () => WM.open('terminal') },
+    { name: 'Settings',      kind: 'App',        open: () => WM.open('settings') },
+    ...PROJECTS.map(p => ({ name: p.name, kind: `Project · ${p.tag}`, open: () => WM.open('project-detail', p.id) })),
+    ...PHOTOS.map(p => ({ name: `${p.label} (photos)`, kind: 'Photo', open: () => WM.open('photo-detail', p.id) })),
+    { name: 'theme: windows', kind: 'Action', open: () => Theme.setSkin('win') },
+    { name: 'theme: macos',   kind: 'Action', open: () => Theme.setSkin('mac') },
+    { name: 'bg: jelly',      kind: 'Wallpaper', open: () => Theme.setBg('jelly') },
+    { name: 'bg: duck',       kind: 'Wallpaper', open: () => Theme.setBg('duck') },
+    { name: 'bg: cream',      kind: 'Action', open: () => Theme.setBg('cream') },
+    { name: 'bg: orange',     kind: 'Action', open: () => Theme.setBg('orange') },
+    { name: 'bg: ink',        kind: 'Action', open: () => Theme.setBg('ink') },
+  ];
+
+  function render(q) {
+    if (!q) { results.classList.remove('open'); results.innerHTML = ''; return; }
+    const Q = q.toLowerCase();
+    const matches = items.filter(it => it.name.toLowerCase().includes(Q) || it.kind.toLowerCase().includes(Q)).slice(0, 8);
+    if (!matches.length) {
+      results.innerHTML = `<div class="res-head">No matches for "${q}"</div>`;
+      results.classList.add('open');
+      return;
+    }
+    results.innerHTML = `<div class="res-head">${matches.length} match${matches.length===1?'':'es'}</div>` +
+      matches.map((m, i) => `<div class="res-row" data-i="${i}"><span style="display:grid;place-items:center;width:18px;height:18px;background:var(--accent);color:#fff;font-size:10px;border-radius:3px;font-family:var(--font-mono);">↵</span><span>${m.name}</span><span class="kind">${m.kind}</span></div>`).join('');
+    results.classList.add('open');
+    results.querySelectorAll('.res-row').forEach((row, i) => {
+      row.addEventListener('click', () => { matches[i].open(); input.value = ''; results.classList.remove('open'); });
+    });
+  }
+
+  input.addEventListener('input', e => render(e.target.value));
+  input.addEventListener('focus', e => render(e.target.value));
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const first = results.querySelector('.res-row');
+      if (first) first.click();
+    } else if (e.key === 'Escape') {
+      input.blur();
+      results.classList.remove('open');
+    }
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.dock-search') && !e.target.closest('#search-results')) {
+      results.classList.remove('open');
+    }
+  });
+}
+
+/* =================================================================
+   KEYBOARD
+   ================================================================= */
+function bindKeys() {
+  window.addEventListener('keydown', e => {
+    const mod = e.metaKey || e.altKey;
+    if (mod && e.key === '1') { e.preventDefault(); WM.open('about'); }
+    if (mod && e.key === '2') { e.preventDefault(); WM.open('projects'); }
+    if (mod && e.key === '3') { e.preventDefault(); WM.open('contact'); }
+    if (mod && (e.key === 't' || e.key === 'T')) { e.preventDefault(); WM.open('terminal'); }
+    if (mod && (e.key === 'k' || e.key === 'K')) {
+      e.preventDefault();
+      if (document.body.dataset.skin === 'mac') openSpotlight();
+      else document.getElementById('search').focus();
+    }
+    if ((e.metaKey || e.ctrlKey) && e.key === ' ') {
+      e.preventDefault();
+      if (document.body.dataset.skin === 'mac') openSpotlight();
+      else openStartMenu();
+    }
+    // Win key opens the Start menu in Win mode (some browsers expose `Meta`)
+    if (e.key === 'Meta' && document.body.dataset.skin === 'win') {
+      e.preventDefault();
+      openStartMenu();
+    }
+    if (e.key === 'Escape') {
+      // close the topmost window
+      let top = null, z = -1;
+      for (const w of WM.windows.values()) {
+        const wz = parseInt(w.el.style.zIndex, 10) || 0;
+        if (wz > z && !w.el.classList.contains('minimized')) { z = wz; top = w; }
+      }
+      if (top) WM.close(top.id);
+    }
+  });
+}
+
+/* =================================================================
+   CLOCK
+   ================================================================= */
+function tickClock() {
+  const d = new Date();
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const hh = String(d.getHours()).padStart(2,'0');
+  const mm = String(d.getMinutes()).padStart(2,'0');
+  // Mac menubar clock
+  const mac = document.getElementById('clock');
+  if (mac) mac.textContent = `${days[d.getDay()]} ${String(d.getDate()).padStart(2,'0')} · ${hh}:${mm}`;
+  // Win taskbar clock (12-hour with AM/PM + date)
+  const tc = document.getElementById('tray-clock');
+  if (tc) {
+    let h12 = d.getHours() % 12; if (h12 === 0) h12 = 12;
+    const ampm = d.getHours() >= 12 ? 'PM' : 'AM';
+    tc.querySelector('.l1').textContent = `${String(h12).padStart(2,'0')}:${mm} ${ampm}`;
+    tc.querySelector('.l2').textContent = `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
+  }
+}
+
+/* =================================================================
+   BOOT
+   ================================================================= */
+const BOOT_T = Date.now();
+
+function init() {
+  Theme.init();
+  renderDesktop();
+  bindMenus();
+  bindDock();
+  bindSearch();
+  bindKeys();
+  tickClock(); setInterval(tickClock, 30 * 1000);
+
+  // Open the About window on first paint, just like the reference.
+  setTimeout(() => WM.open('about'), 250);
+
+  // Lift the boot screen
+  setTimeout(() => {
+    document.getElementById('boot').classList.add('gone');
+    setTimeout(() => document.getElementById('boot').remove(), 800);
+  }, 1800);
+}
+init();
+</script>
+</body>
+</html>

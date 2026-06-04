@@ -1,0 +1,1462 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dinma Okonicha — Software Developer · Data Scientist · UI/UX Designer</title>
+<meta name="description" content="Portfolio of Okonicha Dinma Dunebari — a software developer, data scientist and UI/UX designer with full-stack experience across blockchain, fintech and product." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ivory:  '#F5F2EC',
+          ivory2: '#ECE7DD',
+          ivory3: '#E3DCCB',
+          ink:    '#161616',
+          ink2:   '#2A2926',
+          sub:    '#56544E',
+          line:   '#D8D2C4',
+          accent: '#2F4DEC',
+          rust:   '#C2410C',
+          moss:   '#4A5D23',
+        },
+        fontFamily: {
+          display: ['Fraunces', 'serif'],
+          sans:    ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+          mono:    ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root { color-scheme: light; }
+  html, body {
+    background: #F5F2EC;
+    color: #161616;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-feature-settings: 'ss01', 'ss02';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Grain overlay — gives the ivory paper a texture */
+  body::before {
+    content:'';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: .07;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Typography */
+  .font-display { font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 144, 'SOFT' 30; letter-spacing: -0.035em; }
+  .italic-soft  { font-style: italic; font-variation-settings: 'opsz' 144, 'SOFT' 100; }
+  .mono         { font-family: 'IBM Plex Mono', monospace; }
+  .label        { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+
+  .h1 { font-size: clamp(2.25rem, 5.6vw, 6.25rem); line-height: .95; }
+  .h2 { font-size: clamp(2.5rem, 7vw,  6rem);    line-height: .95; }
+  .h3 { font-size: clamp(1.75rem, 3.5vw, 3rem);  line-height: 1; }
+
+  /* Grid background */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right,  rgba(22,22,22,.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(22,22,22,.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .bg-dots {
+    background-image: radial-gradient(rgba(22,22,22,.16) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+
+  /* Marquee */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .marquee-track { animation: marquee 46s linear infinite; }
+
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 1s cubic-bezier(.2,.6,.2,1), transform 1s cubic-bezier(.2,.6,.2,1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Staggered hero load */
+  .rise    { opacity: 0; transform: translateY(18px); animation: rise .9s cubic-bezier(.2,.6,.2,1) forwards; }
+  .rise-1 { animation-delay: .05s; }
+  .rise-2 { animation-delay: .20s; }
+  .rise-3 { animation-delay: .35s; }
+  .rise-4 { animation-delay: .50s; }
+  .rise-5 { animation-delay: .65s; }
+  .rise-6 { animation-delay: .80s; }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+  /* Blinking caret */
+  @keyframes blink { 50% { opacity: 0; } }
+  .caret { display: inline-block; width: .55ch; height: 1em; background: currentColor; vertical-align: -.15em; animation: blink 1.1s steps(1) infinite; }
+
+  /* Wipe button */
+  .btn {
+    position: relative; overflow: hidden; isolation: isolate;
+    display: inline-flex; align-items: center; gap: .6rem;
+    transition: color .35s cubic-bezier(.2,.7,.2,1);
+  }
+  .btn::after {
+    content:''; position: absolute; inset: 0;
+    background: #161616; transform: translateY(101%);
+    transition: transform .5s cubic-bezier(.2,.7,.2,1);
+    z-index: -1;
+  }
+  .btn:hover::after { transform: translateY(0); }
+  .btn--ink::after { background: #F5F2EC; }
+  .btn--ink       { color: #F5F2EC; }
+  .btn--ink:hover { color: #161616; }
+  .btn--ivory     { color: #161616; }
+  .btn--ivory:hover { color: #F5F2EC; }
+
+  /* Project card hover details */
+  .project { transition: background .35s ease; }
+  .project:hover { background: #ECE7DD; }
+  .project .arrow { transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+  .project:hover .arrow { transform: translate(6px, -6px); }
+  .project .tagline { transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .4s; }
+  .project:hover .tagline { transform: translateX(4px); }
+  .project .visual { transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+  .project:hover .visual { transform: scale(1.02); }
+
+  /* Status dot */
+  .status-dot {
+    width: 9px; height: 9px; border-radius: 999px; background: #4A5D23;
+    box-shadow: 0 0 0 0 rgba(74,93,35,.5);
+    animation: pulse 2.2s infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0   rgba(74,93,35,.55); }
+    70%  { box-shadow: 0 0 0 10px rgba(74,93,35,0); }
+    100% { box-shadow: 0 0 0 0   rgba(74,93,35,0); }
+  }
+
+  /* Link underline reveal */
+  .ul-link { position: relative; }
+  .ul-link::after {
+    content:''; position: absolute; left: 0; right: 0; bottom: -2px;
+    height: 1px; background: currentColor;
+    transform: scaleX(0); transform-origin: right center;
+    transition: transform .45s cubic-bezier(.2,.7,.2,1);
+  }
+  .ul-link:hover::after { transform: scaleX(1); transform-origin: left center; }
+
+  /* Bar chart (about section) */
+  .bar { height: 2px; background: #D8D2C4; position: relative; overflow: hidden; }
+  .bar > i {
+    position: absolute; inset: 0 100% 0 0; background: #161616;
+    transition: right 1.4s cubic-bezier(.2,.7,.2,1);
+  }
+  .bar.in > i { right: var(--r, 30%); }
+
+  /* Sticky nav backdrop on scroll */
+  header.scrolled .nav-bar {
+    background: rgba(245, 242, 236, .85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #D8D2C4;
+  }
+
+  /* Custom selection */
+  ::selection { background: #161616; color: #F5F2EC; }
+
+  /* Project tile color swatches */
+  .tile-demahub  { background: #1B1B1B; color: #F5F2EC; }
+  .tile-bio      { background: #E3DCCB; color: #161616; }
+  .tile-nerobee  { background: #C2410C; color: #F5F2EC; }
+  .tile-elib     { background: #2F4DEC; color: #F5F2EC; }
+  .tile-gesture  { background: #4A5D23; color: #F5F2EC; }
+  .tile-easelite { background: #ECE7DD; color: #161616; }
+  .tile-tranzakt { background: #2A2926; color: #F5F2EC; }
+  .tile-artguide { background: #1B2B4B; color: #F5F2EC; }
+
+  /* Scroll indicator line in section headers */
+  .sec-index { display: inline-flex; align-items: center; gap: .75rem; }
+  .sec-index .line { width: 48px; height: 1px; background: #161616; }
+
+  /* --- Mobile nav --- */
+  .mnav { transform: translateY(-100%); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+  .mnav.open { transform: translateY(0); }
+
+  /* ============================================================
+     CUSTOM CURSOR
+  ============================================================ */
+  @media (hover: hover) and (pointer: fine) {
+    html, body, a, button, input, textarea, select, .project, .btn { cursor: none; }
+  }
+  @media (hover: none), (pointer: coarse) {
+    #cDot, #cRing { display: none !important; }
+  }
+
+  #cDot {
+    position: fixed; top: 0; left: 0;
+    width: 6px; height: 6px;
+    background: #F5F2EC; border-radius: 999px;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: opacity .35s, width .25s, height .25s;
+    mix-blend-mode: difference;
+    will-change: transform;
+  }
+  #cRing {
+    position: fixed; top: 0; left: 0;
+    width: 38px; height: 38px;
+    border: 1px solid #F5F2EC; border-radius: 999px;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width .5s cubic-bezier(.2,.7,.2,1),
+                height .5s cubic-bezier(.2,.7,.2,1),
+                background .35s ease,
+                border-color .35s ease,
+                opacity .35s ease,
+                mix-blend-mode 0s;
+    mix-blend-mode: difference;
+    will-change: transform;
+    display: grid;
+    place-items: center;
+  }
+  #cRing .view-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .16em;
+    color: #161616;
+    opacity: 0;
+    transform: scale(.6);
+    transition: opacity .25s .05s ease, transform .35s cubic-bezier(.2,.7,.2,1);
+  }
+  #cRing.is-hover { width: 62px; height: 62px; }
+  #cRing.is-down  { width: 26px; height: 26px; }
+  #cRing.is-view {
+    width: 104px; height: 104px;
+    mix-blend-mode: normal;
+    background: #F5F2EC;
+    border-color: #F5F2EC;
+  }
+  #cRing.is-view .view-label { opacity: 1; transform: scale(1); }
+  #cRing.is-hidden, #cDot.is-hidden { opacity: 0; }
+
+  /* ============================================================
+     SCROLL PROGRESS BAR
+  ============================================================ */
+  #progress {
+    position: fixed; top: 0; left: 0;
+    height: 2px; width: 0%;
+    background: #161616;
+    z-index: 9997;
+    will-change: width;
+  }
+
+  /* ============================================================
+     HERO CHAR REVEAL
+  ============================================================ */
+  .split .word {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .split .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(1.15em) rotate(6deg) scale(.92);
+    animation: charIn 1s cubic-bezier(.22,.75,.25,1) forwards;
+    transform-origin: 50% 100%;
+  }
+  @keyframes charIn {
+    to { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+  }
+
+  /* ============================================================
+     SCROLL-TRIGGERED SLIDE VARIANTS
+  ============================================================ */
+  .slide-l, .slide-r {
+    opacity: 0;
+    transition: opacity 1.1s cubic-bezier(.2,.7,.2,1), transform 1.1s cubic-bezier(.2,.7,.2,1);
+    will-change: transform, opacity;
+  }
+  .slide-l { transform: translateX(-70px) skewX(-2deg); }
+  .slide-r { transform: translateX( 70px) skewX( 2deg); }
+  .slide-l.in, .slide-r.in { opacity: 1; transform: translateX(0) skewX(0); }
+
+  /* ============================================================
+     PARALLAX WRAPPERS
+  ============================================================ */
+  .parallax { will-change: transform; }
+
+  /* ============================================================
+     TEXT FILL REVEAL (for large headlines)
+  ============================================================ */
+  .fill-reveal {
+    background-image: linear-gradient(90deg, #161616 0%, #161616 var(--fill, 0%), rgba(22,22,22,.18) var(--fill, 0%), rgba(22,22,22,.18) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    transition: background-image .05s linear;
+  }
+
+  /* ============================================================
+     MAGNETIC
+  ============================================================ */
+  .magnetic { transition: transform .5s cubic-bezier(.2,.7,.2,1); will-change: transform; display: inline-flex; }
+  .magnetic > * { transition: transform .5s cubic-bezier(.2,.7,.2,1); display: inline-flex; }
+
+  /* Noise cursor-reveal spotlight (subtle) */
+  .spotlight::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(47,77,236,.10), transparent 60%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .5s ease;
+  }
+  .spotlight:hover::before { opacity: 1; }
+
+  /* Section number counter-rotate on scroll */
+  .sec-num {
+    display: inline-block;
+    will-change: transform;
+  }
+</style>
+</head>
+
+<body class="min-h-screen">
+
+<!-- Scroll progress bar -->
+<div id="progress"></div>
+
+<!-- Custom cursor -->
+<div id="cRing"><span class="view-label">VIEW</span></div>
+<div id="cDot"></div>
+
+<!-- ==========================================================
+     HEADER / NAV
+========================================================== -->
+<header class="fixed top-0 inset-x-0 z-50">
+  <div class="nav-bar transition-colors">
+    <div class="mx-auto max-w-[1440px] px-6 lg:px-10 py-5 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-3">
+        <span class="h-8 w-8 rounded-full bg-ink text-ivory grid place-items-center">
+          <span class="font-display italic-soft text-[17px] leading-none -mt-[1px]">d</span>
+        </span>
+        <span class="font-display text-[22px] leading-none tracking-tight">
+          <span class="italic-soft">Dinma</span> Okonicha
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-9 label text-ink/75">
+        <a href="#home"     class="ul-link hover:text-ink">Home</a>
+        <a href="#work"     class="ul-link hover:text-ink">Work</a>
+        <a href="#services" class="ul-link hover:text-ink">Services</a>
+        <a href="#about"    class="ul-link hover:text-ink">About</a>
+        <a href="#contact"  class="ul-link hover:text-ink">Contact</a>
+      </nav>
+
+      <a href="#contact" class="hidden md:inline-flex btn btn--ivory border border-ink px-4 py-2.5 label">
+        Schedule a call
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+          <path d="M1 9L9 1M9 1H2M9 1v7" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+      </a>
+
+      <button id="menuBtn" class="md:hidden label border border-ink px-3 py-2" aria-label="Open menu">Menu</button>
+    </div>
+  </div>
+
+  <!-- Mobile nav sheet -->
+  <div id="mnav" class="mnav md:hidden fixed inset-x-0 top-0 bg-ivory border-b border-line pt-24 pb-10 px-6">
+    <nav class="flex flex-col gap-5 font-display text-4xl">
+      <a href="#home"     class="italic-soft">Home.</a>
+      <a href="#work">Work.</a>
+      <a href="#services">Services.</a>
+      <a href="#about">About.</a>
+      <a href="#contact">Contact.</a>
+    </nav>
+    <a href="#contact" class="mt-8 inline-flex items-center gap-2 border border-ink px-4 py-2.5 label">Schedule a call →</a>
+  </div>
+</header>
+
+<!-- ==========================================================
+     HERO
+========================================================== -->
+<section id="home" class="relative pt-32 lg:pt-40 pb-20 lg:pb-28 overflow-hidden">
+  <div class="absolute inset-0 bg-grid opacity-90 pointer-events-none"></div>
+  <div class="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ivory to-transparent pointer-events-none"></div>
+
+  <div class="relative mx-auto max-w-[1440px] px-6 lg:px-10">
+
+    <!-- Top meta strip -->
+    <div class="flex flex-wrap items-center justify-between gap-6 rise rise-1">
+      <div class="flex items-center gap-4 label text-sub">
+        <span>Portfolio</span>
+        <span class="opacity-40">/</span>
+        <span>Vol. 001</span>
+        <span class="opacity-40">/</span>
+        <span id="clock">— — : — —</span>
+      </div>
+      <div class="flex items-center gap-3 label">
+        <span class="status-dot"></span>
+        <span>Available for selected projects · 2026</span>
+      </div>
+    </div>
+
+    <div class="mt-14 lg:mt-20 grid grid-cols-12 gap-8">
+      <!-- Left: title + name -->
+      <div class="col-span-12 lg:col-span-8">
+        <div class="label text-sub rise rise-2">[01] — Introduction</div>
+
+        <h1 class="font-display h1 mt-6" data-split>
+          Engineering data,<br>
+          crafting <span class="italic-soft">interfaces</span>,<br>
+          shaping ideas into<br>
+          tools that <span class="italic-soft">feel right</span>.
+        </h1>
+
+        <div class="mt-10 max-w-xl text-[17px] leading-relaxed text-sub rise rise-3">
+          I'm <span class="text-ink font-medium">Okonicha Dinma Dunebari</span> — a
+          software developer, data scientist and UI/UX designer with six years of
+          full-stack experience across blockchain, fintech, internal tools and product.
+        </div>
+
+        <div class="mt-10 flex flex-wrap items-center gap-4 rise rise-4">
+          <a href="#work" class="magnetic btn btn--ivory border border-ink px-6 py-4 label">
+            View selected work
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6l5 5 5-5" stroke="currentColor" stroke-width="1.4"/></svg>
+          </a>
+          <a href="#contact" class="magnetic btn btn--ink bg-ink px-6 py-4 label">
+            Schedule a call
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1v8" stroke="currentColor" stroke-width="1.4"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: status / terminal card -->
+      <div class="col-span-12 lg:col-span-4 rise rise-5">
+        <div class="border border-line bg-ivory2/60 backdrop-blur-sm">
+          <div class="flex items-center justify-between px-4 py-3 border-b border-line">
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-rust"></span>
+              <span class="h-2 w-2 rounded-full bg-[#d4b343]"></span>
+              <span class="h-2 w-2 rounded-full bg-moss"></span>
+            </div>
+            <span class="label text-sub">/currently</span>
+          </div>
+          <div class="p-5 mono text-[12.5px] leading-[1.9] text-ink">
+            <div><span class="text-sub">&gt;</span> role&nbsp;&nbsp;&nbsp;&nbsp; = <span class="italic-soft font-display text-[15px]">Software&nbsp;Developer</span></div>
+            <div><span class="text-sub">&gt;</span> also&nbsp;&nbsp;&nbsp;&nbsp; = <span class="italic-soft font-display text-[15px]">Data&nbsp;Scientist</span></div>
+            <div><span class="text-sub">&gt;</span> also&nbsp;&nbsp;&nbsp;&nbsp; = <span class="italic-soft font-display text-[15px]">UI/UX&nbsp;Designer</span></div>
+            <div class="mt-3"><span class="text-sub">&gt;</span> shipping = <span class="text-accent">6&nbsp;years</span></div>
+            <div><span class="text-sub">&gt;</span> stack&nbsp;&nbsp;&nbsp; = <span class="text-accent">React/TS</span></div>
+            <div><span class="text-sub">&gt;</span> status&nbsp;&nbsp; = <span class="text-moss">accepting_briefs</span></div>
+            <div class="mt-3"><span class="text-sub">&gt;</span> <span id="type"></span><span class="caret"></span></div>
+          </div>
+          <div class="border-t border-line px-4 py-3 label text-sub flex items-center justify-between">
+            <span>Est. 2021</span>
+            <span>Remote · Worldwide</span>
+          </div>
+        </div>
+
+        <!-- Micro stats under card -->
+        <div class="mt-6 grid grid-cols-3 border border-line">
+          <div class="p-4 border-r border-line">
+            <div class="label text-sub">Disciplines</div>
+            <div class="font-display text-3xl mt-1">03</div>
+          </div>
+          <div class="p-4 border-r border-line">
+            <div class="label text-sub">Projects</div>
+            <div class="font-display text-3xl mt-1">40<span class="text-accent">+</span></div>
+          </div>
+          <div class="p-4">
+            <div class="label text-sub">Years</div>
+            <div class="font-display text-3xl mt-1">06</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom hero meta row -->
+    <div class="mt-16 lg:mt-24 pt-6 border-t border-line grid grid-cols-2 md:grid-cols-4 gap-6 rise rise-6">
+      <div>
+        <div class="label text-sub">Based in</div>
+        <div class="mt-1">Remote · Worldwide</div>
+      </div>
+      <div>
+        <div class="label text-sub">Focus</div>
+        <div class="mt-1">Products · Data · Identity</div>
+      </div>
+      <div>
+        <div class="label text-sub">Recognised for</div>
+        <div class="mt-1">Creativity &amp; technical precision</div>
+      </div>
+      <div>
+        <div class="label text-sub">Next available</div>
+        <div class="mt-1">Q2 · 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     MARQUEE
+========================================================== -->
+<section class="py-8 border-y border-line bg-ivory2/60 overflow-hidden">
+  <div class="marquee-track flex whitespace-nowrap">
+    <!-- Duplicated track for seamless loop -->
+    <div class="flex items-center gap-12 pr-12 font-display text-4xl lg:text-5xl">
+      <span>React</span><span class="italic-soft text-accent">·</span>
+      <span class="italic-soft">TypeScript</span><span class="italic-soft text-accent">·</span>
+      <span>Next.js</span><span class="italic-soft text-accent">·</span>
+      <span class="italic-soft">Tailwind</span><span class="italic-soft text-accent">·</span>
+      <span>Vue</span><span class="italic-soft text-accent">·</span>
+      <span class="italic-soft">Node</span><span class="italic-soft text-accent">·</span>
+      <span>Python</span><span class="italic-soft text-accent">·</span>
+      <span class="italic-soft">Figma</span><span class="italic-soft text-accent">·</span>
+      <span>TanStack&nbsp;Query</span><span class="italic-soft text-accent">·</span>
+      <span class="italic-soft">MongoDB</span><span class="italic-soft text-accent">·</span>
+      <span>Laravel</span><span class="italic-soft text-accent">·</span>
+      <span class="italic-soft">Solana&nbsp;Web3</span><span class="italic-soft text-accent">·</span>
+    </div>
+    <div class="flex items-center gap-12 pr-12 font-display text-4xl lg:text-5xl" aria-hidden="true">
+      <span>React</span><span class="italic-soft text-accent">·</span>
+      <span class="italic-soft">TypeScript</span><span class="italic-soft text-accent">·</span>
+      <span>Next.js</span><span class="italic-soft text-accent">·</span>
+      <span class="italic-soft">Tailwind</span><span class="italic-soft text-accent">·</span>
+      <span>Vue</span><span class="italic-soft text-accent">·</span>
+      <span class="italic-soft">Node</span><span class="italic-soft text-accent">·</span>
+      <span>Python</span><span class="italic-soft text-accent">·</span>
+      <span class="italic-soft">Figma</span><span class="italic-soft text-accent">·</span>
+      <span>TanStack&nbsp;Query</span><span class="italic-soft text-accent">·</span>
+      <span class="italic-soft">MongoDB</span><span class="italic-soft text-accent">·</span>
+      <span>Laravel</span><span class="italic-soft text-accent">·</span>
+      <span class="italic-soft">Solana&nbsp;Web3</span><span class="italic-soft text-accent">·</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     SERVICES
+========================================================== -->
+<section id="services" class="py-24 lg:py-36">
+  <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
+      <div>
+        <div class="sec-index label text-sub"><span class="line"></span>[02] Services</div>
+        <h2 class="font-display h2 mt-6 max-w-3xl">
+          Six disciplines, <span class="italic-soft">one</span> practice.
+        </h2>
+      </div>
+      <p class="max-w-md text-sub text-[16px] leading-relaxed">
+        I work across the full product arc — from ambiguous early research
+        through engineered systems and the surfaces people actually touch.
+      </p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-line">
+      <!-- Card -->
+      <div class="group p-8 lg:p-10 border-r border-b border-line hover:bg-ivory2 transition-colors reveal">
+        <div class="flex items-center justify-between label text-sub">
+          <span>01 / Engineering</span>
+          <span class="italic-soft font-display text-2xl text-ink">↗</span>
+        </div>
+        <h3 class="font-display text-3xl mt-10 leading-tight">Software<br><span class="italic-soft">Engineering</span></h3>
+        <p class="mt-4 text-sub text-[15px] leading-relaxed">Typed, testable systems. Web, backend, and the glue between them — built to be changed.</p>
+        <ul class="mt-6 space-y-1.5 label text-sub">
+          <li>— TypeScript · Node · Next.js</li>
+          <li>— APIs · Auth · Infrastructure</li>
+          <li>— Design systems in code</li>
+        </ul>
+      </div>
+
+      <div class="group p-8 lg:p-10 border-r border-b border-line hover:bg-ivory2 transition-colors reveal">
+        <div class="flex items-center justify-between label text-sub">
+          <span>02 / Research</span>
+          <span class="italic-soft font-display text-2xl text-ink">↗</span>
+        </div>
+        <h3 class="font-display text-3xl mt-10 leading-tight">Data<br><span class="italic-soft">Science</span></h3>
+        <p class="mt-4 text-sub text-[15px] leading-relaxed">Turning messy signals into stories, dashboards and decisions that hold up to scrutiny.</p>
+        <ul class="mt-6 space-y-1.5 label text-sub">
+          <li>— Python · PyTorch · SQL</li>
+          <li>— Modelling · ETL · Analytics</li>
+          <li>— Evaluation &amp; reporting</li>
+        </ul>
+      </div>
+
+      <div class="group p-8 lg:p-10 border-r border-b border-line hover:bg-ivory2 transition-colors reveal">
+        <div class="flex items-center justify-between label text-sub">
+          <span>03 / Interface</span>
+          <span class="italic-soft font-display text-2xl text-ink">↗</span>
+        </div>
+        <h3 class="font-display text-3xl mt-10 leading-tight">UI<br><span class="italic-soft">Design</span></h3>
+        <p class="mt-4 text-sub text-[15px] leading-relaxed">Interfaces that respect attention — grids, typography and details composed with intent.</p>
+        <ul class="mt-6 space-y-1.5 label text-sub">
+          <li>— Figma · Prototyping</li>
+          <li>— Web &amp; product surfaces</li>
+          <li>— Design tokens &amp; systems</li>
+        </ul>
+      </div>
+
+      <div class="group p-8 lg:p-10 border-r border-b border-line hover:bg-ivory2 transition-colors reveal">
+        <div class="flex items-center justify-between label text-sub">
+          <span>04 / Identity</span>
+          <span class="italic-soft font-display text-2xl text-ink">↗</span>
+        </div>
+        <h3 class="font-display text-3xl mt-10 leading-tight"><span class="italic-soft">Branding</span><br>&amp; Identity</h3>
+        <p class="mt-4 text-sub text-[15px] leading-relaxed">Marks, type systems and voice — an identity that behaves consistently across every surface.</p>
+        <ul class="mt-6 space-y-1.5 label text-sub">
+          <li>— Logo &amp; mark</li>
+          <li>— Type &amp; colour systems</li>
+          <li>— Brand guidelines</li>
+        </ul>
+      </div>
+
+      <div class="group p-8 lg:p-10 border-r border-b border-line hover:bg-ivory2 transition-colors reveal">
+        <div class="flex items-center justify-between label text-sub">
+          <span>05 / Mobile</span>
+          <span class="italic-soft font-display text-2xl text-ink">↗</span>
+        </div>
+        <h3 class="font-display text-3xl mt-10 leading-tight">Mobile<br><span class="italic-soft">Design</span></h3>
+        <p class="mt-4 text-sub text-[15px] leading-relaxed">Native-feeling flows tuned for thumbs, attention, and the quiet moments between taps.</p>
+        <ul class="mt-6 space-y-1.5 label text-sub">
+          <li>— iOS &amp; Android patterns</li>
+          <li>— Motion &amp; micro-interaction</li>
+          <li>— Prototyping to handoff</li>
+        </ul>
+      </div>
+
+      <div class="group p-8 lg:p-10 border-r border-b border-line hover:bg-ivory2 transition-colors reveal">
+        <div class="flex items-center justify-between label text-sub">
+          <span>06 / Strategy</span>
+          <span class="italic-soft font-display text-2xl text-ink">↗</span>
+        </div>
+        <h3 class="font-display text-3xl mt-10 leading-tight">Product<br><span class="italic-soft">Strategy</span></h3>
+        <p class="mt-4 text-sub text-[15px] leading-relaxed">Mapping the messy middle — from idea through scope, through shipping, to the first real feedback.</p>
+        <ul class="mt-6 space-y-1.5 label text-sub">
+          <li>— Discovery &amp; scoping</li>
+          <li>— Roadmaps &amp; trade-offs</li>
+          <li>— Launch &amp; iteration</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     SELECTED WORK
+========================================================== -->
+<section id="work" class="py-24 lg:py-36 bg-ivory2/60 border-y border-line">
+  <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
+      <div>
+        <div class="sec-index label text-sub"><span class="line"></span>[03] Selected Work</div>
+        <h2 class="font-display h2 mt-6 max-w-4xl">
+          Eight projects, <span class="italic-soft">chosen</span> carefully.
+        </h2>
+      </div>
+      <div class="label text-sub max-w-sm">
+        An abbreviated selection from recent years. Full case studies available on request.
+      </div>
+    </div>
+
+    <div class="mt-16 border-t border-line">
+
+      <!-- Project 01 — DEMAHUB -->
+      <a href="project.html?p=demahub" class="project grid grid-cols-12 gap-6 lg:gap-10 py-10 lg:py-14 px-2 border-b border-line items-center slide-l">
+        <div class="col-span-12 lg:col-span-1 font-display text-5xl text-sub">01</div>
+        <div class="col-span-12 lg:col-span-5">
+          <div class="flex items-center gap-3 label text-sub">
+            <span>UI Design</span><span class="opacity-40">/</span><span>09.08.2021</span>
+          </div>
+          <h3 class="font-display text-5xl lg:text-6xl mt-4 leading-[0.95]">Demahub<span class="text-accent italic-soft">.</span></h3>
+          <p class="tagline mt-5 max-w-md text-sub text-[15.5px] leading-relaxed">
+            A unified dashboard bringing scattered analytics, schedules and team
+            workflows into a single, calm interface — built around rhythm, not alerts.
+          </p>
+          <div class="mt-6 flex items-center gap-4 label">
+            <span class="border border-line px-3 py-1.5">Product UI</span>
+            <span class="border border-line px-3 py-1.5">Design System</span>
+            <span class="border border-line px-3 py-1.5">Figma</span>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-5 lg:col-start-8">
+          <div class="visual tile-demahub aspect-[4/3] relative overflow-hidden">
+            <img src="pictures/demahub/mockup.jpg" alt="Demahub mockup" class="absolute inset-0 w-full h-full object-cover" />
+            <div class="absolute top-6 left-6 label opacity-80">/ demahub.v3</div>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-1 flex lg:justify-end">
+          <span class="arrow font-display italic-soft text-5xl">↗</span>
+        </div>
+      </a>
+
+      <!-- Project 02 — BIO -->
+      <a href="project.html?p=bio" class="project grid grid-cols-12 gap-6 lg:gap-10 py-10 lg:py-14 px-2 border-b border-line items-center slide-r">
+        <div class="col-span-12 lg:col-span-1 font-display text-5xl text-sub">02</div>
+        <div class="col-span-12 lg:col-span-5 lg:order-2">
+          <div class="flex items-center gap-3 label text-sub">
+            <span>Application Development</span><span class="opacity-40">/</span><span>08.18.2021</span>
+          </div>
+          <h3 class="font-display text-5xl lg:text-6xl mt-4 leading-[0.95]"><span class="italic-soft">Bio</span><span class="text-accent">.</span></h3>
+          <p class="tagline mt-5 max-w-md text-sub text-[15.5px] leading-relaxed">
+            A quiet journaling companion for habits, moods and health signals.
+            Privacy-first, offline-first, and designed to feel more like a notebook than an app.
+          </p>
+          <div class="mt-6 flex items-center gap-4 label">
+            <span class="border border-line px-3 py-1.5">iOS</span>
+            <span class="border border-line px-3 py-1.5">Swift</span>
+            <span class="border border-line px-3 py-1.5">Journaling</span>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-5 lg:col-start-2 lg:order-1">
+          <div class="visual tile-bio aspect-[4/3] p-6 lg:p-8 relative overflow-hidden">
+            <div class="label opacity-70">/ bio.daily</div>
+            <div class="mt-4 font-display italic-soft text-[9vw] lg:text-[6.5rem] leading-[0.85]">b</div>
+            <!-- fake mood grid -->
+            <div class="absolute right-6 bottom-6 grid grid-cols-7 gap-1.5">
+              <script>/* filled via JS below is fine, but keep static here */</script>
+              <!-- 28 squares -->
+              <span class="h-3 w-3 bg-ink/10"></span>
+              <span class="h-3 w-3 bg-ink/20"></span>
+              <span class="h-3 w-3 bg-ink/40"></span>
+              <span class="h-3 w-3 bg-ink/70"></span>
+              <span class="h-3 w-3 bg-ink"></span>
+              <span class="h-3 w-3 bg-ink/40"></span>
+              <span class="h-3 w-3 bg-ink/10"></span>
+              <span class="h-3 w-3 bg-ink/20"></span>
+              <span class="h-3 w-3 bg-ink/50"></span>
+              <span class="h-3 w-3 bg-ink"></span>
+              <span class="h-3 w-3 bg-ink/80"></span>
+              <span class="h-3 w-3 bg-ink/40"></span>
+              <span class="h-3 w-3 bg-ink/30"></span>
+              <span class="h-3 w-3 bg-ink/10"></span>
+              <span class="h-3 w-3 bg-ink/40"></span>
+              <span class="h-3 w-3 bg-ink/70"></span>
+              <span class="h-3 w-3 bg-ink"></span>
+              <span class="h-3 w-3 bg-ink/60"></span>
+              <span class="h-3 w-3 bg-ink/30"></span>
+              <span class="h-3 w-3 bg-ink/10"></span>
+              <span class="h-3 w-3 bg-ink/20"></span>
+              <span class="h-3 w-3 bg-ink/60"></span>
+              <span class="h-3 w-3 bg-ink/90"></span>
+              <span class="h-3 w-3 bg-ink"></span>
+              <span class="h-3 w-3 bg-ink/70"></span>
+              <span class="h-3 w-3 bg-ink/40"></span>
+              <span class="h-3 w-3 bg-ink/20"></span>
+              <span class="h-3 w-3 bg-ink/10"></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-1 lg:order-3 flex lg:justify-end">
+          <span class="arrow font-display italic-soft text-5xl">↗</span>
+        </div>
+      </a>
+
+      <!-- Project 03 — NEROBEE -->
+      <a href="project.html?p=nerobee" class="project grid grid-cols-12 gap-6 lg:gap-10 py-10 lg:py-14 px-2 border-b border-line items-center slide-l">
+        <div class="col-span-12 lg:col-span-1 font-display text-5xl text-sub">03</div>
+        <div class="col-span-12 lg:col-span-5">
+          <div class="flex items-center gap-3 label text-sub">
+            <span>Branding</span><span class="opacity-40">/</span><span>07.29.2021</span>
+          </div>
+          <h3 class="font-display text-5xl lg:text-6xl mt-4 leading-[0.95]">Nerobee<span class="italic-soft text-rust">.</span></h3>
+          <p class="tagline mt-5 max-w-md text-sub text-[15.5px] leading-relaxed">
+            A full identity for an independent honey producer — mark, typography,
+            packaging and voice. Warm, earthen, and distinctly unhurried.
+          </p>
+          <div class="mt-6 flex items-center gap-4 label">
+            <span class="border border-line px-3 py-1.5">Identity</span>
+            <span class="border border-line px-3 py-1.5">Packaging</span>
+            <span class="border border-line px-3 py-1.5">Art Direction</span>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-5 lg:col-start-8">
+          <div class="visual tile-nerobee aspect-[4/3] p-6 lg:p-8 relative overflow-hidden">
+            <div class="label opacity-70">/ nerobee.identity</div>
+            <div class="font-display italic-soft text-[9vw] lg:text-[7rem] leading-[0.85] mt-2">N</div>
+            <!-- hex honeycomb dots -->
+            <div class="absolute right-6 bottom-6 w-40 h-24 bg-dots opacity-60"></div>
+            <div class="absolute left-6 bottom-6 label opacity-80">Est. 2021 — Raw · Unfiltered</div>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-1 flex lg:justify-end">
+          <span class="arrow font-display italic-soft text-5xl">↗</span>
+        </div>
+      </a>
+
+      <!-- Project 04 — E-LIBRARY -->
+      <a href="project.html?p=elibrary" class="project grid grid-cols-12 gap-6 lg:gap-10 py-10 lg:py-14 px-2 border-b border-line items-center slide-r">
+        <div class="col-span-12 lg:col-span-1 font-display text-5xl text-sub">04</div>
+        <div class="col-span-12 lg:col-span-5 lg:order-2">
+          <div class="flex items-center gap-3 label text-sub">
+            <span>Mobile Design</span><span class="opacity-40">/</span><span>06.24.2021</span>
+          </div>
+          <h3 class="font-display text-5xl lg:text-6xl mt-4 leading-[0.95]">E-Library<span class="italic-soft text-accent">.</span></h3>
+          <p class="tagline mt-5 max-w-md text-sub text-[15.5px] leading-relaxed">
+            A reading platform that turns long-form writing into a daily ritual —
+            typography-forward, distraction-free, and built for long evenings.
+          </p>
+          <div class="mt-6 flex items-center gap-4 label">
+            <span class="border border-line px-3 py-1.5">Mobile</span>
+            <span class="border border-line px-3 py-1.5">Reader</span>
+            <span class="border border-line px-3 py-1.5">Typography</span>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-5 lg:col-start-2 lg:order-1">
+          <div class="visual tile-elib aspect-[4/3] relative overflow-hidden">
+            <img src="pictures/E-library/Book%20ui.png" alt="E-Library Book UI" class="absolute inset-0 w-full h-full object-cover" />
+            <div class="absolute top-6 left-6 label opacity-80">/ library.volume_iv</div>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-1 lg:order-3 flex lg:justify-end">
+          <span class="arrow font-display italic-soft text-5xl">↗</span>
+        </div>
+      </a>
+
+      <!-- Project 05 — HAND GESTURE RECOGNITION -->
+      <a href="project.html?p=gesture" class="project grid grid-cols-12 gap-6 lg:gap-10 py-10 lg:py-14 px-2 border-b border-line items-center slide-l">
+        <div class="col-span-12 lg:col-span-1 font-display text-5xl text-sub">05</div>
+        <div class="col-span-12 lg:col-span-5">
+          <div class="flex items-center gap-3 label text-sub">
+            <span>Data Science</span><span class="opacity-40">/</span><span>04.13.2021</span>
+          </div>
+          <h3 class="font-display text-5xl lg:text-6xl mt-4 leading-[0.95]"><span class="italic-soft">Hand</span> Gesture<span class="text-accent">.</span></h3>
+          <p class="tagline mt-5 max-w-md text-sub text-[15.5px] leading-relaxed">
+            A computer-vision model that reads hand gestures in real time — trained
+            on a custom-collected dataset and distilled into a lightweight runtime.
+          </p>
+          <div class="mt-6 flex items-center gap-4 label">
+            <span class="border border-line px-3 py-1.5">Computer Vision</span>
+            <span class="border border-line px-3 py-1.5">PyTorch</span>
+            <span class="border border-line px-3 py-1.5">OpenCV</span>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-5 lg:col-start-8">
+          <div class="visual tile-gesture aspect-[4/3] relative overflow-hidden">
+            <img src="pictures/handsign/Green%20Brown%20Black%20Simple%20Filipino%20Sign%20Language%20Alphabet%20Flashcard.png" alt="Hand Gesture Recognition" class="absolute inset-0 w-full h-full object-cover" />
+            <div class="absolute top-6 left-6 label opacity-80">/ gesture.model_v2</div>
+            <div class="absolute left-6 bottom-6 label opacity-80">acc · 0.94</div>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-1 flex lg:justify-end">
+          <span class="arrow font-display italic-soft text-5xl">↗</span>
+        </div>
+      </a>
+
+      <!-- Project 06 — EASELITE -->
+      <a href="project.html?p=easelite" class="project grid grid-cols-12 gap-6 lg:gap-10 py-10 lg:py-14 px-2 border-b border-line items-center slide-r">
+        <div class="col-span-12 lg:col-span-1 font-display text-5xl text-sub">06</div>
+        <div class="col-span-12 lg:col-span-5 lg:order-2">
+          <div class="flex items-center gap-3 label text-sub">
+            <span>Mobile Development</span><span class="opacity-40">/</span><span>03.21.2021</span>
+          </div>
+          <h3 class="font-display text-5xl lg:text-6xl mt-4 leading-[0.95]">Easelite<span class="italic-soft text-rust">.</span></h3>
+          <p class="tagline mt-5 max-w-md text-sub text-[15.5px] leading-relaxed">
+            A lightweight mobile sketching app built around an infinite canvas,
+            gestural tools and the quietest possible chrome. Paper first, app second.
+          </p>
+          <div class="mt-6 flex items-center gap-4 label">
+            <span class="border border-line px-3 py-1.5">Mobile</span>
+            <span class="border border-line px-3 py-1.5">Canvas</span>
+            <span class="border border-line px-3 py-1.5">Drawing</span>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-5 lg:col-start-2 lg:order-1">
+          <div class="visual tile-easelite aspect-[4/3] relative overflow-hidden">
+            <img src="pictures/easelite/mockup.png" alt="Easelite mockup" class="absolute inset-0 w-full h-full object-cover" />
+            <div class="absolute top-6 left-6 label opacity-80">/ easelite.canvas</div>
+            <div class="absolute right-6 bottom-6 label opacity-80">iOS · iPadOS</div>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-1 lg:order-3 flex lg:justify-end">
+          <span class="arrow font-display italic-soft text-5xl">↗</span>
+        </div>
+      </a>
+
+      <!-- Project 07 — TRANZAKT -->
+      <a href="project.html?p=tranzakt" class="project grid grid-cols-12 gap-6 lg:gap-10 py-10 lg:py-14 px-2 border-b border-line items-center slide-l">
+        <div class="col-span-12 lg:col-span-1 font-display text-5xl text-sub">07</div>
+        <div class="col-span-12 lg:col-span-5">
+          <div class="flex items-center gap-3 label text-sub">
+            <span>Application Development</span><span class="opacity-40">/</span><span>02.22.2021</span>
+          </div>
+          <h3 class="font-display text-5xl lg:text-6xl mt-4 leading-[0.95]">Tranzakt<span class="italic-soft text-accent">.</span></h3>
+          <p class="tagline mt-5 max-w-md text-sub text-[15.5px] leading-relaxed">
+            An end-to-end payments and ledger tool for small businesses —
+            invoices, tracking and reconciliation stitched together in one calm surface.
+          </p>
+          <div class="mt-6 flex items-center gap-4 label">
+            <span class="border border-line px-3 py-1.5">Fintech</span>
+            <span class="border border-line px-3 py-1.5">Ledger</span>
+            <span class="border border-line px-3 py-1.5">Web App</span>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-5 lg:col-start-8">
+          <div class="visual tile-tranzakt aspect-[4/3] relative overflow-hidden">
+            <img src="pictures/tranzact/tranzactlogo.png" alt="Tranzakt" class="absolute inset-0 w-full h-full object-cover" />
+            <div class="absolute top-6 left-6 label opacity-80">/ tranzakt.ledger</div>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-1 flex lg:justify-end">
+          <span class="arrow font-display italic-soft text-5xl">↗</span>
+        </div>
+      </a>
+
+      <!-- Project 08 — ART GUIDE -->
+      <a href="project.html?p=artguide" class="project grid grid-cols-12 gap-6 lg:gap-10 py-10 lg:py-14 px-2 items-center slide-r">
+        <div class="col-span-12 lg:col-span-1 font-display text-5xl text-sub">08</div>
+        <div class="col-span-12 lg:col-span-5 lg:order-2">
+          <div class="flex items-center gap-3 label text-sub">
+            <span>Data Science</span><span class="opacity-40">/</span><span>01.18.2021</span>
+          </div>
+          <h3 class="font-display text-5xl lg:text-6xl mt-4 leading-[0.95]">Art <span class="italic-soft">Guide</span><span class="text-rust">.</span></h3>
+          <p class="tagline mt-5 max-w-md text-sub text-[15.5px] leading-relaxed">
+            A visual-search experiment matching photographs to artworks across
+            museum collections, using image embeddings and a custom nearest-neighbour index.
+          </p>
+          <div class="mt-6 flex items-center gap-4 label">
+            <span class="border border-line px-3 py-1.5">Embeddings</span>
+            <span class="border border-line px-3 py-1.5">Search</span>
+            <span class="border border-line px-3 py-1.5">Museums</span>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-5 lg:col-start-2 lg:order-1">
+          <div class="visual tile-artguide aspect-[4/3] relative overflow-hidden">
+            <img src="pictures/artG/graphics.png" alt="Art Guide" class="absolute inset-0 w-full h-full object-cover" />
+            <div class="absolute top-6 left-6 label opacity-80">/ artguide.index</div>
+            <div class="absolute right-6 bottom-6 label opacity-80">k · 12 · cos</div>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-1 lg:order-3 flex lg:justify-end">
+          <span class="arrow font-display italic-soft text-5xl">↗</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="mt-14 flex items-center justify-between reveal">
+      <p class="text-sub max-w-md text-[15px]">More case studies, process notes and unlisted experiments are shared on request.</p>
+      <a href="#contact" class="btn btn--ivory border border-ink px-5 py-3 label">Request archive →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     METRICS / PRECISION
+========================================================== -->
+<section class="py-24 lg:py-32">
+  <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+    <div class="reveal">
+      <div class="sec-index label text-sub"><span class="line"></span>[04] Practice</div>
+      <h2 class="font-display h2 mt-6 max-w-4xl">
+        Measured like <span class="italic-soft">research</span>,<br>shipped like <span class="italic-soft">product</span>.
+      </h2>
+    </div>
+
+    <div class="mt-16 grid grid-cols-2 lg:grid-cols-4 border-t border-l border-line reveal">
+      <div class="p-8 border-r border-b border-line">
+        <div class="label text-sub">Precision</div>
+        <div class="font-display text-6xl mt-4">0.<span class="counter" data-to="91" data-pad="2">00</span></div>
+        <div class="mt-3 bar" style="--r: 9%"><i></i></div>
+        <div class="mt-2 label text-sub">Attention to detail</div>
+      </div>
+      <div class="p-8 border-r border-b border-line">
+        <div class="label text-sub">Recall</div>
+        <div class="font-display text-6xl mt-4">0.<span class="counter" data-to="87" data-pad="2">00</span></div>
+        <div class="mt-3 bar" style="--r: 13%"><i></i></div>
+        <div class="mt-2 label text-sub">Breadth of coverage</div>
+      </div>
+      <div class="p-8 border-r border-b border-line">
+        <div class="label text-sub">Throughput</div>
+        <div class="font-display text-6xl mt-4"><span class="counter" data-to="40">0</span><span class="text-accent italic-soft">+</span></div>
+        <div class="mt-3 bar" style="--r: 20%"><i></i></div>
+        <div class="mt-2 label text-sub">Projects delivered</div>
+      </div>
+      <div class="p-8 border-r border-b border-line">
+        <div class="label text-sub">Tenure</div>
+        <div class="font-display text-6xl mt-4"><span class="counter" data-to="6" data-pad="2">00</span><span class="italic-soft">y</span></div>
+        <div class="mt-3 bar" style="--r: 25%"><i></i></div>
+        <div class="mt-2 label text-sub">Years shipping</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     ABOUT
+========================================================== -->
+<section id="about" class="py-24 lg:py-36 bg-ivory2/60 border-y border-line">
+  <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+
+    <div class="grid grid-cols-12 gap-8 lg:gap-14">
+      <!-- Left: typographic portrait -->
+      <div class="col-span-12 lg:col-span-5 reveal">
+        <div class="relative aspect-[4/5] bg-ink text-ivory p-6 lg:p-8 overflow-hidden">
+          <div class="absolute inset-0 bg-grid opacity-[0.07]"></div>
+          <div class="relative flex items-start justify-between label">
+            <span class="text-ivory/60">/ self-portrait</span>
+            <span class="text-ivory/60">v. 2026</span>
+          </div>
+          <div class="relative mt-10 lg:mt-16 font-display leading-[0.8] text-[28vw] lg:text-[16rem]">
+            d<span class="italic-soft">o</span>
+          </div>
+          <div class="relative mt-auto flex items-end justify-between label">
+            <span>Okonicha Dinma Dunebari</span>
+            <span class="text-ivory/60">EST · 2021</span>
+          </div>
+          <!-- sparkle accent -->
+          <div class="absolute top-24 right-8 h-20 w-20 border border-ivory/30 rounded-full grid place-items-center">
+            <span class="italic-soft font-display text-3xl">✳</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: bio + skills -->
+      <div class="col-span-12 lg:col-span-7">
+        <div class="reveal">
+          <div class="sec-index label text-sub"><span class="line"></span>[05] About</div>
+          <h2 class="font-display h2 mt-6 leading-[.95]">
+            I build things that are<br><span class="italic-soft">creative</span> and technically precise.
+          </h2>
+        </div>
+
+        <div class="mt-10 space-y-6 text-[17px] leading-relaxed text-sub max-w-xl reveal">
+          <p>
+            I'm a software developer and UI/UX designer with a strong background in
+            full-stack engineering and data science. Across the last six years I've
+            built blockchain dashboards, real-time internal analytics, hackathon-winning
+            prototypes, and earned an MSc in Data Science along the way.
+          </p>
+          <p>
+            I'm fluent in modern JavaScript frameworks — React, Vue, Next.js, Node —
+            and the design tooling that surrounds them. I care as much about the line
+            weight of a border as the name of a database column.
+          </p>
+          <p>
+            Right now I'm building dashboards for Cyrus Terminal, a Solana pre-bond
+            listings platform — while taking on a small number of independent briefs
+            per quarter where engineering, data and design need to be thought about
+            at the same time, by the same person.
+          </p>
+        </div>
+
+        <!-- Bars -->
+        <div class="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6 max-w-2xl reveal">
+          <div>
+            <div class="flex items-baseline justify-between">
+              <span class="label">Engineering</span>
+              <span class="mono text-sub">95%</span>
+            </div>
+            <div class="bar mt-3" style="--r: 5%"><i></i></div>
+          </div>
+          <div>
+            <div class="flex items-baseline justify-between">
+              <span class="label">Data Science</span>
+              <span class="mono text-sub">88%</span>
+            </div>
+            <div class="bar mt-3" style="--r: 12%"><i></i></div>
+          </div>
+          <div>
+            <div class="flex items-baseline justify-between">
+              <span class="label">UI Design</span>
+              <span class="mono text-sub">92%</span>
+            </div>
+            <div class="bar mt-3" style="--r: 8%"><i></i></div>
+          </div>
+          <div>
+            <div class="flex items-baseline justify-between">
+              <span class="label">Branding</span>
+              <span class="mono text-sub">80%</span>
+            </div>
+            <div class="bar mt-3" style="--r: 20%"><i></i></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     CTA / CONTACT
+========================================================== -->
+<section id="contact" class="py-28 lg:py-40 relative overflow-hidden">
+  <div class="absolute inset-0 bg-grid opacity-80 pointer-events-none"></div>
+
+  <div class="relative mx-auto max-w-[1440px] px-6 lg:px-10 text-center">
+    <div class="sec-index justify-center inline-flex label text-sub reveal"><span class="line"></span>[06] Contact<span class="line"></span></div>
+
+    <h2 class="font-display mt-8 text-[clamp(3rem,11vw,11rem)] leading-[.88] reveal">
+      Got an idea?<br>
+      Let's <span class="italic-soft">make it</span> happen.
+    </h2>
+
+    <p class="mt-8 max-w-xl mx-auto text-sub text-[17px] leading-relaxed reveal">
+      Whether it's a product to build, data to make sense of, or a brand that
+      needs a voice — I'd love to hear the shape of it.
+    </p>
+
+    <div class="mt-12 flex flex-wrap items-center justify-center gap-4 reveal">
+      <a href="mailto:ddunebari@gmail.com" class="magnetic btn btn--ink bg-ink px-7 py-5 label">
+        Schedule a call
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H3M11 1v8" stroke="currentColor" stroke-width="1.4"/></svg>
+      </a>
+      <a href="mailto:ddunebari@gmail.com" class="magnetic btn btn--ivory border border-ink px-7 py-5 label">
+        ddunebari@gmail.com
+      </a>
+    </div>
+
+    <div class="mt-16 grid grid-cols-2 md:grid-cols-4 border-t border-line max-w-3xl mx-auto reveal">
+      <div class="p-5 border-r border-line">
+        <div class="label text-sub">Response</div>
+        <div class="mt-1 font-display text-2xl">&lt; 24h</div>
+      </div>
+      <div class="p-5 border-r border-line">
+        <div class="label text-sub">Window</div>
+        <div class="mt-1 font-display text-2xl">Q2 '26</div>
+      </div>
+      <div class="p-5 border-r border-line">
+        <div class="label text-sub">Regions</div>
+        <div class="mt-1 font-display text-2xl">Global</div>
+      </div>
+      <div class="p-5">
+        <div class="label text-sub">Format</div>
+        <div class="mt-1 font-display text-2xl">Remote</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     FOOTER
+========================================================== -->
+<footer class="border-t border-line bg-ink text-ivory">
+  <div class="mx-auto max-w-[1440px] px-6 lg:px-10 py-16">
+
+    <div class="grid grid-cols-12 gap-8 lg:gap-14">
+      <div class="col-span-12 lg:col-span-5">
+        <div class="font-display text-6xl lg:text-8xl leading-[0.85]">
+          <span class="italic-soft">Dinma</span><br>Okonicha.
+        </div>
+        <p class="mt-6 max-w-sm text-ivory/60 text-[15px]">
+          Software engineer, data scientist and UI designer. Building small,
+          precise, considered things since 2021.
+        </p>
+      </div>
+
+      <div class="col-span-6 lg:col-span-2">
+        <div class="label text-ivory/50">Sitemap</div>
+        <ul class="mt-5 space-y-3">
+          <li><a href="#home"     class="ul-link">Home</a></li>
+          <li><a href="#work"     class="ul-link">Work</a></li>
+          <li><a href="#services" class="ul-link">Services</a></li>
+          <li><a href="#about"    class="ul-link">About</a></li>
+          <li><a href="#contact"  class="ul-link">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="col-span-6 lg:col-span-2">
+        <div class="label text-ivory/50">Elsewhere</div>
+        <ul class="mt-5 space-y-3">
+          <li><a href="#" class="ul-link">GitHub ↗</a></li>
+          <li><a href="#" class="ul-link">LinkedIn ↗</a></li>
+          <li><a href="mainresume.pdf" class="ul-link">Résumé ↗</a></li>
+          <li><a href="mailto:ddunebari@gmail.com" class="ul-link">Email ↗</a></li>
+        </ul>
+      </div>
+
+      <div class="col-span-12 lg:col-span-3">
+        <div class="label text-ivory/50">Get in touch</div>
+        <a href="mailto:ddunebari@gmail.com" class="mt-5 block font-display italic-soft text-3xl">ddunebari@gmail.com</a>
+        <div class="mt-6 flex items-center gap-3 label text-ivory/60">
+          <span class="status-dot"></span>
+          <span>Taking briefs · 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-16 pt-6 border-t border-ivory/15 flex flex-wrap items-center justify-between gap-4 label text-ivory/50">
+      <div>© 2026 — Okonicha Dinma Dunebari. All rights reserved.</div>
+      <div class="flex items-center gap-6">
+        <span>Designed &amp; built in-house</span>
+        <span>v 2.0</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ==========================================================
+     SCRIPTS
+========================================================== -->
+<script>
+  /* ============================================================
+     CLOCK (hero meta)
+  ============================================================ */
+  const clock = document.getElementById('clock');
+  function tick() {
+    const d = new Date();
+    const hh = String(d.getHours()).padStart(2,'0');
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    const ss = String(d.getSeconds()).padStart(2,'0');
+    clock.textContent = `${hh}:${mm}:${ss} LOCAL`;
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ============================================================
+     SCROLL PROGRESS + STICKY HEADER
+  ============================================================ */
+  const header = document.querySelector('header');
+  const prog = document.getElementById('progress');
+  let lastY = 0, scrollVel = 0;
+  function onScroll() {
+    const y = window.scrollY;
+    scrollVel = y - lastY;
+    lastY = y;
+    header.classList.toggle('scrolled', y > 8);
+    const h = document.documentElement;
+    const p = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+    prog.style.width = (p * 100) + '%';
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ============================================================
+     SCROLL REVEAL (generic + directional slides)
+  ============================================================ */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal, .slide-l, .slide-r, .bar').forEach(el => io.observe(el));
+
+  /* ============================================================
+     HERO SPLIT-TEXT CHAR REVEAL
+  ============================================================ */
+  document.querySelectorAll('[data-split]').forEach(el => {
+    const state = { i: 0 };
+    const stagger = 0.022;
+    const base = 0.1;
+    function walk(node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent;
+        if (!text.trim()) { return; }
+        const frag = document.createDocumentFragment();
+        const parts = text.split(/(\s+)/);
+        for (const part of parts) {
+          if (part === '') continue;
+          if (/^\s+$/.test(part)) {
+            frag.appendChild(document.createTextNode(' '));
+          } else {
+            const word = document.createElement('span');
+            word.className = 'word';
+            for (const ch of part) {
+              const s = document.createElement('span');
+              s.className = 'char';
+              s.textContent = ch;
+              s.style.animationDelay = (base + state.i * stagger) + 's';
+              word.appendChild(s);
+              state.i++;
+            }
+            frag.appendChild(word);
+          }
+        }
+        node.replaceWith(frag);
+      } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'BR') {
+        Array.from(node.childNodes).forEach(walk);
+      }
+    }
+    Array.from(el.childNodes).forEach(walk);
+    el.classList.add('split');
+  });
+
+  /* ============================================================
+     CUSTOM CURSOR (dot + trailing ring + hover states)
+  ============================================================ */
+  const cDot = document.getElementById('cDot');
+  const cRing = document.getElementById('cRing');
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (fine && cDot && cRing) {
+    let mx = innerWidth / 2, my = innerHeight / 2;
+    let dx = mx, dy = my, rx = mx, ry = my;
+    let visible = false;
+
+    window.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      if (!visible) {
+        visible = true;
+        cDot.classList.remove('is-hidden');
+        cRing.classList.remove('is-hidden');
+      }
+    });
+    window.addEventListener('mousedown', () => cRing.classList.add('is-down'));
+    window.addEventListener('mouseup',   () => cRing.classList.remove('is-down'));
+    document.addEventListener('mouseleave', () => {
+      cDot.classList.add('is-hidden');
+      cRing.classList.add('is-hidden');
+      visible = false;
+    });
+
+    function cursorLoop() {
+      dx += (mx - dx) * 0.92;
+      dy += (my - dy) * 0.92;
+      rx += (mx - rx) * 0.16;
+      ry += (my - ry) * 0.16;
+      cDot.style.transform  = `translate(${dx}px, ${dy}px) translate(-50%, -50%)`;
+      cRing.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      requestAnimationFrame(cursorLoop);
+    }
+    requestAnimationFrame(cursorLoop);
+
+    // Hover inflate over interactive elements
+    const hoverables = document.querySelectorAll('a, button, .magnetic, input, textarea');
+    hoverables.forEach(el => {
+      el.addEventListener('mouseenter', () => cRing.classList.add('is-hover'));
+      el.addEventListener('mouseleave', () => cRing.classList.remove('is-hover'));
+    });
+
+    // Special "VIEW" state over project cards
+    document.querySelectorAll('.project').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cRing.classList.remove('is-hover');
+        cRing.classList.add('is-view');
+        cDot.classList.add('is-hidden');
+      });
+      el.addEventListener('mouseleave', () => {
+        cRing.classList.remove('is-view');
+        cDot.classList.remove('is-hidden');
+      });
+    });
+  }
+
+  /* ============================================================
+     MAGNETIC BUTTONS
+  ============================================================ */
+  document.querySelectorAll('.magnetic').forEach(el => {
+    const strength = 18;
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - (r.left + r.width / 2);
+      const y = e.clientY - (r.top + r.height / 2);
+      el.style.transform = `translate(${x / r.width * strength}px, ${y / r.height * strength}px)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'translate(0, 0)';
+    });
+  });
+
+  /* ============================================================
+     COUNTERS (animate on enter)
+  ============================================================ */
+  const counters = document.querySelectorAll('.counter');
+  const counterIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const to = parseFloat(el.dataset.to);
+      const pad = parseInt(el.dataset.pad || '0', 10);
+      const dur = 1600;
+      const start = performance.now();
+      function step(now) {
+        const t = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const val = Math.round(to * eased);
+        el.textContent = pad ? String(val).padStart(pad, '0') : val;
+        if (t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      counterIO.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterIO.observe(c));
+
+  /* ============================================================
+     HERO PARALLAX (grid + status card drift)
+  ============================================================ */
+  const heroGrid = document.querySelector('#home .bg-grid');
+  const heroSection = document.querySelector('#home');
+  const parallaxTargets = [
+    { el: heroGrid, speed: 0.35 },
+  ];
+  function parallax() {
+    const y = window.scrollY;
+    parallaxTargets.forEach(({ el, speed }) => {
+      if (!el) return;
+      el.style.transform = `translate3d(0, ${y * speed}px, 0)`;
+    });
+    requestAnimationFrame(parallax);
+  }
+  requestAnimationFrame(parallax);
+
+  /* ============================================================
+     TYPEWRITER (hero terminal)
+  ============================================================ */
+  const typeEl = document.getElementById('type');
+  const phrases = [
+    'accepting new briefs...',
+    'drafting a design system...',
+    'shipping quiet product...',
+    'reading the data...',
+    'listening for the problem...',
+  ];
+  let pIdx = 0, cIdx = 0, erase = false;
+  function typeLoop() {
+    const word = phrases[pIdx];
+    if (!erase) {
+      cIdx++;
+      typeEl.textContent = word.slice(0, cIdx);
+      if (cIdx === word.length) { erase = true; setTimeout(typeLoop, 1600); return; }
+      setTimeout(typeLoop, 55);
+    } else {
+      cIdx--;
+      typeEl.textContent = word.slice(0, cIdx);
+      if (cIdx === 0) { erase = false; pIdx = (pIdx + 1) % phrases.length; setTimeout(typeLoop, 260); return; }
+      setTimeout(typeLoop, 22);
+    }
+  }
+  typeLoop();
+
+  /* ============================================================
+     MOBILE NAV
+  ============================================================ */
+  const menuBtn = document.getElementById('menuBtn');
+  const mnav = document.getElementById('mnav');
+  menuBtn.addEventListener('click', () => {
+    mnav.classList.toggle('open');
+    menuBtn.textContent = mnav.classList.contains('open') ? 'Close' : 'Menu';
+  });
+  mnav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mnav.classList.remove('open');
+    menuBtn.textContent = 'Menu';
+  }));
+
+  /* ============================================================
+     MARQUEE SCROLL VELOCITY
+     (subtly accelerate on fast scroll, gently restore)
+  ============================================================ */
+  const marquee = document.querySelector('.marquee-track');
+  if (marquee) {
+    let base = 46; // seconds
+    let current = base;
+    function easeMarquee() {
+      const target = Math.max(8, base - Math.abs(scrollVel) * 0.6);
+      current += (target - current) * 0.08;
+      marquee.style.animationDuration = current.toFixed(2) + 's';
+      requestAnimationFrame(easeMarquee);
+    }
+    requestAnimationFrame(easeMarquee);
+  }
+</script>
+
+</body>
+</html>
